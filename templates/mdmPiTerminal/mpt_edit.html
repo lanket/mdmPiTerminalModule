@@ -1,0 +1,129 @@
+
+<!-- Table 'mpt' edit -->
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend><#LANG_NEW_RECORD#></legend>
+[#endif ID#]
+<!-- TITLE (varchar) -->
+<div class="form-group">
+ <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_TITLE#>:
+ (*)
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="title" value="[#TITLE#]" id="title"></div>
+</div>
+<!-- NAME (varchar) -->
+<div class="form-group">
+ <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
+ name:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
+</div>
+<!-- LINKEDROOM (varchar) -->
+<div class="form-group">
+ <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
+ linkedRoom:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
+</div>
+<!-- IP (varchar) -->
+<div class="form-group">
+ <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
+ ip:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
+</div>
+<!-- PROVIDERTTS (varchar) -->
+<div class="form-group">
+ <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
+ providertts:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="providertts" value="[#PROVIDERTTS#]" id="providertts"></div>
+</div>
+<!-- APIKEYTTS (varchar) -->
+<div class="form-group">
+ <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
+ apikeytts:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="apikeytts" value="[#APIKEYTTS#]" id="apikeytts"></div>
+</div>
+<!-- PROVIDERSTT (varchar) -->
+<div class="form-group">
+ <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
+ providerstt:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="providerstt" value="[#PROVIDERSTT#]" id="providerstt"></div>
+</div>
+<!-- APIKEYSTT (varchar) -->
+<div class="form-group">
+ <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
+ apikeystt:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
+</div>
+<!-- SENSITIVITY (varchar) -->
+<div class="form-group">
+ <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
+ sensitivity:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"></div>
+</div>
+<!-- ALARMKWACTIVATED (varchar) -->
+<div class="form-group">
+ <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
+ alarmkwactivated:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"></div>
+</div>
+<!-- ALARMTTS (varchar) -->
+<div class="form-group">
+ <label for="alarmtts" class="col-lg-3 control-label"[#if ERR_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
+ alarmtts:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="alarmtts" value="[#ALARMTTS#]" id="alarmtts"></div>
+</div>
+<!-- ALARMSTT (varchar) -->
+<div class="form-group">
+ <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
+ alarmstt:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="alarmstt" value="[#ALARMSTT#]" id="alarmstt"></div>
+</div>
+<!-- LINKED_OBJECT (varchar) -->
+<div class="form-group">
+ <label for="linked_object" class="col-lg-3 control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_LINKED_OBJECT#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
+</div>
+<!-- LINKED_PROPERTY (varchar) -->
+<div class="form-group">
+ <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_LINKED_PROPERTY#>:
+ </label>
+ <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
+</div>
+[#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#]
+<div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+        </div>
+</div>
+</fieldset>
+</form>
