@@ -4,7 +4,7 @@
 * @package project
 * @author Wizard <sergejey@gmail.com>
 * @copyright http://majordomo.smartliving.ru/ (c)
-* @version 0.1 (wizard, 22:05:48 [May 07, 2018])
+* @version 0.1 (wizard, 23:05:08 [May 07, 2018])
 */
 //
 //
@@ -18,7 +18,7 @@ class mdmPiTerminal extends module {
 */
 function mdmPiTerminal() {
   $this->name="mdmPiTerminal";
-  $this->title="РўРµСЂРјРёРЅР°Р» РіРѕР»РѕСЃРѕРІРѕРіРѕ СѓРїСЂР°РІР»РµРЅРёСЏ";
+  $this->title="МажорКолонка";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
   $this->checkInstalled();
 }
@@ -112,26 +112,6 @@ function run() {
 * @access public
 */
 function admin(&$out) {
- $this->getConfig();
- $out['API_URL']=$this->config['API_URL'];
- if (!$out['API_URL']) {
-  $out['API_URL']='http://';
- }
- $out['API_KEY']=$this->config['API_KEY'];
- $out['API_USERNAME']=$this->config['API_USERNAME'];
- $out['API_PASSWORD']=$this->config['API_PASSWORD'];
- if ($this->view_mode=='update_settings') {
-   global $api_url;
-   $this->config['API_URL']=$api_url;
-   global $api_key;
-   $this->config['API_KEY']=$api_key;
-   global $api_username;
-   $this->config['API_USERNAME']=$api_username;
-   global $api_password;
-   $this->config['API_PASSWORD']=$api_password;
-   $this->saveConfig();
-   $this->redirect("?");
- }
  if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
   $out['SET_DATASOURCE']=1;
  }
@@ -185,7 +165,6 @@ function usual(&$out) {
   SQLExec("DELETE FROM mpt WHERE ID='".$rec['ID']."'");
  }
  function propertySetHandle($object, $property, $value) {
-  $this->getConfig();
    $table='mpt';
    $properties=SQLSelect("SELECT ID FROM $table WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($properties);
@@ -196,11 +175,21 @@ function usual(&$out) {
    }
  }
  function processSubscription($event, $details='') {
- $this->getConfig();
   if ($event=='SAY') {
    $level=$details['level'];
    $message=$details['message'];
-   //...
+   debmes('mpt say ' . $message . '; level = ' . $level);
+  }
+  if ($event=='ASK') {
+   $message=$details['prompt'];
+   $target=$details['target'];
+   debmes('mpt ask ' . $message . '; target = ' . $target);
+  }
+  if ($event=='SAYTO') {
+   $level=$details['level'];
+   $message=$details['message'];
+   $destination=$details['destination'];
+   debmes('mpt say ' . $message . '; level = ' . $level . '; to = ' . $destination);
   }
  }
 /**
@@ -212,6 +201,8 @@ function usual(&$out) {
 */
  function install($data='') {
   subscribeToEvent($this->name, 'SAY');
+  subscribeToEvent($this->name, 'SAYTO');
+  subscribeToEvent($this->name, 'ASK');
   parent::install();
  }
 /**
