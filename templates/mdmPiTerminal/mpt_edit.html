@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    function sendCommandParam(id, cmd, val){ 
+		var url="?sendCommand=1&id="+id+"&cmd="+cmd+"&param="+val;
+        console.log(url);
+		$.ajax({  
+			url: url,  
+			cache: false,  
+			success: function(html){  
+				alert(html);  
+			}  
+		});  
+	}
+</script> 
 
 <!-- Table 'mpt' edit -->
 <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
@@ -45,8 +58,13 @@
  <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
  Сервис синтеза речи:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="providertts" value="[#PROVIDERTTS#]" id="providertts"></div>
-</div>
+ <div class="col-lg-4">
+    <select name="providertts" class="form-control" id="providertts">
+        <option value="Yandex"[#if PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
+        <option value="Google"[#if PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
+    </select>
+ </div>
+ </div>
 <!-- APIKEYTTS (varchar) -->
 <div class="form-group">
  <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
@@ -59,7 +77,10 @@
  <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
  Сервис распознования речи:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="providerstt" value="[#PROVIDERSTT#]" id="providerstt"></div>
+    <select name="providerstt" class="form-control" id="providerstt">
+        <option value="Yandex"[#if PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
+        <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
+    </select>
 </div>
 <!-- APIKEYSTT (varchar) -->
 <div class="form-group">
@@ -73,28 +94,50 @@
  <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
  Чувствительность реагирования на ключевое слово:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"></div>
+    <div class="col-lg-4">
+     <select name="sensitivity" class="form-control" id="sensitivity">
+        <option value="0.2"[#if SENSITIVITY="0.2"#] selected[#endif#]>0.2</option>
+        <option value="0.25"[#if SENSITIVITY="0.25"#] selected[#endif#]>0.25</option>
+        <option value="0.3"[#if SENSITIVITY="0.3"#] selected[#endif#]>0.3</option>
+        <option value="0.35"[#if SENSITIVITY="0.35"#] selected[#endif#]>0.35</option>
+        <option value="0.4"[#if SENSITIVITY="0.4"#] selected[#endif#]>0.4</option>
+        <option value="0.45"[#if SENSITIVITY="0.45"#] selected[#endif#]>0.45</option>
+        <option value="0.5"[#if SENSITIVITY="0.5"#] selected[#endif#]>0.5</option>
+        <option value="0.55"[#if SENSITIVITY="0.55"#] selected[#endif#]>0.55</option>
+        <option value="0.6"[#if SENSITIVITY="0.6"#] selected[#endif#]>0.6</option>
+        <option value="0.65"[#if SENSITIVITY="0.65"#] selected[#endif#]>0.65</option>
+        <option value="0.7"[#if SENSITIVITY="0.7"#] selected[#endif#]>0.7</option>
+    </select>
+ <!-- <input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"> -->
+    </div>
 </div>
 <!-- ALARMKWACTIVATED (varchar) -->
 <div class="form-group">
  <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
  Сигнал о распозновании ключевого слова:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"></div>
+ <div class="col-lg-4">
+     <input type="checkbox" name="alarmkwactivated" value="1"[#if ALARMKWACTIVATED="1"#] checked[#endif#]>
+     <!-- <input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"> -->
+ </div>
 </div>
 <!-- ALARMTTS (varchar) -->
 <div class="form-group">
  <label for="alarmtts" class="col-lg-3 control-label"[#if ERR_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
  Сигнал перед сообщением:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="alarmtts" value="[#ALARMTTS#]" id="alarmtts"></div>
+ <div class="col-lg-4">
+      <input type="checkbox" name="alarmtts" value="1"[#if ALARMTTS="1"#] checked[#endif#]>
+ </div>
 </div>
 <!-- ALARMSTT (varchar) -->
 <div class="form-group">
  <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
  Сигнал перед начале распознования речи:
  </label>
- <div class="col-lg-4"><input type="text" class="form-control" name="alarmstt" value="[#ALARMSTT#]" id="alarmstt"></div>
+ <div class="col-lg-4">
+      <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
+ </div>
 </div>
 <!-- LINKED_OBJECT (varchar) -->
 <div class="form-group">
