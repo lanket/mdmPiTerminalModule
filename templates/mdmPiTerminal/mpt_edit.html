@@ -77,10 +77,12 @@
  <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
  Сервис распознования речи:
  </label>
+    <div class="col-lg-4">
     <select name="providerstt" class="form-control" id="providerstt">
         <option value="Yandex"[#if PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
         <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
     </select>
+    </div>
 </div>
 <!-- APIKEYSTT (varchar) -->
 <div class="form-group">
