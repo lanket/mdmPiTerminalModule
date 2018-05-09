@@ -57,8 +57,10 @@
    $rec['LINKED_PROPERTY']=$linked_property;
   //UPDATING RECORD
    if ($ok) {
-    if ($rec['ID']) {
-     SQLUpdate($table_name, $rec); // update
+    if ($rec['ID'] and $ip) {
+     SQLUpdate($table_name, $rec); // update sql
+     $senddata = json_encode($rec);
+     $this->send_mpt('settings',$senddata,$ip);
     } else {
      $new_rec=1;
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
