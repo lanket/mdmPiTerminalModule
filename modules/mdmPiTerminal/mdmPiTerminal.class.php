@@ -155,6 +155,14 @@ function usual(&$out) {
   require(DIR_MODULES.$this->name.'/mpt_edit.inc.php');
  }
 /**
+* mpt send data to terminal
+*
+* @access public
+*/
+ function send_mpt($command, $data, $target) {
+  require(DIR_MODULES.$this->name.'/mpt_send.inc.php');
+ }
+/**
 * mpt delete record
 *
 * @access public
@@ -178,18 +186,26 @@ function usual(&$out) {
   if ($event=='SAY') {
    $level=$details['level'];
    $message=$details['message'];
-   debmes('mpt say ' . $message . '; level = ' . $level);
+        $table_name='mpt';
+        $rec=SQLSelect("SELECT * FROM $table_name");
+        foreach ($rec as $terminalpi) {
+            $this->send_mpt('tts', $message, $terminalpi['ip']);
+        }
+
+   //debmes('mpt say ' . $message . '; level = ' . $level);
   }
   if ($event=='ASK') {
    $message=$details['prompt'];
    $target=$details['target'];
-   debmes('mpt ask ' . $message . '; target = ' . $target);
+   $this->send_mpt('ask', $message, $target);
+   //debmes('mpt ask ' . $message . '; target = ' . $target);
   }
   if ($event=='SAYTO') {
    $level=$details['level'];
    $message=$details['message'];
    $destination=$details['destination'];
-   debmes('mpt say ' . $message . '; level = ' . $level . '; to = ' . $destination);
+   $this->send_mpt('tts', $message, $destination);
+   //debmes('mpt say ' . $message . '; level = ' . $level . '; to = ' . $destination);
   }
  }
 /**
