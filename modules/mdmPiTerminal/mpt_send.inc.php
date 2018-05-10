@@ -13,7 +13,7 @@
     if (preg_match('/^[\d\.]+$/',$target)) {
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($socket) {
-            $result = socket_connect($socket, $ip, $service_port);
+            $result = socket_connect($socket, $target, $service_port);
             if ($result) {
                 socket_write($socket, $in, strlen($in));
             }
