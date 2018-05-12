@@ -41,11 +41,24 @@
         [#endif ID#]
         <!-- TITLE (varchar) -->
         <div class="form-group">
-         <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
+        <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_TITLE#>:
          (*)
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="title" value="[#TITLE#]" id="title"></div>
+        
+         <div class="col-lg-4">
+            <!--    
+            <select name="id_terminal" class="form-control" id="id_terminal">
+                <?php
+                    $res=SQLSelect("SELECT * FROM terminals");
+                    foreach ($rec as $terminal) {
+                        echo'<option value="' . $terminal['ID'] . '"[#if ID_TERMINAL=="' . $terminal['ID'] . '"#] selected[#endif#]>' . $terminal['TITLE'] . '</option>';
+                    }
+                ?>
+            </select>
+            -->
+            <input type="text" class="form-control" name="title" value="[#TITLE#]" id="title">
+         </div>
         </div>
         <!-- NAME (varchar) -->
         <div class="form-group">
@@ -94,8 +107,9 @@
          </label>
             <div class="col-lg-4">
             <select name="providerstt" class="form-control" id="providerstt">
-                <option value="Yandex"[#if PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
                 <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
+                <option value="Wit.ai"[#if PROVIDERSTT=="Wit.ai"#] selected[#endif#]>Wit.ai</option>
+                <option value="Microsoft"[#if PROVIDERSTT=="Microsoft"#] selected[#endif#]>Microsoft voice</option>
             </select>
             </div>
         </div>

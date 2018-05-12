@@ -42,12 +42,16 @@
    $rec['SENSITIVITY']=$sensitivity;
   //updating 'alarmkwactivated' (varchar)
    global $alarmkwactivated;
+   if(!$alarmkwactivated) $alarmkwactivated = 0;
    $rec['ALARMKWACTIVATED']=$alarmkwactivated;
   //updating 'alarmtts' (varchar)
    global $alarmtts;
+   if(!$alarmtts) $alarmtts=0;
+   if(!$alarmtts)
    $rec['ALARMTTS']=$alarmtts;
   //updating 'alarmstt' (varchar)
    global $alarmstt;
+   if(!$alarmstt) $alarmstt=0;
    $rec['ALARMSTT']=$alarmstt;
   //updating '<%LANG_LINKED_OBJECT%>' (varchar)
    global $linked_object;
@@ -59,6 +63,7 @@
    if ($ok) {
     if ($rec['ID'] and $ip) {
      SQLUpdate($table_name, $rec); // update sql
+     $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
      $this->send_mpt('settings',$senddata,$ip);
     } else {

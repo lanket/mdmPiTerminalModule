@@ -18,7 +18,7 @@ class mdmPiTerminal extends module {
 */
 function mdmPiTerminal() {
   $this->name="mdmPiTerminal";
-  $this->title="МажорКолонка";
+  $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
   $this->checkInstalled();
 }
@@ -245,6 +245,7 @@ mpt -
 */
   $data = <<<EOD
  mpt: ID int(10) unsigned NOT NULL auto_increment
+ mpt: ID_TERMINAL int(10) NOT NULL DEFAULT 1
  mpt: TITLE varchar(30) NOT NULL DEFAULT ''
  mpt: NAME varchar(30) NOT NULL DEFAULT ''
  mpt: LINKEDROOM varchar(50) NOT NULL DEFAULT ''
