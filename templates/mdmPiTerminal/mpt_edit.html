@@ -39,48 +39,54 @@
         [#if ID=""#]
         <legend><#LANG_NEW_RECORD#></legend>
         [#endif ID#]
-        <!-- TITLE (varchar) -->
+        <!-- TITLE (varchar) 
         <div class="form-group">
         <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_TITLE#>:
          (*)
          </label>
-        
          <div class="col-lg-4">
-            <!--    
-            <select name="id_terminal" class="form-control" id="id_terminal">
-                <?php
-                    $res=SQLSelect("SELECT * FROM terminals");
-                    foreach ($rec as $terminal) {
-                        echo'<option value="' . $terminal['ID'] . '"[#if ID_TERMINAL=="' . $terminal['ID'] . '"#] selected[#endif#]>' . $terminal['TITLE'] . '</option>';
-                    }
-                ?>
-            </select>
-            -->
             <input type="text" class="form-control" name="title" value="[#TITLE#]" id="title">
          </div>
         </div>
-        <!-- NAME (varchar) -->
+        -->
+        <!-- ID_TERMINAL (select) -->
+        [#if !IS_SET_ID_TERMINAL#]
+        <div class="form-group ">
+            <label for="id_terminal" class="col-lg-4 control-label" [#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
+            Терминал: *
+            </label>
+            <div class="col-lg-5">
+                <select name="id_terminal" class="form-control [#if ERR_ID_TERMINAL#]alert-danger[#endif#]" >
+                    <option value="">select
+                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#NAME#]
+                    [#end ID_TERMINAL_OPTIONS#]
+                </select>
+
+            </div>
+        </div>
+        [#endif IS_SET_ID_TERMINAL#]
+        <!-- NAME (varchar) 
         <div class="form-group">
          <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
          Системное имя:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
-        </div>
-        <!-- LINKEDROOM (varchar) -->
+        </div> -->
+        <!-- LINKEDROOM (varchar) 
         <div class="form-group">
          <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
          Расположение:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
-        </div>
-        <!-- IP (varchar) -->
+        </div>-->
+        <!-- IP (varchar) 
         <div class="form-group">
          <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
          ip адрес терминала:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
-        </div>
+        </div>-->
         <!-- PROVIDERTTS (varchar) -->
         <div class="form-group">
          <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>

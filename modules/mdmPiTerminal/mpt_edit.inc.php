@@ -9,7 +9,17 @@
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
   if ($this->mode=='update') {
    $ok=1;
+   
+    //options for 'ID_TERMINAL' (select)
+    global $id_terminal;
+    $rec['ID_TERMINAL'] = $id_terminal;
+    if($rec['ID_TERMINAL'] == '')
+    {
+        $out['ERR_ID_TERMINAL']=1;
+        $ok=0;
+    }
   //updating '<%LANG_TITLE%>' (varchar, required)
+   /*
    global $title;
    $rec['TITLE']=$title;
    if ($rec['TITLE']=='') {
@@ -25,6 +35,7 @@
   //updating 'ip' (varchar)
    global $ip;
    $rec['IP']=$ip;
+   */
   //updating 'providertts' (varchar)
    global $providertts;
    $rec['PROVIDERTTS']=$providertts;
@@ -61,7 +72,9 @@
    $rec['LINKED_PROPERTY']=$linked_property;
   //UPDATING RECORD
    if ($ok) {
-    if ($rec['ID'] and $ip) {
+    if ($rec['ID']) {
+     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     $rec['IP'] = $tmp['HOST'];
      SQLUpdate($table_name, $rec); // update sql
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
@@ -75,6 +88,16 @@
     $out['ERR']=1;
    }
   }
+    $tmp=SQLSelect("SELECT ID, TITLE as NAME FROM terminals ORDER BY NAME");
+    $terminals_total=count($tmp);
+    for($terminals_i=0;$terminals_i<$terminals_total;$terminals_i++) {
+        $terminal_id_opt[$tmp[$terminals_i]['ID']]=$tmp[$terminals_i]['NAME'];
+    }
+    for($i=0;$i<$terminals_total;$i++) {
+        if ($rec['ID_TERMINAL']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
+    }
+    $out['ID_TERMINAL_OPTIONS']=$tmp;
+  
   if (is_array($rec)) {
    foreach($rec as $k=>$v) {
     if (!is_array($v)) {
