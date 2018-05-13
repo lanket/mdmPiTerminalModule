@@ -19,7 +19,8 @@
   $sortby_mpt="ID DESC";
   $out['SORTBY']=$sortby_mpt;
   // SEARCH RESULTS
-  $res=SQLSelect("SELECT * FROM mpt WHERE $qry ORDER BY ".$sortby_mpt);
+  //$res=SQLSelect("SELECT * FROM mpt WHERE $qry ORDER BY ".$sortby_mpt);
+  $res=SQLSelect("SELECT mpt.ID, terminals.TITLE,terminals.NAME, terminals.HOST FROM `mpt` inner join terminals on mpt.ID_TERMINAL = terminals.ID WHERE $qry ORDER BY ".$sortby_mpt);
   if ($res[0]['ID']) {
    //paging($res, 100, $out); // search result paging
    $total=count($res);

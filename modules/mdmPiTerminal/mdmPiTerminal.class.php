@@ -117,7 +117,7 @@ function admin(&$out) {
  }
  if ($this->data_source=='mpt' || $this->data_source=='') {
   if ($this->view_mode=='' || $this->view_mode=='search_mpt') {
-   $this->search_mpt($out);
+      $this->search_mpt($out);
   }
   if ($this->view_mode=='edit_mpt') {
    $this->edit_mpt($out, $this->id);
@@ -219,9 +219,9 @@ function usual(&$out) {
 * @access private
 */
  function install($data='') {
-  subscribeToEvent($this->name, 'SAY');
-  subscribeToEvent($this->name, 'SAYTO');
-  subscribeToEvent($this->name, 'ASK');
+  subscribeToEvent($this->name, 'SAY','',10);
+  subscribeToEvent($this->name, 'SAYTO','',20);
+  subscribeToEvent($this->name, 'ASK','',20);
   parent::install();
  }
 /**
@@ -249,20 +249,15 @@ mpt -
   $data = <<<EOD
  mpt: ID int(10) unsigned NOT NULL auto_increment
  mpt: ID_TERMINAL int(10) NOT NULL DEFAULT 1
- mpt: TITLE varchar(30) NOT NULL DEFAULT ''
- mpt: NAME varchar(30) NOT NULL DEFAULT ''
  mpt: LINKEDROOM varchar(50) NOT NULL DEFAULT ''
- mpt: IP varchar(15) NOT NULL DEFAULT ''
- mpt: PROVIDERTTS varchar(20) NOT NULL DEFAULT ''
+ mpt: PROVIDERTTS varchar(20) NOT NULL DEFAULT 'Yandex'
  mpt: APIKEYTTS varchar(100) NOT NULL DEFAULT ''
- mpt: PROVIDERSTT varchar(20) NOT NULL DEFAULT ''
+ mpt: PROVIDERSTT varchar(20) NOT NULL DEFAULT 'Google'
  mpt: APIKEYSTT varchar(100) NOT NULL DEFAULT ''
  mpt: SENSITIVITY varchar(4) NOT NULL DEFAULT ''
  mpt: ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
  mpt: ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
  mpt: ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
- mpt: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''
- mpt: LINKED_PROPERTY varchar(100) NOT NULL DEFAULT ''
 EOD;
   parent::dbInstall($data);
  }
