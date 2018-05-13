@@ -80,7 +80,7 @@
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
      //debmes('mpt: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$ip);
+     $this->send_mpt('settings',$senddata,$rec['IP']);
     } else {
      $new_rec=1;
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
@@ -89,7 +89,7 @@
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
      //debmes('mpt: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$ip);
+     $this->send_mpt('settings',$senddata,$rec['IP']);
     }
     $out['OK']=1;
    } else {

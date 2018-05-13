@@ -183,31 +183,34 @@ function usual(&$out) {
    }
  }
  function processSubscription($event, $details='') {
-  if ($event=='SAY') {
-   $level=$details['level'];
-   $message=$details['message'];
-        $table_name='mpt';
-        $rec=SQLSelect("SELECT * FROM $table_name");
-        foreach ($rec as $terminalpi) {
-            $this->send_mpt('tts', $message, $terminalpi['ip']);
-        }
-
-   //debmes('mpt say ' . $message . '; level = ' . $level);
-  }
-  if ($event=='ASK') {
-   $message=$details['prompt'];
-   $target=$details['target'];
-   $this->send_mpt('ask', $message, $target);
-   //debmes('mpt ask ' . $message . '; target = ' . $target);
-  }
-  if ($event=='SAYTO') {
-   $level=$details['level'];
-   $message=$details['message'];
-   $destination=$details['destination'];
-   $this->send_mpt('tts', $message, $destination);
-   //debmes('mpt say ' . $message . '; level = ' . $level . '; to = ' . $destination);
-  }
+   require(DIR_MODULES.$this->name.'/mpt_processSubscription.inc.php');
  }
+
+/**
+* target destination name и еще всякого в IP
+*
+* Module installation routine
+*
+* @access private
+*/
+ 
+ function targetToIp($target='') {
+    if(!$target) return null;
+    if (preg_match('/^[\d\.]+$/',$target))
+    {
+        //debmes('mpt ttIp 1: ' . $target);    
+        return $target;
+    }
+    else
+    {
+        $qry = "terminals.NAME LIKE '".DBSafe($target)."' OR terminals.TITLE LIKE '".DBSafe($target)."'";
+        $res = SQLSelectOne("SELECT terminals.HOST FROM `mpt` inner join terminals on mpt.ID_TERMINAL = terminals.ID where $qry");
+        //debmes('mpt ttIp 2: ' . $res['HOST']);    
+        if(!res) return null;
+        return $res['HOST'];
+    }
+ }
+ 
 /**
 * Install
 *
