@@ -21,7 +21,6 @@
 <ul id="tab" class="nav nav-tabs">
     <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
     <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
-    <li><a data-toggle="tab" href="#panel_help">Описание</a></li>
 </ul>
 <br>
 
@@ -177,14 +176,14 @@
               <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
-        <!-- LINKED_OBJECT (varchar) -->
+        <!-- LINKED_OBJECT (varchar)
         <div class="form-group">
          <label for="linked_object" class="col-lg-3 control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_LINKED_OBJECT#>:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
-        </div>
-        <!-- LINKED_PROPERTY (varchar) -->
+        </div> -->
+        <!-- LINKED_PROPERTY (varchar) 
         <div class="form-group">
          <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_LINKED_PROPERTY#>:
@@ -192,6 +191,7 @@
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
         </div>
         [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#]
+        -->
         <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-4">
          [#if ID!=""#]
@@ -230,11 +230,6 @@
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознование ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile',1);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
-    </div>
-    <div id="panel_help" class="tab-pane fade in">
-        <p>Для добавления в систему новой колонки сначала надо добавить её в качестве обычного терминала. Это можно сделать в "Панель управления" -> "Настройки" -> <a href="/admin.php?pd=&md=panel&inst=&action=terminals" target="_blank"> "Терминалы"</a></p>
-        <p>Там надо указать ip адрес вашей колонки , если хотите по ней слушать онлайнрадио то поставте галочку "может проигрывать медиа-контент" и выбирите "Тип плеера" "MPD", "Порт доступа к плееру" "6600"</p>
-        <p>Саму колонку можно сделать из недорогого одноплатника, напримар orange pi zero. Установыв туда простой скрипт. Сам скрипт и его установка описаны на странице проекта в GitHub <a href="https://github.com/devoff/mdmPiTerminal" target="_blank">https://github.com/devoff/mdmPiTerminal</a></p>
     </div>
 </div>
 <hr/>
