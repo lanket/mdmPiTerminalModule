@@ -75,13 +75,21 @@
     if ($rec['ID']) {
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
      $rec['IP'] = $tmp['HOST'];
+     //debmes('mpt: ' . $tmp['HOST']);
      SQLUpdate($table_name, $rec); // update sql
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
+     //debmes('mpt: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
     } else {
      $new_rec=1;
+     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     $rec['IP'] = $tmp['HOST'];
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
+     $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
+     $senddata = json_encode($rec);
+     //debmes('mpt: ' . $senddata);
+     $this->send_mpt('settings',$senddata,$ip);
     }
     $out['OK']=1;
    } else {
