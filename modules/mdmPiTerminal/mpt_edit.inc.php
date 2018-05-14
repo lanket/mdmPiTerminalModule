@@ -13,7 +13,11 @@
     //options for 'ID_TERMINAL' (select)
     global $id_terminal;
     $rec['ID_TERMINAL'] = $id_terminal;
-    if($rec['ID_TERMINAL'] == '')
+    $qry = '';
+    if($rec['ID']) $qry = " and ID <> " . $rec['ID'];
+    $findduble=SQLSelectOne("SELECT * FROM $table_name WHERE ID_TERMINAL='$id_terminal' $qry");
+    // chech not empy terminal and mast no dubles
+    if($rec['ID_TERMINAL'] == '' or $findduble['ID'])
     {
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
