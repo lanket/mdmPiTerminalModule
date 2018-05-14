@@ -112,6 +112,20 @@ function run() {
 * @access public
 */
 function admin(&$out) {
+    global $sendCommand;
+    if ($sendCommand)
+    {
+        header("HTTP/1.0: 200 OK\n");
+        header('Content-Type: text/html; charset=utf-8');
+        global $id;
+        global $cmd;
+        $tmp = SQLSelectOne("SELECT HOST FROM `terminals` inner join mpt on mpt.ID_TERMINAL = terminals.ID where mpt.ID =  $id");
+        $target = $tmp['HOST'];
+        $this->send_mpt('rec', $cmd, $target);
+        echo "Ok";
+        exit;
+    }
+ 
  if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
   $out['SET_DATASOURCE']=1;
  }
