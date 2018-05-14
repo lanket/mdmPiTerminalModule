@@ -64,17 +64,20 @@
    global $alarmstt;
    if(!$alarmstt) $alarmstt=0;
    $rec['ALARMSTT']=$alarmstt;
-  //updating '<%LANG_LINKED_OBJECT%>' (varchar)
+/*
+   //updating '<%LANG_LINKED_OBJECT%>' (varchar)
    global $linked_object;
    $rec['LINKED_OBJECT']=$linked_object;
   //updating '<%LANG_LINKED_PROPERTY%>' (varchar)
    global $linked_property;
    $rec['LINKED_PROPERTY']=$linked_property;
+ 
+ */
   //UPDATING RECORD
    if ($ok) {
     if ($rec['ID']) {
-     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     $rec['IP'] = $tmp['HOST'];
+     //$tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     //$rec['IP'] = $tmp['HOST'];
      //debmes('mpt: ' . $tmp['HOST']);
      SQLUpdate($table_name, $rec); // update sql
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
@@ -83,8 +86,8 @@
      $this->send_mpt('settings',$senddata,$rec['IP']);
     } else {
      $new_rec=1;
-     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     $rec['IP'] = $tmp['HOST'];
+     //$tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     //$rec['IP'] = $tmp['HOST'];
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
