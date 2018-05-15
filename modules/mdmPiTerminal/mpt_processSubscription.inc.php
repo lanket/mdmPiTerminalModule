@@ -22,7 +22,7 @@
    if(!$target) return 0;
    $message=$details['prompt'];
    $this->send_mpt('ask', $message, $target);
-   debmes('mpt ask ' . $message . '; target = ' . $target);
+   //debmes('mpt ask ' . $message . '; target = ' . $target);
   }
 
   if ($event=='SAYTO') {

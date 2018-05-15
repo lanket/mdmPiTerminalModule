@@ -62,7 +62,6 @@
   //updating 'alarmtts' (varchar)
    global $alarmtts;
    if(!$alarmtts) $alarmtts=0;
-   if(!$alarmtts)
    $rec['ALARMTTS']=$alarmtts;
   //updating 'alarmstt' (varchar)
    global $alarmstt;
