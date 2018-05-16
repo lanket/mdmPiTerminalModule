@@ -79,23 +79,23 @@
   //UPDATING RECORD
    if ($ok) {
     if ($rec['ID']) {
-     //$tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     //$rec['IP'] = $tmp['HOST'];
-     //debmes('mpt: ' . $tmp['HOST']);
      SQLUpdate($table_name, $rec); // update sql
+     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     $ip = $tmp['HOST'];
+     //debmes('mpt: ' . $tmp['HOST']);
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
-     //debmes('mpt: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$rec['IP']);
+     //debmes('mpt edit send: ' . $senddata);
+     $this->send_mpt('settings',$senddata,$ip);
     } else {
      $new_rec=1;
-     //$tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     //$rec['IP'] = $tmp['HOST'];
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
+     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+     $ip = $tmp['HOST'];
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      $senddata = json_encode($rec);
-     //debmes('mpt: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$rec['IP']);
+     //debmes('mpt edit send: ' . $senddata);
+     $this->send_mpt('settings',$senddata,$ip);
     }
     $out['OK']=1;
    } else {

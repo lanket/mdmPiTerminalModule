@@ -171,7 +171,7 @@
         <!-- ALARMSTT (varchar) -->
         <div class="form-group">
          <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал перед начале распознования речи:
+         Сигнал перед началом распознования речи:
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
@@ -214,22 +214,22 @@
         <p>Здесь можно записать 3 образца своего ключевого слова. Для избежания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном который будет использоваться для распознования. Говорить надо в микрофон на терминале.</p>
         <hr/>
         <p>Запись первого образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'start,1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec1_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,1',1);return false;" title="Стоп записи 1го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play,1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play1_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись второго образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'start,2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec1_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,2',1);return false;" title="Стоп записи 2го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play,2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play1_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись третьего образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'start,3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec1_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,3',1);return false;" title="Стоп записи 3го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play,3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play1_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознование ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
