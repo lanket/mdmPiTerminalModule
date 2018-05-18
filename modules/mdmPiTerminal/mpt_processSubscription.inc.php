@@ -14,7 +14,7 @@
             $this->send_mpt('tts', $message, $terminalpi['HOST']);
         }
 
-   //debmes('mpt say ' . $message . '; level = ' . $level);
+   if($this->debug == 1) debmes('mpt say ' . $message . '; level = ' . $level);
   }
   
   if ($event=='ASK') {
@@ -22,18 +22,18 @@
    if(!$target) return 0;
    $message=$details['prompt'];
    $this->send_mpt('ask', $message, $target);
-   debmes('mpt ask ' . $message . '; target = ' . $target);
+   if($this->debug == 1) debmes('mpt ask ' . $message . '; target = ' . $target);
   }
 
   if ($event=='SAYTO') {
-   //debmes('mpt sayto start');
+   if($this->debug == 1) debmes('mpt sayto start');
    $level=$details['level'];
    $message=$details['message'];
    $target = $this->targetToIp($details['destination']);
-   //debmes('mpt sayto after ttIp : ' . $target);
+   if($this->debug == 1) debmes('mpt sayto after ttIp : ' . $target);
    if(!$target) return 0;
    $this->send_mpt('tts', $message, $target);
-   //debmes('mpt sayto ' . $message . '; level = ' . $level . '; to = ' . $target);
+   if($this->debug == 1) debmes('mpt sayto ' . $message . '; level = ' . $level . '; to = ' . $target);
   }
 /*
   if ($event=='SAYREPLY') {
@@ -43,6 +43,6 @@
    $tartget = $this->targetToIp($details['replyto']);
    if(!$target) return 0;
    $this->send_mpt('tts', $message, $target);
-   debmes('mpt sayto ' . $message . '; level = ' . $level . '; to = ' . $destination);
+   if($this->debug == 1) debmes('mpt sayto ' . $message . '; level = ' . $level . '; to = ' . $destination);
   }
 */
