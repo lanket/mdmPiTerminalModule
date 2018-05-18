@@ -17,6 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
+  $this->debug = 0;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
@@ -212,14 +213,14 @@ function usual(&$out) {
     if(!$target) return null;
     if (preg_match('/^[\d\.]+$/',$target))
     {
-        //debmes('mpt ttIp 1: ' . $target);    
+        if($this->debug == 1) debmes('mpt ttIp 1: ' . $target);    
         return $target;
     }
     else
     {
         $qry = "terminals.NAME LIKE '".DBSafe($target)."' OR terminals.TITLE LIKE '".DBSafe($target)."'";
         $res = SQLSelectOne("SELECT terminals.HOST FROM `mpt` inner join terminals on mpt.ID_TERMINAL = terminals.ID where $qry");
-        //debmes('mpt ttIp 2: ' . $res['HOST']);    
+        if($this->debug == 1) debmes('mpt ttIp 2: ' . $res['HOST']);    
         if(!res) return null;
         return $res['HOST'];
     }
@@ -246,6 +247,9 @@ function usual(&$out) {
 * @access public
 */
  function uninstall() {
+    unsubscribeFromEvent($this->name, 'SAY');
+    unsubscribeFromEvent($this->name, 'SAYTO');
+    unsubscribeFromEvent($this->name, 'ASK');
   SQLExec('DROP TABLE IF EXISTS mpt');
   parent::uninstall();
  }

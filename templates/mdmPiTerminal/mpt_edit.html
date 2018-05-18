@@ -110,7 +110,7 @@
         <!-- PROVIDERSTT (varchar) -->
         <div class="form-group">
          <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис распознования речи:
+         Сервис распознавания речи:
          </label>
             <div class="col-lg-4">
             <select name="providerstt" class="form-control" id="providerstt">
@@ -123,7 +123,7 @@
         <!-- APIKEYSTT (varchar) -->
         <div class="form-group">
          <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Ключ API сервиса распознования речи:
+         Ключ API сервиса распознавания речи:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
         </div>
@@ -152,7 +152,7 @@
         <!-- ALARMKWACTIVATED (varchar) -->
         <div class="form-group">
          <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал о распозновании ключевого слова:
+         Сигнал о распознавании ключевого слова:
          </label>
          <div class="col-lg-4">
              <input type="checkbox" name="alarmkwactivated" value="1"[#if ALARMKWACTIVATED="1"#] checked[#endif#]>
@@ -171,7 +171,7 @@
         <!-- ALARMSTT (varchar) -->
         <div class="form-group">
          <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал перед началом распознования речи:
+         Сигнал перед началом распознавания речи:
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
@@ -191,8 +191,7 @@
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
         </div>
-        [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#]
-        -->
+        [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#] -->
         <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-4">
          [#if ID!=""#]
@@ -211,7 +210,7 @@
         </form>
     </div>
     <div id="panel_record" class="tab-pane fade in">
-        <p>Здесь можно записать 3 образца своего ключевого слова. Для избежания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном который будет использоваться для распознования. Говорить надо в микрофон на терминале.</p>
+        <p>Здесь можно записать 3 образца своего ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
         <hr/>
         <p>Запись первого образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec1_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
@@ -231,7 +230,7 @@
         -->
         <button onclick="sendCommand([#ID#],'play1_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
-        <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознование ключевого слова.</p>
+        <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
     </div>
 </div>

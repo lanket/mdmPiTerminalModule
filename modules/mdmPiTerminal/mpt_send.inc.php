@@ -10,7 +10,7 @@
     $service_port='7999';
     $in= $command.':'.$data;
     
-    //debmes('mpt send - ' . $in . '; to = ' . $target);
+    if($this->debug == 1) debmes('mpt send - ' . $in . '; to = ' . $target);
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if ($socket) {
             $result = socket_connect($socket, $target, $service_port);

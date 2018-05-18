@@ -82,10 +82,11 @@
      SQLUpdate($table_name, $rec); // update sql
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
      $ip = $tmp['HOST'];
-     //debmes('mpt: ' . $tmp['HOST']);
+     if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
+     unset($rec['ID'],$rec['ID_TERMINAL']);
      $senddata = json_encode($rec);
-     //debmes('mpt edit send: ' . $senddata);
+     if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
     } else {
      $new_rec=1;
@@ -93,8 +94,9 @@
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
      $ip = $tmp['HOST'];
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
+     unset($rec['ID'],$rec['ID_TERMINAL']);
      $senddata = json_encode($rec);
-     //debmes('mpt edit send: ' . $senddata);
+     if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
     }
     $out['OK']=1;
