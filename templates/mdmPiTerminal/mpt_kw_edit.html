@@ -19,15 +19,6 @@
 </script> 
 
 
-<ul id="tab" class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
-    <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
-</ul>
-<br>
-
-<div class="tab-content">
-    <div id="panel_settings" class="tab-pane fade in">
-
         <!-- Table 'mpt' edit -->
         <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
         [#if OK#]
@@ -208,11 +199,9 @@
         </div>
         </fieldset>
         </form>
-    </div>
     
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
     
-    <div id="panel_record" class="tab-pane fade in">
         <!-- table mpt_kw search -->
         <p>
         <a href="?view_mode=edit_mpt_kw" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> <#LANG_ADD#></a>
@@ -323,9 +312,3 @@
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
-    </div>
-</div>
-<hr/>
-<script type="text/javascript">
-$('#tab a:first').tab('show');
-</script>

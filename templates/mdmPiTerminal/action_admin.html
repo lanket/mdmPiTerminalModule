@@ -1,17 +1,60 @@
 
  <!-- action usual -->
- <!-- table mpt search -->
- [#if VIEW_MODE="search_mpt" || VIEW_MODE=""#]
-  [#inc mpt_search_admin.html#]
- [#endif VIEW_MODE#]
- <!-- / table mpt search -->
- <!-- table mpt edit -->
- [#if VIEW_MODE="edit_mpt"#]
-   [#inc mpt_edit.html#]
- [#endif VIEW_MODE#]
- <!-- / table mpt edit -->
- <!-- table mpt view --> 
- [#if VIEW_MODE="view_mpt"#]
-   [#inc mpt_view.html#]
- [#endif VIEW_MODE#]
- <!-- / table mpt view -->
+
+ [#if SET_DATASOURCE!="1"#]
+  &nbsp;
+<!-- source select -->
+
+<ul class="nav nav-tabs">
+ <li [#if DATA_SOURCE=="mpt" || DATA_SOURCE==""#]class="active"[#endif#]><a href="?data_source=mpt">Ассистенты</a></li>
+ <li [#if DATA_SOURCE=="mpt_kw"#]class="active"[#endif#]><a href="?data_source=mpt_kw">Ключевые слова</a></li>
+ <li [#if DATA_SOURCE=="description"#]class="active"[#endif#]><a href="?data_source=description">Описание</a></li>
+</ul>
+<hr/>
+<!-- / source select -->
+[#endif SET_DATASOURCE#]
+
+
+ [#if DATA_SOURCE=="mpt" || DATA_SOURCE==""#]
+    <!-- table mpt search -->
+    [#if VIEW_MODE="search_mpt" || VIEW_MODE=""#]
+        [#inc mpt_search_admin.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt search -->
+    <!-- table mpt edit -->
+    [#if VIEW_MODE="edit_mpt"#]
+        [#inc mpt_edit.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt edit -->
+    <!-- table mpt view --> 
+    [#if VIEW_MODE="view_mpt"#]
+        [#inc mpt_view.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt view -->
+[#endif DATA_SOURCE#]
+
+
+ 
+ [#if DATA_SOURCE=="mpt_kw"#]
+    <!-- table mpt_kw search -->
+    [#if VIEW_MODE="search_mpt_kw"]
+        [#inc mpt_kw_search_admin.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt_kw search -->
+    <!-- table mpt_kw edit -->
+    [#if VIEW_MODE="edit_mpt_kw"#]
+        [#inc mpt_kw_edit.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt_kw edit -->
+    <!-- table mpt_kw view --> 
+    [#if VIEW_MODE="view_mpt_kw"#]
+        [#inc mpt_kw_view.html#]
+    [#endif VIEW_MODE#]
+    <!-- / table mpt_kw view -->
+ [#endif DATA_SOURCE#]
+
+
+ [#if DATA_SOURCE=="description"#]
+  [#inc mpt_description_admin.html#]
+ [#endif DATA_SOURCE#]
+ 

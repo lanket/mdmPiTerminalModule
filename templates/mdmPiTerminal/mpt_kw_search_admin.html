@@ -1,6 +1,6 @@
-        <!-- table mpt search -->
+        <!-- table mpt_kw search -->
         <p>
-        <a href="?view_mode=edit_mpt" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> <#LANG_ADD#></a>
+        <a href="?view_mode=edit_mpt_kw" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> <#LANG_ADD#></a>
         </p>
         <table width=100% border=0><tr>
         <td valign=top>
@@ -21,7 +21,7 @@
         [#endif PAGES#]
         <!-- / paging -->
         <!-- search results (list) -->
-        <form action="?" method="post" name="frmList_mpt" style="padding:0px" class="form">
+        <form action="?" method="post" name="frmList_mpt_kw" style="padding:0px" class="form">
         <table  align=center class="table table-striped">
         <tbody>
         [#begin RESULT#]
@@ -29,26 +29,21 @@
          <td
           >
           <b>
-           [#TITLE#]
+           [#NAME#]
           </a></b>
          </td>
          <td
           >
           <b>
-           [#NAME#]
+           [#SYSNAME#]
           </a></b>
          </td>
-          <td
-          >
-          <b>
-           [#HOST#]
-          </a></b>
-         </td>
-        <td width="1%" nowrap>
+          
+         <td width="1%" nowrap>
           <div>
           [#if "<#ACTION#>"=="admin"#]
-           <a href="?view_mode=edit_mpt&id=[#ID#]" class="btn btn-default" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-            <a href="?view_mode=delete_mpt&id=[#ID#]" onClick="return confirm('Are you sure? Please confirm.')" class="btn btn-default" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>
+           <a href="?view_mode=edit_mpt_kw&id=[#ID#]" class="btn btn-default" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a href="?view_mode=delete_mpt_kw&id=[#ID#]" onClick="return confirm('Are you sure? Please confirm.')" class="btn btn-default" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>
           [#endif ACTION#]
           </div>
          </td>
@@ -57,7 +52,7 @@
         </tbody>
         </table>
         <input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
-        <input type="hidden" name="view_mode" value="multiple_mpt">
+        <input type="hidden" name="view_mode" value="multiple_mpt_kw">
         </form>
         <!-- / search results (list) -->
         <!-- paging -->

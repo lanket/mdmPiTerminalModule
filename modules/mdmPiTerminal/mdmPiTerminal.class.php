@@ -17,7 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 0;
+  $this->debug = 1;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
@@ -44,6 +44,9 @@ function saveParams($data=1) {
  if (IsSet($this->tab)) {
   $p["tab"]=$this->tab;
  }
+ if (IsSet($this->data_source)) {
+  $p["data_source"]=$this->data_source;
+ }
  return parent::saveParams($p);
 }
 /**
@@ -58,6 +61,7 @@ function getParams() {
   global $mode;
   global $view_mode;
   global $edit_mode;
+  global $data_source;
   global $tab;
   if (isset($id)) {
    $this->id=$id;
@@ -70,6 +74,9 @@ function getParams() {
   }
   if (isset($edit_mode)) {
    $this->edit_mode=$edit_mode;
+  }
+  if (isset($data_source)) {
+   $this->data_source=$data_source;
   }
   if (isset($tab)) {
    $this->tab=$tab;
@@ -100,6 +107,7 @@ function run() {
   $out['EDIT_MODE']=$this->edit_mode;
   $out['MODE']=$this->mode;
   $out['ACTION']=$this->action;
+  $out['DATA_SOURCE']=$this->data_source;
   $out['TAB']=$this->tab;
   $this->data=$out;
   $p=new parser(DIR_TEMPLATES.$this->name."/".$this->name.".html", $this->data, $this);
@@ -139,8 +147,21 @@ function admin(&$out) {
   }
   if ($this->view_mode=='delete_mpt') {
    $this->delete_mpt($this->id);
-   $this->redirect("?");
+   $this->redirect("?data_source=search_mpt");
   }
+ }
+ if ($this->data_source=='mpt_kw') {
+  if ($this->view_mode=='' || $this->view_mode=='search_mpt_kw') {
+      $this->search_mpt_kw($out);
+  }
+  if ($this->view_mode=='edit_mpt_kw') {
+   $this->edit_mpt_kw($out, $this->id);
+  }
+  if ($this->view_mode=='delete_mpt_kw') {
+   $this->delete_mpt_kw($this->id);
+   $this->redirect("?data_source=search_mpt_kw");
+  }
+  
  }
 }
 /**
@@ -162,12 +183,28 @@ function usual(&$out) {
   require(DIR_MODULES.$this->name.'/mpt_search.inc.php');
  }
 /**
+* mpt_kw search
+*
+* @access public
+*/
+ function search_mpt_kw(&$out) {
+  require(DIR_MODULES.$this->name.'/mpt_kw_search.inc.php');
+ }
+/**
 * mpt edit/add
 *
 * @access public
 */
  function edit_mpt(&$out, $id) {
   require(DIR_MODULES.$this->name.'/mpt_edit.inc.php');
+ }
+/**
+* mpt_kw edit/add
+*
+* @access public
+*/
+ function edit_mpt_kw(&$out, $id) {
+  require(DIR_MODULES.$this->name.'/mpt_edit_kw.inc.php');
  }
 /**
 * mpt send data to terminal
@@ -187,6 +224,17 @@ function usual(&$out) {
   // some action for related tables
   SQLExec("DELETE FROM mpt WHERE ID='".$rec['ID']."'");
  }
+/**
+* mpt_kw delete record
+*
+* @access public
+*/
+ function delete_mpt_kw($id) {
+  $rec=SQLSelectOne("SELECT * FROM mpt_kw WHERE ID='$id'");
+  // some action for related tables
+  SQLExec("DELETE FROM mpt_kw WHERE ID='".$rec['ID']."'");
+ }
+
  function propertySetHandle($object, $property, $value) {
    $table='mpt';
    $properties=SQLSelect("SELECT ID FROM $table WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
@@ -213,14 +261,14 @@ function usual(&$out) {
     if(!$target) return null;
     if (preg_match('/^[\d\.]+$/',$target))
     {
-        if($this->debug == 1) debmes('mpt ttIp 1: ' . $target);    
+        if($this->debug == 1) debmes('mpt ttIp ip: ' . $target);    
         return $target;
     }
     else
     {
         $qry = "terminals.NAME LIKE '".DBSafe($target)."' OR terminals.TITLE LIKE '".DBSafe($target)."'";
         $res = SQLSelectOne("SELECT terminals.HOST FROM `mpt` inner join terminals on mpt.ID_TERMINAL = terminals.ID where $qry");
-        if($this->debug == 1) debmes('mpt ttIp 2: ' . $res['HOST']);    
+        if($this->debug == 1) debmes('mpt ttIp name: ' . $res['HOST']);    
         if(!res) return null;
         return $res['HOST'];
     }
@@ -251,6 +299,7 @@ function usual(&$out) {
     unsubscribeFromEvent($this->name, 'SAYTO');
     unsubscribeFromEvent($this->name, 'ASK');
   SQLExec('DROP TABLE IF EXISTS mpt');
+  SQLExec('DROP TABLE IF EXISTS mpt_kw');
   parent::uninstall();
  }
 /**
@@ -276,6 +325,11 @@ mpt -
  mpt: ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
  mpt: ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
  mpt: ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
+          
+ mpt_kw: ID int(10) unsigned NOT NULL auto_increment
+ mpt_kw: NAME varchar(50) NOT NULL
+ mpt_kw: SYSNAME varchar(20) NOT NULL
+ mpt_kw: ID_USERS int(10) NOT NULL
 EOD;
   parent::dbInstall($data);
  }

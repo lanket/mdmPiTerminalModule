@@ -5,13 +5,13 @@
   if ($this->owner->name=='panel') {
    $out['CONTROLPANEL']=1;
   }
-  $table_name='mpt';
+  $table_name='mpt_kw';
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
   if ($this->mode=='update') {
    $ok=1;
    
     //options for 'ID_TERMINAL' (select)
-    global $id_terminal;
+/*    global $id_terminal;
     $rec['ID_TERMINAL'] = $id_terminal;
     $qry = '';
     if($rec['ID']) $qry = " and ID <> " . $rec['ID'];
@@ -22,7 +22,9 @@
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
     }
-  //updating '<%LANG_TITLE%>' (varchar, required)
+*/
+   //updating '<%LANG_TITLE%>' (varchar, required)
+ 
    /*
    global $title;
    $rec['TITLE']=$title;
@@ -40,43 +42,8 @@
    global $ip;
    $rec['IP']=$ip;
    */
-  //updating 'providertts' (varchar)
-   global $providertts;
-   $rec['PROVIDERTTS']=$providertts;
-  //updating 'apikeytts' (varchar)
-   global $apikeytts;
-   $rec['APIKEYTTS']=$apikeytts;
-  //updating 'providerstt' (varchar)
-   global $providerstt;
-   $rec['PROVIDERSTT']=$providerstt;
-  //updating 'apikeystt' (varchar)
-   global $apikeystt;
-   $rec['APIKEYSTT']=$apikeystt;
-  //updating 'sensitivity' (varchar)
-   global $sensitivity;
-   $rec['SENSITIVITY']=$sensitivity;
-  //updating 'alarmkwactivated' (varchar)
-   global $alarmkwactivated;
-   if(!$alarmkwactivated) $alarmkwactivated = 0;
-   $rec['ALARMKWACTIVATED']=$alarmkwactivated;
-  //updating 'alarmtts' (varchar)
-   global $alarmtts;
-   if(!$alarmtts) $alarmtts=0;
-   $rec['ALARMTTS']=$alarmtts;
-  //updating 'alarmstt' (varchar)
-   global $alarmstt;
-   if(!$alarmstt) $alarmstt=0;
-   $rec['ALARMSTT']=$alarmstt;
-/*
-   //updating '<%LANG_LINKED_OBJECT%>' (varchar)
-   global $linked_object;
-   $rec['LINKED_OBJECT']=$linked_object;
-  //updating '<%LANG_LINKED_PROPERTY%>' (varchar)
-   global $linked_property;
-   $rec['LINKED_PROPERTY']=$linked_property;
- 
- */
-  //UPDATING RECORD
+
+   //UPDATING RECORD
    if ($ok) {
     if ($rec['ID']) {
      SQLUpdate($table_name, $rec); // update sql
