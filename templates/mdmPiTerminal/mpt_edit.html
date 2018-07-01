@@ -3,7 +3,7 @@
                 var kw = document.getElementsByName('kw');
                 for (var i = 0; i < kw.length; i++) {
                     if (kw[i].type === 'radio' && kw[i].checked) {
-                        reskw = kw[i].value;       
+                        reskw = kw[i].value;
                     }
                 }
                 var cmdforsend = cmd.replace("0", reskw);
@@ -14,16 +14,16 @@
 			if (text == null) return;
 			url=url+"&param="+text;
 		}
-                
-		$.ajax({  
-			url: url,  
-			cache: false,  
-			/*success: function(html){  
-				alert(html);  
-			} */ 
-		});  
+
+		$.ajax({
+			url: url,
+			cache: false,
+			/*success: function(html){
+				alert(html);
+			} */
+		});
 	}
-</script> 
+</script>
 
 
 <ul id="tab" class="nav nav-tabs">
@@ -47,7 +47,7 @@
         [#if ID=""#]
         <legend><#LANG_NEW_RECORD#></legend>
         [#endif ID#]
-        <!-- TITLE (varchar) 
+        <!-- TITLE (varchar) -->
         <div class="form-group">
         <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_TITLE#>:
@@ -57,7 +57,6 @@
             <input type="text" class="form-control" name="title" value="[#TITLE#]" id="title">
          </div>
         </div>
-        -->
         <!-- ID_TERMINAL (select) -->
         [#if !IS_SET_ID_TERMINAL#]
         <div class="form-group ">
@@ -74,27 +73,27 @@
             </div>
         </div>
         [#endif IS_SET_ID_TERMINAL#]
-        <!-- NAME (varchar) 
+        <!-- NAME (varchar)
         <div class="form-group">
          <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
          Системное имя:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
         </div> -->
-        <!-- LINKEDROOM (varchar) 
+        <!-- LINKEDROOM (varchar)
         <div class="form-group">
          <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
          Расположение:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
         </div>-->
-        <!-- IP (varchar) 
+        <!-- IP (varchar) -->
         <div class="form-group">
          <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
          ip адрес терминала:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
-        </div>-->
+        </div>
         <!-- PROVIDERTTS (varchar) -->
         <div class="form-group">
          <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
@@ -191,14 +190,13 @@
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
         </div> -->
-        <!-- LINKED_PROPERTY (varchar) 
+        <!-- LINKED_PROPERTY (varchar)
         <div class="form-group">
          <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_LINKED_PROPERTY#>:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
-        </div>
-        [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#] -->
+			 </div>-->
         <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-4">
          [#if ID!=""#]

@@ -9,7 +9,7 @@
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
   if ($this->mode=='update') {
    $ok=1;
-   
+
     //options for 'ID_TERMINAL' (select)
     global $id_terminal;
     $rec['ID_TERMINAL'] = $id_terminal;
@@ -23,7 +23,6 @@
         $ok=0;
     }
   //updating '<%LANG_TITLE%>' (varchar, required)
-   /*
    global $title;
    $rec['TITLE']=$title;
    if ($rec['TITLE']=='') {
@@ -39,7 +38,6 @@
   //updating 'ip' (varchar)
    global $ip;
    $rec['IP']=$ip;
-   */
   //updating 'providertts' (varchar)
    global $providertts;
    $rec['PROVIDERTTS']=$providertts;
@@ -74,7 +72,7 @@
   //updating '<%LANG_LINKED_PROPERTY%>' (varchar)
    global $linked_property;
    $rec['LINKED_PROPERTY']=$linked_property;
- 
+
  */
   //UPDATING RECORD
    if ($ok) {
@@ -113,7 +111,7 @@
         if ($rec['ID_TERMINAL']==$tmp[$i]['ID']) $tmp[$i]['SELECTED']=1;
     }
     $out['ID_TERMINAL_OPTIONS']=$tmp;
-  
+
   if (is_array($rec)) {
    foreach($rec as $k=>$v) {
     if (!is_array($v)) {
