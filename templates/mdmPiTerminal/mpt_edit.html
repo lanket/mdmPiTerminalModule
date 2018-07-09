@@ -216,34 +216,34 @@
         </form>
     </div>
     <div id="panel_record" class="tab-pane fade in">
-        <!--<p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>-->
+        <p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
         <input name="kw" type="radio" value="1" checked> 1е слово
-        <!--<input name="kw" type="radio" value="2"> 2е слово
+        <input name="kw" type="radio" value="2"> 2е слово
         <input name="kw" type="radio" value="3"> 3е слово
         <input name="kw" type="radio" value="4"> 4е слово
         <input name="kw" type="radio" value="5"> 5е слово
-        <input name="kw" type="radio" value="6"> 6е слово-->
+        <input name="kw" type="radio" value="6"> 6е слово
         <hr/>
         <p>Запись первого образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,1',1);return false;" title="Стоп записи 1го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись второго образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,2',1);return false;" title="Стоп записи 2го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись третьего образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,3',1);return false;" title="Стоп записи 3го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
-        <button onclick="sendCommand([#ID#],'compile0',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
+        <button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
     </div>
 </div>
 <hr/>
