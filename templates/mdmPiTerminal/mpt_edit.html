@@ -3,7 +3,7 @@
                 var kw = document.getElementsByName('kw');
                 for (var i = 0; i < kw.length; i++) {
                     if (kw[i].type === 'radio' && kw[i].checked) {
-                        reskw = kw[i].value;       
+                        reskw = kw[i].value;
                     }
                 }
                 var cmdforsend = cmd.replace("0", reskw);
@@ -14,16 +14,16 @@
 			if (text == null) return;
 			url=url+"&param="+text;
 		}
-                
-		$.ajax({  
-			url: url,  
-			cache: false,  
-			/*success: function(html){  
-				alert(html);  
-			} */ 
-		});  
+
+		$.ajax({
+			url: url,
+			cache: false,
+			/*success: function(html){
+				alert(html);
+			} */
+		});
 	}
-</script> 
+</script>
 
 
 <ul id="tab" class="nav nav-tabs">
@@ -47,7 +47,7 @@
         [#if ID=""#]
         <legend><#LANG_NEW_RECORD#></legend>
         [#endif ID#]
-        <!-- TITLE (varchar) 
+        <!-- TITLE (varchar)
         <div class="form-group">
         <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_TITLE#>:
@@ -74,21 +74,21 @@
             </div>
         </div>
         [#endif IS_SET_ID_TERMINAL#]
-        <!-- NAME (varchar) 
+        <!-- NAME (varchar)
         <div class="form-group">
          <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
          Системное имя:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
         </div> -->
-        <!-- LINKEDROOM (varchar) 
+        <!-- LINKEDROOM (varchar)
         <div class="form-group">
          <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
          Расположение:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
         </div>-->
-        <!-- IP (varchar) 
+        <!-- IP (varchar)
         <div class="form-group">
          <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
          ip адрес терминала:
@@ -191,14 +191,13 @@
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
         </div> -->
-        <!-- LINKED_PROPERTY (varchar) 
+        <!-- LINKED_PROPERTY (varchar)
         <div class="form-group">
          <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
          <#LANG_LINKED_PROPERTY#>:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
-        </div>
-        [#module name="linkedobject" object_field="linked_object" property_field="linked_property" method_field="linked_method"#] -->
+			 </div>-->
         <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-4">
          [#if ID!=""#]
@@ -226,25 +225,28 @@
         <input name="kw" type="radio" value="6"> 6е слово
         <hr/>
         <p>Запись первого образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,1',1);return false;" title="Стоп записи 1го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись второго образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,2',1);return false;" title="Стоп записи 2го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись третьего образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
+        <button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
         <!--<button onclick="sendCommand([#ID#],'stop,3',1);return false;" title="Стоп записи 3го образца ключевого слова" class="btn btn-default">Стоп записи</button>
         -->
-        <button onclick="sendCommand([#ID#],'play0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+        <button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
-        <button onclick="sendCommand([#ID#],'compile0',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
+        <button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
+				<hr/>
+				<p>Применить настройки на терминале</p>
+        <button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
     </div>
 </div>
 <hr/>
