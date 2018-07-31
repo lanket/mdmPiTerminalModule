@@ -234,9 +234,12 @@ function usual(&$out) {
 * @access private
 */
  function install($data='') {
-  subscribeToEvent($this->name, 'SAY','',10);
-  subscribeToEvent($this->name, 'SAYTO','',20);
-  subscribeToEvent($this->name, 'ASK','',20);
+    unsubscribeFromEvent($this->name, 'SAY');
+    unsubscribeFromEvent($this->name, 'SAYTO');
+    unsubscribeFromEvent($this->name, 'ASK');
+//  subscribeToEvent($this->name, 'SAY','',10);
+//  subscribeToEvent($this->name, 'SAYTO','',20);
+//  subscribeToEvent($this->name, 'ASK','',20);
   parent::install();
  }
 /**
