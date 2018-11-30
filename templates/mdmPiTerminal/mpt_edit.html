@@ -199,7 +199,7 @@
         <div class="form-group">
         Ниже настройки предназначенные только для второй версии терминала.
         </div>
-        <!-- LAST_LOVE (BOOLEAN) -->
+        <!-- LAST_LOVE (BOOLEAN) 
         <div class="form-group">
          <label for="last_love" class="col-lg-3 control-label"[#if ERR_LAST_LOVE#] style="color:red;font-weight:bold"[#endif#]>
          Терминал будет отвергать подключения от ip не совпадающих с ip МажорДомо:
@@ -207,15 +207,15 @@
          <div class="col-lg-4">
               <input type="checkbox" name="last_love" value="1"[#if LAST_LOVE="1"#] checked[#endif#]>
          </div>
-        </div>
-        <!-- MIC_INDEX (TINYINT) -->
+        </div> -->
+        <!-- MIC_INDEX (TINYINT) 
         <div class="form-group">
          <label for="mic_index" class="col-lg-3 control-label"[#if ERR_MIC_INDEX#] style="color:red;font-weight:bold"[#endif#]>
           Индекс микрофона. Посмотреть индексы можно запустив mdmTerminal2/src/lib/mic.py Если -1 - устройство по умолчанию.:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="mic_index" value="[#MIC_INDEX#]" id="mic_index"></div>
-        </div>
-        <!-- OPTIMISTIC_NONBLOCK_TTS (BOOLEAN) -->
+        </div> -->
+        <!-- OPTIMISTIC_NONBLOCK_TTS (BOOLEAN) 
         <div class="form-group">
          <label for="optimistic_nonblock_tts" class="col-lg-3 control-label"[#if ERR_OPTIMISTIC_NONBLOCK_TTS#] style="color:red;font-weight:bold"[#endif#]>
          Запрос к провайдеру TTS не будет блокировать выполнение до генерации аудио. Это сокращает время ответа, т.к. запрос будет идти параллельно всяким динг-донгам если время отклика TTS большое, паузы между сигналами и фразой могут напрягать.:
@@ -223,11 +223,11 @@
          <div class="col-lg-4">
               <input type="checkbox" name="optimistic_nonblock_tts" value="1"[#if OPTIMISTIC_NONBLOCK_TTS="1"#] checked[#endif#]>
          </div>
-        </div>
+        </div> -->
         <!-- ASK_ME_AGAIN (TINYINT) -->
         <div class="form-group">
          <label for="ask_me_again" class="col-lg-3 control-label"[#if ERR_ASK_ME_AGAIN#] style="color:red;font-weight:bold"[#endif#]>
-          Если в записи нет слов или STT не смог ничего распознать, будет переспрашивать данное количество раз. Если 0 - не переспрашивает.:
+                Количество переспрашиваней <img src="/img/helpicon.png" title="Если в записи нет слов или STT не смог ничего распознать, будет переспрашивать данное количество раз. Если 0 - не переспрашивает"/>
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="ask_me_again" value="[#ASK_ME_AGAIN#]" id="ask_me_again"></div>
         </div>
@@ -235,14 +235,14 @@
         <!-- QUIET (BOOLEAN) -->
         <div class="form-group">
          <label for="quiet" class="col-lg-3 control-label"[#if ERR_QUIET#] style="color:red;font-weight:bold"[#endif#]>
-         Несущественные сообщения не будут произнесены (тихий запуск):
+         Тихий запуск <img src="/img/helpicon.png" title="Несущественные сообщения не будут произнесены"/>
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="quiet" value="1"[#if QUIET="1"#] checked[#endif#]>
          </div>
         </div>
 
-        <!-- NO_HELLO (BOOLEAN) -->
+        <!-- NO_HELLO (BOOLEAN) 
         <div class="form-group">
          <label for="no_hello" class="col-lg-3 control-label"[#if ERR_NO_HELLO#] style="color:red;font-weight:bold"[#endif#]>
          Терминал не будет произносить приветствие при голосовой активации:
@@ -250,9 +250,9 @@
          <div class="col-lg-4">
               <input type="checkbox" name="no_hello" value="1"[#if NO_HELLO="1"#] checked[#endif#]>
          </div>
-        </div>
+        </div>-->
 
-        <!-- BLOCKING_LISTENER (BOOLEAN) -->
+        <!-- BLOCKING_LISTENER (BOOLEAN) 
         <div class="form-group">
          <label for="blocking_listener" class="col-lg-3 control-label"[#if ERR_BLOCKING_LISTENER#] style="color:red;font-weight:bold"[#endif#]>
          Включает блокирующее распознавание речи (как в первой версии) Распознавание начнется после приветствия или звукового сигнала При отключении не нужно ждать окончания приветствия, терминал будет записывать голос параллельно но он может начать записывать сам себя:
@@ -260,9 +260,9 @@
          <div class="col-lg-4">
               <input type="checkbox" name="blocking_listener" value="1"[#if BLOCKING_LISTENER="1"#] checked[#endif#]>
          </div>
-        </div>
+        </div>-->
 
-        <!-- ENERGY_THRESHOLD (TINYINT) -->
+        <!-- ENERGY_THRESHOLD (TINYINT) 
         <div class="form-group">
          <label for="energy_threshold" class="col-lg-3 control-label"[#if ERR_ENERGY_THRESHOLD#] style="color:red;font-weight:bold"[#endif#]>
           Задает начальный уровень шума для отделения слов от шума</BR>
@@ -271,12 +271,12 @@
           Если меньше 0, то значение полученное при удачном распознавании используется до первого неудачного.:
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="energy_threshold" value="[#ENERGY_THRESHOLD#]" id="energy_threshold"></div>
-        </div>
+        </div>-->
 
         <!-- PHRASE_TIME_LIMIT (TINYINT) -->
         <div class="form-group">
          <label for="phrase_time_limit" class="col-lg-3 control-label"[#if ERR_PHRASE_TIME_LIMIT#] style="color:red;font-weight:bold"[#endif#]>
-          Лимит времени на запись после того как терминал распознал речь, в секундах.:
+          Лимит распознования <img src="/img/helpicon.png" title="Лимит времени на запись после того как терминал распознал речь, в секундах"/>
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="phrase_time_limit" value="[#PHRASE_TIME_LIMIT#]" id="phrase_time_limit"></div>
         </div>
@@ -284,7 +284,7 @@
         <!-- CHROME_MODE (BOOLEAN) -->
         <div class="form-group">
          <label for="chrome_mode" class="col-lg-3 control-label"[#if ERR_CHROME_MODE#] style="color:red;font-weight:bold"[#endif#]>
-         Включает\выключает режим chrome_mode:
+         Ключевое в контексте команды <img src="/img/helpicon.png" title="Если включить то не надо ждать подтверждения от терминала реакции на ключевое слово, а можно будет одним предложением дать команду началом которого будет ключевое слово"/>
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="chrome_mode" value="1"[#if CHROME_MODE="1"#] checked[#endif#]>
@@ -294,7 +294,7 @@
         <!-- CHROME_CHOKE (BOOLEAN) -->
         <div class="form-group">
          <label for="chrome_choke" class="col-lg-3 control-label"[#if ERR_CHROME_CHOKE#] style="color:red;font-weight:bold"[#endif#]>
-         Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям.:
+         Глушить музыку <img src="/img/helpicon.png" title="Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="chrome_choke" value="1"[#if CHROME_CHOKE="1"#] checked[#endif#]>
@@ -304,14 +304,14 @@
         <!-- CHROME_ALARMSTT (BOOLEAN) -->
         <div class="form-group">
          <label for="chrome_alarmstt" class="col-lg-3 control-label"[#if ERR_CHROME_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям.:
+         Сигнал перед распознованием <img src="/img/helpicon.png" title="Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
               <input type="checkbox" name="chrome_alarmstt" value="1"[#if CHROME_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
 
-        <!-- LANG (varchar) -->
+        <!-- LANG (varchar) 
         <div class="form-group">
          <label for="lang" class="col-lg-3 control-label"[#if ERR_LANG#] style="color:red;font-weight:bold"[#endif#]>
             Язык локализации, доступен только русский (и gt_en для тестов). </br>
@@ -325,9 +325,9 @@
                 <option value="gt_en"[#if LANG="gt_en"#] selected[#endif#]>Английский только для тестов</option>
             </select>
             </div>
-        </div>
+        </div>-->
         
-        <!-- LANG_CHECK (BOOLEAN) -->
+        <!-- LANG_CHECK (BOOLEAN) 
         <div class="form-group">
          <label for="lang_check" class="col-lg-3 control-label"[#if ERR_LANG_CHECK#] style="color:red;font-weight:bold"[#endif#]>
             Выводит результаты сравнения выбранного языка с базовым при загрузке.</br>
@@ -336,9 +336,9 @@
          <div class="col-lg-4">
               <input type="checkbox" name="lang_check" value="1"[#if LANG_CHECK="1"#] checked[#endif#]>
          </div>
-        </div>
+        </div> -->
 
-        <!-- CLEAR_MODELS (BOOLEAN) -->
+        <!-- CLEAR_MODELS (BOOLEAN) 
         <div class="form-group">
          <label for="clear_models" class="col-lg-3 control-label"[#if ERR_CLEAR_MODELS#] style="color:red;font-weight:bold"[#endif#]>
             Если включено сноубой не будет компилировать модель если хоть один из образцов отличается по звучанию. Позволяет избежать создания плохих моделей.:
@@ -346,12 +346,12 @@
          <div class="col-lg-4">
               <input type="checkbox" name="clear_models" value="1"[#if CLEAR_MODELS="1"#] checked[#endif#]>
          </div>
-        </div>
+        </div>-->
 
         <!-- TOKEN (varchar) -->
         <div class="form-group">
          <label for="token" class="col-lg-3 control-label"[#if ERR_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
-         Токен для API. Если этот перестанет работать можно задать свой.:
+         Токен Сноубоя <img src="/img/helpicon.png" title="Токен для API. Если этот перестанет работать можно задать свой"/>
          </label>
          <div class="col-lg-4"><input type="text" class="form-control" name="token" value="[#TOKEN#]" id="token"></div>
         </div>
@@ -372,17 +372,17 @@
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
 			 </div>-->
         <div class="form-group">
-                <div class="col-lg-offset-3 col-lg-4">
+        <div class="col-lg-offset-3 col-lg-4">
+        <input type="hidden" name="id" value="<#ID#>">
+        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+        <input type="hidden" name="mode" value="update">
          [#if ID!=""#]
          <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
          [#else ID#]
          <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
          [#endif ID#]
          <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-        <input type="hidden" name="id" value="<#ID#>">
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-        <input type="hidden" name="mode" value="update">
                 </div>
         </div>
         </fieldset>
@@ -399,26 +399,23 @@
         <hr/>
         <p>Запись первого образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,1',1);return false;" title="Стоп записи 1го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись второго образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,2',1);return false;" title="Стоп записи 2го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись третьего образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,3',1);return false;" title="Стоп записи 3го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
-				<hr/>
-				<p>Применить настройки на терминале</p>
+	<hr/>
+	<p>Удалить модель</p>
+        <button onclick="sendCommand([#ID#],'del_0_1',0);return false;" title="Удалить модель" class="btn btn-default">Удалить</button>
+	<hr/>
+	<p>Применить настройки на терминале</p>
         <button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
     </div>
 </div>
