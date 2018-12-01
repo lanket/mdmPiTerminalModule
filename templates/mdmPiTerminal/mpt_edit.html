@@ -41,10 +41,7 @@
 <br>
 
 <div class="tab-content">
-    <!-- panel_settings -->
-    <div id="panel_settings" class="tab-pane fade in">
-
-        <!-- Table 'mpt' edit -->
+    
         <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
         [#if OK#]
         <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
@@ -56,6 +53,11 @@
         [#if ID=""#]
         <legend><#LANG_NEW_RECORD#></legend>
         [#endif ID#]
+    
+    
+    <!-- panel_settings -->
+    <div id="panel_settings" class="tab-pane fade in">
+
         <!-- TITLE (varchar)
         <div class="form-group">
         <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
@@ -377,39 +379,9 @@
          <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
 			 </div>
         -->
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-         [#if ID!=""#]
-             <input type="hidden" name="id" value="<#ID#>">
-             <input type="hidden" name="mode" value="update">
-         [#endif ID#]
-        </fieldset>
-        <div class="form-group">
-            <div class="col-lg-offset-3 col-lg-4">
-                 [#if ID!=""#]
-                     <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-                 [#else ID#]
-                     <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-                 [#endif ID#]
-                 <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-             </div>
-        </div>
-        </form>
     </div>
     <!-- panel_settings_snowboy -->
     <div id="panel_settings_snowboy" class="tab-pane fade in">
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-        [#if OK#]
-        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
-        [#endif OK#]
-        [#if ERR#]
-        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
-        [#endif ERR#]
-        <fieldset>
-        [#if ID=""#]
-        <legend><#LANG_NEW_RECORD#></legend>
-        [#endif ID#]
-        <fieldset>
         <!-- TOKEN (varchar) -->
         <div class="form-group">
          <label for="token" class="col-lg-3 control-label"[#if ERR_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
@@ -418,24 +390,6 @@
          <div class="col-lg-4"><input type="text" class="form-control" name="token" value="[#TOKEN#]" id="token"></div>
         </div>
         
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-         [#if ID!=""#]
-             <input type="hidden" name="id" value="<#ID#>">
-             <input type="hidden" name="mode" value="update">
-         [#endif ID#]
-        </fieldset>
-        <div class="form-group">
-            <div class="col-lg-offset-3 col-lg-4">
-                 [#if ID!=""#]
-                     <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-                 [#else ID#]
-                     <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-                 [#endif ID#]
-                 <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-             </div>
-        </div>
-        </form>
     </div>
     <!-- panel_admin -->
     <div id="panel_admin" class="tab-pane fade in">
@@ -484,6 +438,26 @@
         <button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
         -->
     </div>
+
+        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+         [#if ID!=""#]
+             <input type="hidden" name="id" value="<#ID#>">
+             <input type="hidden" name="mode" value="update">
+         [#endif ID#]
+        </fieldset>
+        <div class="form-group">
+            <div class="col-lg-offset-3 col-lg-4">
+                 [#if ID!=""#]
+                     <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+                 [#else ID#]
+                     <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+                 [#endif ID#]
+                 <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+             </div>
+        </div>
+        </form>
+
 </div>
 <hr/>
 <script type="text/javascript">
