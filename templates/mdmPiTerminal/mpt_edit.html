@@ -28,13 +28,7 @@
 
 <ul id="tab" class="nav nav-tabs">
     <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
-    <li><a data-toggle="tab" href="#panel_settings_snowboy" class="active">Настройки Snowboy</a></li>
-    <li><a data-toggle="tab" href="#panel_settings_yandex" class="active">Настройки Яндекс</a></li>
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки Google</a></li>
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки Amazon</a></li>
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки RhVoice</a></li>
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки RhVoice-rest</a></li>
-    <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки Pocketsphinx-rest</a></li>
+    <li><a data-toggle="tab" href="#panel_voice">Выбор и настройка голосовых сервисов</a></li>
     <li><a data-toggle="tab" href="#panel_admin">Обслуживание</a></li>
     <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
 </ul>
@@ -42,33 +36,22 @@
 
 <div class="tab-content">
     
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-        [#if OK#]
-        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
-        [#endif OK#]
-        [#if ERR#]
-        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
-        [#endif ERR#]
-        <fieldset>
-        [#if ID=""#]
-        <legend><#LANG_NEW_RECORD#></legend>
-        [#endif ID#]
+    <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+    [#if OK#]
+    <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+    [#endif OK#]
+    [#if ERR#]
+    <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+    [#endif ERR#]
+    <fieldset>
+    [#if ID=""#]
+    <legend><#LANG_NEW_RECORD#></legend>
+    [#endif ID#]
     
     
     <!-- panel_settings -->
     <div id="panel_settings" class="tab-pane fade in">
 
-        <!-- TITLE (varchar)
-        <div class="form-group">
-        <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_TITLE#>:
-         (*)
-         </label>
-         <div class="col-lg-4">
-            <input type="text" class="form-control" name="title" value="[#TITLE#]" id="title">
-         </div>
-        </div>
-        -->
         <!-- ID_TERMINAL (select) -->
         [#if !IS_SET_ID_TERMINAL#]
         <div class="form-group ">
@@ -85,99 +68,7 @@
             </div>
         </div>
         [#endif IS_SET_ID_TERMINAL#]
-        <!-- NAME (varchar)
-        <div class="form-group">
-         <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
-         Системное имя:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
-        </div> -->
-        <!-- LINKEDROOM (varchar)
-        <div class="form-group">
-         <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
-         Расположение:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
-        </div>-->
-        <!-- IP (varchar)
-        <div class="form-group">
-         <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
-         ip адрес терминала:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
-        </div>-->
-        <!-- VERSION (varchar) 
-        <div class="form-group">
-         <label for="version" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Версия терминала:
-         </label>
-         <div class="col-lg-4">
-            <select name="version" class="form-control" id="version">
-                <option value="2"[#if VERSION=="2"#] selected[#endif#]>Вторая версия от Anaki</option>
-                <option value="1"[#if VERSION=="1"#] selected[#endif#]>Первая версия от Devoff</option>
-            </select>
-         </div>
-         </div>-->
-        <!-- PROVIDERTTS (varchar) -->
-        <div class="form-group">
-         <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис синтеза речи:
-         </label>
-         <div class="col-lg-4">
-            <select name="providertts" class="form-control" id="providertts">
-                <option value="Yandex"[#if PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
-                <option value="Google"[#if PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
-            </select>
-         </div>
-         </div>
-        <!-- APIKEYTTS (varchar) -->
-        <div class="form-group">
-         <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Ключ API сервиса синтеза речи:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeytts" value="[#APIKEYTTS#]" id="apikeytts"></div>
-        </div>
-        <!-- PROVIDERSTT (varchar) -->
-        <div class="form-group">
-         <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис распознавания речи:
-         </label>
-            <div class="col-lg-4">
-            <select name="providerstt" class="form-control" id="providerstt">
-                <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
-                <option value="Wit.ai"[#if PROVIDERSTT=="Wit.ai"#] selected[#endif#]>Wit.ai</option>
-                <option value="Microsoft"[#if PROVIDERSTT=="Microsoft"#] selected[#endif#]>Microsoft voice</option>
-            </select>
-            </div>
-        </div>
-        <!-- APIKEYSTT (varchar) -->
-        <div class="form-group">
-         <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Ключ API сервиса распознавания речи:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
-        </div>
-        <!-- SENSITIVITY (varchar) -->
-        <div class="form-group">
-         <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
-         Чувствительность <img src="/img/helpicon.png" title="Чувствительность реагирования на ключевое слово. Диапозон от 0.2 до 0.7 , чем больше число тем лучше реагирует но больше вероятность ложных срабатываний."/>
-         </label>
-            <!-- <div class="col-lg-4">
-             <select name="sensitivity" class="form-control" id="sensitivity">
-                <option value="0.2"[#if SENSITIVITY="0.2"#] selected[#endif#]>0.2</option>
-                <option value="0.25"[#if SENSITIVITY="0.25"#] selected[#endif#]>0.25</option>
-                <option value="0.3"[#if SENSITIVITY="0.3"#] selected[#endif#]>0.3</option>
-                <option value="0.35"[#if SENSITIVITY="0.35"#] selected[#endif#]>0.35</option>
-                <option value="0.4"[#if SENSITIVITY="0.4"#] selected[#endif#]>0.4</option>
-                <option value="0.45"[#if SENSITIVITY="0.45"#] selected[#endif#]>0.45</option>
-                <option value="0.5"[#if SENSITIVITY="0.5"#] selected[#endif#]>0.5</option>
-                <option value="0.55"[#if SENSITIVITY="0.55"#] selected[#endif#]>0.55</option>
-                <option value="0.6"[#if SENSITIVITY="0.6"#] selected[#endif#]>0.6</option>
-                <option value="0.65"[#if SENSITIVITY="0.65"#] selected[#endif#]>0.65</option>
-                <option value="0.7"[#if SENSITIVITY="0.7"#] selected[#endif#]>0.7</option>
-            </select>-->
-         <div class="col-lg-4"><input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"></div>
-         </div>
+
         <!-- ALARMKWACTIVATED (BOOLEAN) -->
         <div class="form-group">
          <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
@@ -188,6 +79,7 @@
              <!-- <input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"> -->
          </div>
         </div>
+        
         <!-- ALARMTTS (BOOLEAN) -->
         <div class="form-group">
          <label for="alarmtts" class="col-lg-3 control-label"[#if ERR_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
@@ -197,6 +89,7 @@
               <input type="checkbox" name="alarmtts" value="1"[#if ALARMTTS="1"#] checked[#endif#]>
          </div>
         </div>
+        
         <!-- ALARMSTT (BOOLEAN) -->
         <div class="form-group">
          <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
@@ -206,36 +99,7 @@
               <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
-        <!--
-        <div class="form-group">
-        Ниже настройки предназначенные только для второй версии терминала.
-        </div>
-        -->
-        <!-- LAST_LOVE (BOOLEAN) 
-        <div class="form-group">
-         <label for="last_love" class="col-lg-3 control-label"[#if ERR_LAST_LOVE#] style="color:red;font-weight:bold"[#endif#]>
-         Терминал будет отвергать подключения от ip не совпадающих с ip МажорДомо:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="last_love" value="1"[#if LAST_LOVE="1"#] checked[#endif#]>
-         </div>
-        </div> -->
-        <!-- MIC_INDEX (TINYINT) 
-        <div class="form-group">
-         <label for="mic_index" class="col-lg-3 control-label"[#if ERR_MIC_INDEX#] style="color:red;font-weight:bold"[#endif#]>
-          Индекс микрофона. Посмотреть индексы можно запустив mdmTerminal2/src/lib/mic.py Если -1 - устройство по умолчанию.:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="mic_index" value="[#MIC_INDEX#]" id="mic_index"></div>
-        </div> -->
-        <!-- OPTIMISTIC_NONBLOCK_TTS (BOOLEAN) 
-        <div class="form-group">
-         <label for="optimistic_nonblock_tts" class="col-lg-3 control-label"[#if ERR_OPTIMISTIC_NONBLOCK_TTS#] style="color:red;font-weight:bold"[#endif#]>
-         Запрос к провайдеру TTS не будет блокировать выполнение до генерации аудио. Это сокращает время ответа, т.к. запрос будет идти параллельно всяким динг-донгам если время отклика TTS большое, паузы между сигналами и фразой могут напрягать.:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="optimistic_nonblock_tts" value="1"[#if OPTIMISTIC_NONBLOCK_TTS="1"#] checked[#endif#]>
-         </div>
-        </div> -->
+        
         <!-- ASK_ME_AGAIN (TINYINT) -->
         <div class="form-group">
          <label for="ask_me_again" class="col-lg-3 control-label"[#if ERR_ASK_ME_AGAIN#] style="color:red;font-weight:bold"[#endif#]>
@@ -263,27 +127,6 @@
               <input type="checkbox" name="no_hello" value="1"[#if NO_HELLO="1"#] checked[#endif#]>
          </div>
         </div>
-
-        <!-- BLOCKING_LISTENER (BOOLEAN) 
-        <div class="form-group">
-         <label for="blocking_listener" class="col-lg-3 control-label"[#if ERR_BLOCKING_LISTENER#] style="color:red;font-weight:bold"[#endif#]>
-         Включает блокирующее распознавание речи (как в первой версии) Распознавание начнется после приветствия или звукового сигнала При отключении не нужно ждать окончания приветствия, терминал будет записывать голос параллельно но он может начать записывать сам себя:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="blocking_listener" value="1"[#if BLOCKING_LISTENER="1"#] checked[#endif#]>
-         </div>
-        </div>-->
-
-        <!-- ENERGY_THRESHOLD (TINYINT) 
-        <div class="form-group">
-         <label for="energy_threshold" class="col-lg-3 control-label"[#if ERR_ENERGY_THRESHOLD#] style="color:red;font-weight:bold"[#endif#]>
-          Задает начальный уровень шума для отделения слов от шума</BR>
-          Если 0, будет корректироваться автоматически до записи голоса и выводиться в лог.</BR>
-          Если больше 0 будет использован как начальный уровень шума, а активация записи произойдет быстрее.</BR>
-          Если меньше 0, то значение полученное при удачном распознавании используется до первого неудачного.:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="energy_threshold" value="[#ENERGY_THRESHOLD#]" id="energy_threshold"></div>
-        </div>-->
 
         <!-- PHRASE_TIME_LIMIT (TINYINT) -->
         <div class="form-group">
@@ -322,66 +165,11 @@
               <input type="checkbox" name="chrome_alarmstt" value="1"[#if CHROME_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
-
-        <!-- LANG (varchar) 
-        <div class="form-group">
-         <label for="lang" class="col-lg-3 control-label"[#if ERR_LANG#] style="color:red;font-weight:bold"[#endif#]>
-            Язык локализации, доступен только русский (и gt_en для тестов). </br>
-            Параметры отсутствующие в файле выбранного языка будут взяты из базового языка.</br>
-            Базовым языком является ru (src/languages/ru.py).</br>
-            Нужно полностью перезапустить терминал при изменении языка и желательно удалить файл src/phrases.json.:
-         </label>
-            <div class="col-lg-4">
-             <select name="lang" class="form-control" id="lang">
-                <option value="ru"[#if LANG="ru"#] selected[#endif#]>Русский</option>
-                <option value="gt_en"[#if LANG="gt_en"#] selected[#endif#]>Английский только для тестов</option>
-            </select>
-            </div>
-        </div>
-        -->
-        
-        <!-- LANG_CHECK (BOOLEAN) 
-        <div class="form-group">
-         <label for="lang_check" class="col-lg-3 control-label"[#if ERR_LANG_CHECK#] style="color:red;font-weight:bold"[#endif#]>
-            Выводит результаты сравнения выбранного языка с базовым при загрузке.</br>
-            Может помочь в поиске ошибок. Если выбран базовый язык ничего не делает.:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="lang_check" value="1"[#if LANG_CHECK="1"#] checked[#endif#]>
-         </div>
-        </div> 
-        -->
-
-        <!-- CLEAR_MODELS (BOOLEAN) 
-        <div class="form-group">
-         <label for="clear_models" class="col-lg-3 control-label"[#if ERR_CLEAR_MODELS#] style="color:red;font-weight:bold"[#endif#]>
-            Если включено сноубой не будет компилировать модель если хоть один из образцов отличается по звучанию. Позволяет избежать создания плохих моделей.:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="clear_models" value="1"[#if CLEAR_MODELS="1"#] checked[#endif#]>
-         </div>
-        </div>
-        -->
-
-        <!-- LINKED_OBJECT (varchar)
-        <div class="form-group">
-         <label for="linked_object" class="col-lg-3 control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_LINKED_OBJECT#>:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
-        </div> 
-        -->
-        <!-- LINKED_PROPERTY (varchar)
-        <div class="form-group">
-         <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_LINKED_PROPERTY#>:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
-			 </div>
-        -->
     </div>
-    <!-- panel_settings_snowboy -->
-    <div id="panel_settings_snowboy" class="tab-pane fade in">
+    <!-- panel_voice -->
+    <div id="panel_voice" class="tab-pane fade in">
+        <h2>SnowBoy</h2>
+ 
         <!-- TOKEN (varchar) -->
         <div class="form-group">
          <label for="token" class="col-lg-3 control-label"[#if ERR_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
@@ -390,6 +178,80 @@
          <div class="col-lg-4"><input type="text" class="form-control" name="token" value="[#TOKEN#]" id="token"></div>
         </div>
         
+        <!-- SENSITIVITY (varchar) -->
+        <div class="form-group">
+         <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
+         Чувствительность <img src="/img/helpicon.png" title="Чувствительность реагирования на ключевое слово. Диапозон от 0.2 до 0.7 , чем больше число тем лучше реагирует но больше вероятность ложных срабатываний."/>
+         </label>
+            <!-- <div class="col-lg-4">
+             <select name="sensitivity" class="form-control" id="sensitivity">
+                <option value="0.2"[#if SENSITIVITY="0.2"#] selected[#endif#]>0.2</option>
+                <option value="0.25"[#if SENSITIVITY="0.25"#] selected[#endif#]>0.25</option>
+                <option value="0.3"[#if SENSITIVITY="0.3"#] selected[#endif#]>0.3</option>
+                <option value="0.35"[#if SENSITIVITY="0.35"#] selected[#endif#]>0.35</option>
+                <option value="0.4"[#if SENSITIVITY="0.4"#] selected[#endif#]>0.4</option>
+                <option value="0.45"[#if SENSITIVITY="0.45"#] selected[#endif#]>0.45</option>
+                <option value="0.5"[#if SENSITIVITY="0.5"#] selected[#endif#]>0.5</option>
+                <option value="0.55"[#if SENSITIVITY="0.55"#] selected[#endif#]>0.55</option>
+                <option value="0.6"[#if SENSITIVITY="0.6"#] selected[#endif#]>0.6</option>
+                <option value="0.65"[#if SENSITIVITY="0.65"#] selected[#endif#]>0.65</option>
+                <option value="0.7"[#if SENSITIVITY="0.7"#] selected[#endif#]>0.7</option>
+            </select>-->
+         <div class="col-lg-4"><input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"></div>
+         </div>
+        <hr/>
+        
+        <h2>Сервисы речи</h2>
+        
+        <!-- PROVIDERTTS (varchar) -->
+        <div class="form-group">
+         <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
+         Сервис синтеза речи 
+         </label>
+         <div class="col-lg-4">
+            <select name="providertts" class="form-control" id="providertts">
+                <option value="Yandex"[#if PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
+                <option value="Aws"[#if PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
+                <option value="Rhvoice"[#if PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
+                <option value="Rhvoice-rest"[#if PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+            </select>
+         </div>
+         </div>
+        
+        <!-- PROVIDERSTT (varchar) -->
+        <div class="form-group">
+         <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Сервис распознавания речи
+         </label>
+            <div class="col-lg-4">
+            <select name="providerstt" class="form-control" id="providerstt">
+                <option value="Yandex"[#if PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
+                <option value="Wit"[#if PROVIDERSTT=="Wit"#] selected[#endif#]>Wit.ai, Microsoft</option>
+                <option value="pocketsphinx-rest"[#if PROVIDERSTT=="pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
+            </select>
+            </div>
+        </div>
+
+        <hr/>
+        <h2>Яндекс</h2>
+        
+        <!-- APIKEYTTS (varchar) -->
+        <div class="form-group">
+         <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
+         Ключ API сервиса генерации речи
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="apikeytts" value="[#APIKEYTTS#]" id="apikeytts"></div>
+        </div>
+        
+        <!-- APIKEYSTT (varchar) -->
+        <div class="form-group">
+         <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Ключ API сервиса распознавания речи
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
+        </div>
     </div>
     <!-- panel_admin -->
     <div id="panel_admin" class="tab-pane fade in">
@@ -439,24 +301,24 @@
         -->
     </div>
 
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-         [#if ID!=""#]
-             <input type="hidden" name="id" value="<#ID#>">
-             <input type="hidden" name="mode" value="update">
-         [#endif ID#]
-        </fieldset>
-        <div class="form-group">
-            <div class="col-lg-offset-3 col-lg-4">
-                 [#if ID!=""#]
-                     <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-                 [#else ID#]
-                     <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-                 [#endif ID#]
-                 <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-             </div>
-        </div>
-        </form>
+    <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+    <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+     [#if ID!=""#]
+         <input type="hidden" name="id" value="<#ID#>">
+         <input type="hidden" name="mode" value="update">
+     [#endif ID#]
+    </fieldset>
+    <div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+             [#if ID!=""#]
+                 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+             [#else ID#]
+                 <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+             [#endif ID#]
+             <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+         </div>
+    </div>
+    </form>
 
 </div>
 <hr/>
