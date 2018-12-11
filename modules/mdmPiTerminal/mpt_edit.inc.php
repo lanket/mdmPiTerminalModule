@@ -17,7 +17,7 @@
     if($rec['ID']) $qry = " and ID <> " . $rec['ID'];
     $findduble=SQLSelectOne("SELECT * FROM $table_name WHERE ID_TERMINAL='$id_terminal' $qry");
     // chech not empy terminal and mast no dubles
-    if($rec['ID_TERMINAL'] == '' or $findduble['ID'])
+    if(($rec['ID_TERMINAL'] == '' or $findduble['ID']) and !$_POST['panel_voice'])
     {
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
@@ -67,6 +67,34 @@
    global $alarmstt;
    if(!$alarmstt) $alarmstt=0;
    $rec['ALARMSTT']=$alarmstt;
+  //updating 'ask_me_again' (TINYINT)
+   global $ask_me_again;
+   if(!$ask_me_again) $ask_me_again=0;
+   $rec['ASK_ME_AGAIN']=$ask_me_again;
+  //updating 'quiet' (BOOLEAN)
+   global $quiet;
+   if(!$quiet) $quiet=FALSE;
+   $rec['QUIET']=$quiet;
+  //updating 'no_hello' (BOOLEAN)
+   global $no_hello;
+   if(!$no_hello) $no_hello=FALSE;
+   $rec['NO_HELLO']=$no_hello;
+  //updating 'phrase_time_limit' (TINYINT)
+   global $phrase_time_limit;
+   if(!$phrase_time_limit) $phrase_time_limit=15;
+   $rec['PHRASE_TIME_LIMIT']=$phrase_time_limit;
+  //updating 'chrome_mode' (TINYINT)
+   global $chrome_mode;
+   if(!$chrome_mode) $chrome_mode=2;
+   $rec['CHROME_MODE']=$chrome_mode;
+  //updating 'chrome_choke' (BOOLEAN)
+   global $chrome_choke;
+   if(!$chrome_choke) $chrome_choke=FALSE;
+   $rec['CHROME_CHOKE']=$chrome_choke;
+  //updating 'chrome_alarmstt' (BOOLEAN)
+   global $chrome_alarmstt;
+   if(!$chrome_alarmstt) $chrome_alarmstt=FALSE;
+   $rec['CHROME_ALARMSTT']=$chrome_alarmstt;
 /*
    //updating '<%LANG_LINKED_OBJECT%>' (varchar)
    global $linked_object;
@@ -84,7 +112,7 @@
      $ip = $tmp['HOST'];
      if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-     unset($rec['ID'],$rec['ID_TERMINAL']);
+     // unset($rec['ID'],$rec['ID_TERMINAL']);
      $senddata = json_encode($rec);
      if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
@@ -94,7 +122,7 @@
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
      $ip = $tmp['HOST'];
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-     unset($rec['ID'],$rec['ID_TERMINAL']);
+     // unset($rec['ID'],$rec['ID_TERMINAL']);
      $senddata = json_encode($rec);
      if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
