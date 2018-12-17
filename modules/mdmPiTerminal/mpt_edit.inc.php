@@ -42,27 +42,42 @@
    */
    if($_POST['panel_voice'])
    {
-        //updating 'token' (varchar)
-         global $token;
-         $rec['TOKEN']=$token;
-        //updating 'sensitivity' (varchar)
-         global $sensitivity;
-         $rec['SENSITIVITY']=$sensitivity;
-        //updating 'providertts' (varchar)
-         global $providertts;
-         $rec['PROVIDERTTS']=$providertts;
-        //updating 'providerstt' (varchar)
-         global $providerstt;
-         $rec['PROVIDERSTT']=$providerstt;
-        //updating 'apikeytts' (varchar)
-         global $apikeytts;
-         $rec['APIKEYTTS']=$apikeytts;
-        //updating 'apikeystt' (varchar)
-         global $apikeystt;
-         $rec['APIKEYSTT']=$apikeystt;
+        //updating 'snowboy_token' (varchar)
+         $rec['SNOWBOY_TOKEN']=  $this->validate('snowboy_token');
+        //updating 'settings_sensitivity' (varchar)
+         $rec['SETTINGS_SENSITIVITY']=  $this->validate('settings_sensitivity');
+        //updating 'settings_providertts' (varchar)
+         $rec['SETTINGS_PROVIDERTTS']=  $this->validate('settings_providertts');
+        //updating 'settings_providerstt' (varchar)
+         $rec['SETTINGS_PROVIDERSTT']=  $this->validate('settings_providerstt');
+
        
    }
    else {
+        //updating 'settings_alarmkwactivated' (BOOLEAN)
+         $rec['SETTINGS_ALARMKWACTIVATED']=  $this->validate('settings_alarmkwactivated');
+        //updating 'settings_alarmtts' (BOOLEAN)
+         $rec['SETTINGS_ALARMTTS']=  $this->validate('settings_alarmtts');
+        //updating 'settings_alarmstt' (BOOLEAN)
+         $rec['SETTINGS_ALARMSTT']=  $this->validate('settings_alarmstt');
+        //updating 'settings_ask_me_again' (TINYINT)
+         $rec['SETTINGS_ASK_ME_AGAIN']=  $this->validate('settings_ask_me_again');
+        //updating 'settings_quiet' (BOOLEAN)
+         $rec['SETTINGS_QUIET']=  $this->validate('settings_quiet');
+        //updating 'settings_no_hello' (BOOLEAN)
+         $rec['SETTINGS_NO_HELLO']=  $this->validate('settings_no_hello');
+        //updating 'settings_phrase_time_limit' (TINYINT)
+         $rec['SETTINGS_PHRASE_TIME_LIMIT']=  $this->validate('settings_phrase_time_limit');
+        //updating 'settings_chrome_mode' (TINYINT)
+         $rec['SETTINGS_CHROME_MODE']=  $this->validate('settings_chrome_mode');
+        //updating 'settings_chrome_choke' (BOOLEAN)
+         $rec['SETTINGS_CHROME_CHOKE']=  $this->validate('settings_chrome_choke');
+        //updating 'settings_chrome_alarmstt' (BOOLEAN)
+         $rec['SETTINGS_CHROME_ALARMSTT']=  $this->validate('settings_chrome_alarmstt');
+
+       
+/*
+
         //updating 'alarmkwactivated' (varchar)
          global $alarmkwactivated;
          if(!$alarmkwactivated) $alarmkwactivated = 0;
@@ -103,6 +118,7 @@
          global $chrome_alarmstt;
          if(!$chrome_alarmstt) $chrome_alarmstt=FALSE;
          $rec['CHROME_ALARMSTT']=$chrome_alarmstt;
+ */
    }
 /*
    //updating '<%LANG_LINKED_OBJECT%>' (varchar)

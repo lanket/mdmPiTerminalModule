@@ -68,85 +68,84 @@
         </div>
         [#endif IS_SET_ID_TERMINAL#]
 
-        <!-- ALARMKWACTIVATED (BOOLEAN) -->
+        <!-- SETTINGS_ALARMKWACTIVATED (BOOLEAN) -->
         <div class="form-group">
-         <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_alarmkwactivated" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
          Сигнал о распознавании ключевого слова:
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="alarmkwactivated" value="1"[#if ALARMKWACTIVATED="1"#] checked[#endif#]>
-             <!-- <input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"> -->
+             <input type="checkbox" name="settings_alarmkwactivated" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>
          </div>
         </div>
         
-        <!-- ALARMTTS (BOOLEAN) -->
+        <!-- SETTINGS_ALARMTTS (BOOLEAN) -->
         <div class="form-group">
-         <label for="alarmtts" class="col-lg-3 control-label"[#if ERR_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_alarmtts" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
          Сигнал перед сообщением:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="alarmtts" value="1"[#if ALARMTTS="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmtts" value="1"[#if SETTINGS_ALARMTTS="1"#] checked[#endif#]>
          </div>
         </div>
         
-        <!-- ALARMSTT (BOOLEAN) -->
+        <!-- SETTINGS_ALARMSTT (BOOLEAN) -->
         <div class="form-group">
-         <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="SETTINGS_ALARMSTT" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
          Сигнал перед началом распознавания речи:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmstt" value="1"[#if SETTINGS_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
         
-        <!-- ASK_ME_AGAIN (TINYINT) -->
+        <!-- SETTINGS_ASK_ME_AGAIN (TINYINT) -->
         <div class="form-group">
-         <label for="ask_me_again" class="col-lg-3 control-label"[#if ERR_ASK_ME_AGAIN#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_ask_me_again" class="col-lg-3 control-label"[#if ERR_SETTINGS_ASK_ME_AGAIN#] style="color:red;font-weight:bold"[#endif#]>
                 Количество переспрашиваней <img src="/img/helpicon.png" title="Если в записи нет слов или STT не смог ничего распознать, будет переспрашивать данное количество раз. Если 0 - не переспрашивает"/>
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="ask_me_again" value="[#ASK_ME_AGAIN#]" id="ask_me_again"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_ask_me_again" value="[#SETTINGS_ASK_ME_AGAIN#]" id="ask_me_again"></div>
         </div>
 
-        <!-- QUIET (BOOLEAN) -->
+        <!-- SETTINGS_QUIET (BOOLEAN) -->
         <div class="form-group">
-         <label for="quiet" class="col-lg-3 control-label"[#if ERR_QUIET#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_quiet" class="col-lg-3 control-label"[#if ERR_SETTINGS_QUIET#] style="color:red;font-weight:bold"[#endif#]>
          Тихий запуск <img src="/img/helpicon.png" title="Несущественные сообщения не будут произнесены"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="quiet" value="1"[#if QUIET="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_quiet" value="1"[#if SETTINGS_QUIET="1"#] checked[#endif#]>
          </div>
         </div>
 
-        <!-- NO_HELLO (BOOLEAN) -->
+        <!-- SETTINGS_NO_HELLO (BOOLEAN) -->
         <div class="form-group">
-         <label for="no_hello" class="col-lg-3 control-label"[#if ERR_NO_HELLO#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_no_hello" class="col-lg-3 control-label"[#if ERR_SETTINGS_NO_HELLO#] style="color:red;font-weight:bold"[#endif#]>
          Старт без приветствия <img src="/img/helpicon.png" title="Терминал не будет произносить приветствие при голосовой активации"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="no_hello" value="1"[#if NO_HELLO="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_no_hello" value="1"[#if SETTINGS_NO_HELLO="1"#] checked[#endif#]>
          </div>
         </div>
 
-        <!-- PHRASE_TIME_LIMIT (TINYINT) -->
+        <!-- SETTINGS_PHRASE_TIME_LIMIT (TINYINT) -->
         <div class="form-group">
-         <label for="phrase_time_limit" class="col-lg-3 control-label"[#if ERR_PHRASE_TIME_LIMIT#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_phrase_time_limit" class="col-lg-3 control-label"[#if ERR_SETTINGS_PHRASE_TIME_LIMIT#] style="color:red;font-weight:bold"[#endif#]>
           Лимит распознования <img src="/img/helpicon.png" title="Лимит времени на запись после того как терминал распознал речь, в секундах"/>
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="phrase_time_limit" value="[#PHRASE_TIME_LIMIT#]" id="phrase_time_limit"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_phrase_time_limit" value="[#SETTINGS_PHRASE_TIME_LIMIT#]" id="settings_phrase_time_limit"></div>
         </div>
 
-        <!-- CHROME_MODE (TINYINT) -->
+        <!-- SETTINGS_CHROME_MODE (TINYINT) -->
         <div class="form-group">
-         <label for="chrome_mode" class="col-lg-3 control-label"[#if ERR_CHROME_MODE#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_chrome_mode" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_MODE#] style="color:red;font-weight:bold"[#endif#]>
          Ключевое в контексте команды <img src="/img/helpicon.png" title="Если включить то не надо ждать подтверждения от терминала реакции на ключевое слово, а можно будет одним предложением дать команду началом которого будет ключевое слово. 'Непрерывная оценка шума': Измерение шума будет происходить непрерывно, при условии что терминал сам не шумит. Это увечит потребление CPU в режиме ожидания примерно в 3 раза (5% -> 17%), но терминал может работать лучше если уровень шума часто меняется. 'Без оценки шума': Этот режим похож на предыдущий, но вместо измерения уровня шума используется способность snowboy выделять слова из аудиопотока. Нагрузка на CPU низкая. На качество выделения слов будут влиять настройки snowboy (audio_gain, sensitivity) и качество моделей. 'Параллельное распознавание': Этот режим похож на 'Без оценки шума', но распознавание голоса начнется после активации ключевым словом и будет идти вместе с записью. Может сократить время реакции терминала, особенно если фраза очень длинная. Лучше не включать его если у вас много ложных активаций. Опция 'Сигнал перед распознованием' по очевидным причинам работать не будет."/>
          </label>
             <div class="col-lg-4">
             <select name="chrome_mode" class="form-control" id="chrome_mode">
-                <option value="0"[#if CHROME_MODE=="0"#] selected[#endif#]>Отключить</option>
-                <option value="1"[#if CHROME_MODE=="1"#] selected[#endif#]>Включено</option>
-                <option value="2"[#if CHROME_MODE=="2"#] selected[#endif#]>Непрерывная оценка шума</option>
-                <option value="3"[#if CHROME_MODE=="3"#] selected[#endif#]>Без оценки шума</option>
-                <option value="4"[#if CHROME_MODE=="4"#] selected[#endif#]>Параллельное распознавание</option>
+                <option value="0"[#if SETTINGS_CHROME_MODE=="0"#] selected[#endif#]>Отключить</option>
+                <option value="1"[#if SETTINGS_CHROME_MODE=="1"#] selected[#endif#]>Включено</option>
+                <option value="2"[#if SETTINGS_CHROME_MODE=="2"#] selected[#endif#]>Непрерывная оценка шума</option>
+                <option value="3"[#if SETTINGS_CHROME_MODE=="3"#] selected[#endif#]>Без оценки шума</option>
+                <option value="4"[#if SETTINGS_CHROME_MODE=="4"#] selected[#endif#]>Параллельное распознавание</option>
             </select>
             </div>
         </div>
@@ -161,23 +160,23 @@
         </div>
         -->
         
-        <!-- CHROME_CHOKE (BOOLEAN) -->
+        <!-- SETTINGS_CHROME_CHOKE (BOOLEAN) -->
         <div class="form-group">
-         <label for="chrome_choke" class="col-lg-3 control-label"[#if ERR_CHROME_CHOKE#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_chrome_choke" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_CHOKE#] style="color:red;font-weight:bold"[#endif#]>
          Глушить музыку <img src="/img/helpicon.png" title="Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="chrome_choke" value="1"[#if CHROME_CHOKE="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_choke" value="1"[#if SETTINGS_CHROME_CHOKE="1"#] checked[#endif#]>
          </div>
         </div>
 
-        <!-- CHROME_ALARMSTT (BOOLEAN) -->
+        <!-- SETTINGS_CHROME_ALARMSTT (BOOLEAN) -->
         <div class="form-group">
-         <label for="chrome_alarmstt" class="col-lg-3 control-label"[#if ERR_CHROME_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_chrome_alarmstt" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
          Сигнал перед распознованием <img src="/img/helpicon.png" title="Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="chrome_alarmstt" value="1"[#if CHROME_ALARMSTT="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_alarmstt" value="1"[#if SETTINGS_CHROME_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
         <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
@@ -216,18 +215,18 @@
 
         <h2>SnowBoy</h2>
 
-        <!-- TOKEN (varchar) -->
+        <!-- SNOWBOY_TOKEN (varchar) -->
         <div class="form-group">
-         <label for="token" class="col-lg-3 control-label"[#if ERR_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="snowboy_token" class="col-lg-3 control-label"[#if ERR_SNOWBOY_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
          Токен Сноубоя <img src="/img/helpicon.png" title="Токен для API. Если этот перестанет работать можно задать свой"/>
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="token" value="[#TOKEN#]" id="token"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="snowboy_token" value="[#SNOWBOY_TOKEN#]" id="snowboy_token"></div>
         </div>
         <hr/>
         
-        <!-- SENSITIVITY (varchar) -->
+        <!-- SETTINGS_SENSITIVITY (varchar) -->
         <div class="form-group">
-         <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_sensitivity" class="col-lg-3 control-label"[#if ERR_SETTINGS_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
          Чувствительность <img src="/img/helpicon.png" title="Чувствительность реагирования на ключевое слово. Диапозон от 0.2 до 0.7 , чем больше число тем лучше реагирует но больше вероятность ложных срабатываний."/>
          </label>
             <!-- <div class="col-lg-4">
@@ -244,63 +243,208 @@
                 <option value="0.65"[#if SENSITIVITY="0.65"#] selected[#endif#]>0.65</option>
                 <option value="0.7"[#if SENSITIVITY="0.7"#] selected[#endif#]>0.7</option>
             </select>-->
-         <div class="col-lg-4"><input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_sensitivity" value="[#SETTINGS_SENSITIVITY#]" id="settings_sensitivity"></div>
          </div>
         <hr/>
         
         <h2>Сервисы речи</h2>
         
-        <!-- PROVIDERTTS (varchar) -->
+        <!-- SETTINGS_PROVIDERTTS (varchar) -->
         <div class="form-group">
-         <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_providertts" class="col-lg-3 control-label"[#if ERR_SETTINGS_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
          Сервис синтеза речи 
          </label>
          <div class="col-lg-4">
-            <select name="providertts" class="form-control" id="providertts">
-                <option value="Yandex"[#if PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
-                <option value="Google"[#if PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
-                <option value="Aws"[#if PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
-                <option value="Rhvoice"[#if PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
-                <option value="Rhvoice-rest"[#if PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+            <select name="settings_providertts" class="form-control" id="settings_providertts">
+                <option value="Yandex"[#if SETTINGS_PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if SETTINGS_PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
+                <option value="Aws"[#if SETTINGS_PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
+                <option value="Rhvoice"[#if SETTINGS_PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
+                <option value="Rhvoice-rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
             </select>
          </div>
          </div>
         <hr/>
         
-        <!-- PROVIDERSTT (varchar) -->
+        <!-- SETTINGS_PROVIDERSTT (varchar) -->
         <div class="form-group">
-         <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="settings_providerstt" class="col-lg-3 control-label"[#if ERR_SETTINGS_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
          Сервис распознавания речи
          </label>
             <div class="col-lg-4">
-            <select name="providerstt" class="form-control" id="providerstt">
-                <option value="Yandex"[#if PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
-                <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
-                <option value="Wit"[#if PROVIDERSTT=="Wit"#] selected[#endif#]>Wit.ai, Microsoft</option>
-                <option value="pocketsphinx-rest"[#if PROVIDERSTT=="pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
+            <select name="settings_providerstt" class="form-control" id="settings_providerstt">
+                <option value="Yandex"[#if SETTINGS_PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if SETTINGS_PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
+                <option value="Wit"[#if SETTINGS_PROVIDERSTT=="Wit"#] selected[#endif#]>Wit.ai, Microsoft</option>
+                <option value="pocketsphinx-rest"[#if SETTINGS_PROVIDERSTT=="pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
             </select>
             </div>
         </div>
 
         <hr/>
         <h2>Яндекс</h2>
-        
-        <!-- APIKEYTTS (varchar) -->
+        <p>Ключи для синтеза\распознавания. Можно использовать разные.</br>Если ключ не указан, он будет взят с https://translate.yandex.ru, пока это работает.</br>Ключ дают бесплатно, на месяц, https://tech.yandex.ru/speechkit/cloud/</p>
+        <!-- YANDEX_APIKEYTTS (varchar) -->
         <div class="form-group">
-         <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="yandex_apikeytts" class="col-lg-3 control-label"[#if ERR_YANDEX_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
          Ключ API сервиса генерации речи
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeytts" value="[#APIKEYTTS#]" id="apikeytts"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="yandex_apikeytts" value="[#YANDEX_APIKEYTTS#]" id="yandex_apikeytts"></div>
         </div>
         <hr/>
         
-        <!-- APIKEYSTT (varchar) -->
+        <!-- YANDEX_APIKEYSTT (varchar) -->
         <div class="form-group">
-         <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
+         <label for="yandex_apikeystt" class="col-lg-3 control-label"[#if ERR_YANDEX_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
          Ключ API сервиса распознавания речи
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
+         <div class="col-lg-4"><input type="text" class="form-control" name="yandex_apikeystt" value="[#YANDEX_APIKEYSTT#]" id="yandex_apikeystt"></div>
         </div>
+
+        <!-- YANDEX_EMOTION (varchar) -->
+        <div class="form-group[#if ERR_YANDEX_EMOTION#] has-error[#endif#]">
+         <label for="yandex_emotion" class="col-lg-3 control-label">
+         Эмоциональная окраска голоса
+         </label>
+            <div class="col-lg-4">
+            <select name="yandex_emotion" class="form-control" id="yandex_emotion">
+                <option value="good"[#if YANDEX_EMOTION=="good"#] selected[#endif#]>Обычная</option>
+                <option value="neutral"[#if YANDEX_EMOTION=="neutral"#] selected[#endif#]>Нейтральная</option>
+                <option value="evil"[#if YANDEX_EMOTION=="evil"#] selected[#endif#]>Злая</option>
+            </select>
+            </div>
+        </div>
+        <!-- YANDEX_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_YANDEX_SPEAKER#] has-error[#endif#]">
+         <label for="yandex_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="yandex_speaker" class="form-control" id="yandex_speaker">
+                <option value="alyss"[#if YANDEX_SPEAKER=="alyss"#] selected[#endif#]>Алиса</option>
+                <option value="jane"[#if YANDEX_SPEAKER=="jane"#] selected[#endif#]>Жанна</option>
+                <option value="oksana"[#if YANDEX_SPEAKER=="oksana"#] selected[#endif#]>Оксана</option>
+                <option value="omazh"[#if YANDEX_SPEAKER=="omazh"#] selected[#endif#]>Олеся</option>
+                <option value="zahar"[#if YANDEX_SPEAKER=="zahar"#] selected[#endif#]>Захар</option>
+                <option value="ermil"[#if YANDEX_SPEAKER=="ermil"#] selected[#endif#]>Ермил</option>
+            </select>
+            </div>
+        </div>
+        <hr/>
+        <h2>Amazon AWS</h2>
+        <p>Для доступа нужен <a href="https://aws.amazon.com/ru/polly" target="_blank">аккаунт AWS</a>, первые 5 миллионов символов в месяц первые 12 месяцев бесплатно.</p>
+        <!-- AWS_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_AWS_SPEAKER#] has-error[#endif#]">
+         <label for="aws_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="aws_speaker" class="form-control" id="aws_speaker">
+                <option value="Tatyana"[#if AWS_SPEAKER=="Tatyana"#] selected[#endif#]>Татьяна</option>
+                <option value="Maxim"[#if AWS_SPEAKER=="Maxim"#] selected[#endif#]>Максим</option>
+            </select>
+            </div>
+        </div>
+        <!-- AWS_ACCESS_KEY_ID (varchar) -->
+        <div class="form-group[#if ERR_AWS_ACCESS_KEY_ID#] has-error[#endif#]">
+         <label for="aws_access_key_id" class="col-lg-3 control-label">
+         Access key id
+         </label>
+         <div class="col-lg-9"><input id="aws_access_key_id" name="aws_access_key_id" value="[#AWS_ACCESS_KEY_ID#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_SECRET_ACCESS_KEY (varchar) -->
+        <div class="form-group[#if ERR_AWS_SECRET_ACCESS_KEY#] has-error[#endif#]">
+         <label for="aws_secret_access_key" class="col-lg-3 control-label">
+         Secret access key
+         </label>
+         <div class="col-lg-9"><input id="aws_secret_access_key" name="aws_secret_access_key" value="[#AWS_SECRET_ACCESS_KEY#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_REGION (varchar) -->
+        <div class="form-group[#if ERR_AWS_REGION#] has-error[#endif#]">
+         <label for="aws_region" class="col-lg-3 control-label">
+         Region
+         </label>
+         <div class="col-lg-9"><input id="aws_region" name="aws_region" value="[#AWS_REGION#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_BOTO3 (BOOLEAN) -->
+        <div class="form-group[#if ERR_AWS_BOTO3#] has-error[#endif#]">
+         <label for="aws_boto3" class="col-lg-3 control-label">
+         Использовать AWS SDK (boto3) для коммуникации вместо нативной реализации <img src="/img/helpicon.png" title="Polly будет отвечать на 200-300 ms быстрее, а прокси для aws перестанет работать. boto3 должен быть установлен: mdmTerminal2/env/bin/python -m pip install boto3"/>
+         </label>
+         <div class="col-lg-4">
+             <input type="checkbox" name="aws_boto3" value="0"[#if AWS_BOTO3="1"#] checked[#endif#]>
+         </div>
+        </div>
+        <hr/>
+        <h2>RHVoice TTS запущенный в виде веб-сервиса.</h2>
+        <p>Голос лучше чем у гугла.</br>Один из самый быстрых в плане отклика.</br>Отклик на апельсинке с отключенным кэшем примерно 100 мс</br>На i7 в виртуалке ~ 20 мс.</br><a href="https://github.com/Aculeasis/rhvoice-rest" target="_blank">GitHub</a></p>
+        <!-- RHVOICE-REST_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE-REST_SPEAKER#] has-error[#endif#]">
+         <label for="rhvoice-rest_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="rhvoice-rest_speaker" class="form-control" id="rhvoice-rest_speaker">
+                <option value="anna"[#if RHVOICE-REST_SPEAKER=="anna"#] selected[#endif#]>Анна</option>
+                <option value="elena"[#if RHVOICE-REST_SPEAKER=="elena"#] selected[#endif#]>Елена</option>
+                <option value="irina"[#if RHVOICE-REST_SPEAKER=="irina"#] selected[#endif#]>Ирина</option>
+                <option value="aleksandr"[#if RHVOICE-REST_SPEAKER=="aleksandr"#] selected[#endif#]>Александр</option>
+            </select>
+            </div>
+        </div>
+        <!-- RHVOICE-REST_SERVER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE-REST_SERVER#] has-error[#endif#]">
+         <label for="rhvoice-rest_server" class="col-lg-3 control-label">
+         Server
+         </label>
+         <div class="col-lg-9"><input id="rhvoice-rest_server" name="rhvoice-rest_server" value="[#RHVOICE-REST_SERVER#]" type="text" class="form-control"></div>
+        </div>
+        <!-- RHVOICE-REST_RATE (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE-REST_RATE#] has-error[#endif#]">
+         <label for="rhvoice-rest_rate" class="col-lg-3 control-label">
+         Темп голоса 0-100
+         </label>
+         <div class="col-lg-9"><input id="rhvoice-rest_rate" name="rhvoice-rest_rate" value="[#RHVOICE-REST_RATE#]" type="text" class="form-control"></div>
+        </div>
+        <!-- RHVOICE-REST_PITCH (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE-REST_PITCH#] has-error[#endif#]">
+         <label for="rhvoice-rest_pitch" class="col-lg-3 control-label">
+         Высота голоса 0-100
+         </label>
+         <div class="col-lg-9"><input id="rhvoice-rest_pitch" name="rhvoice-rest_pitch" value="[#RHVOICE-REST_PITCH#]" type="text" class="form-control"></div>
+        </div>
+        <!-- RHVOICE-REST_VOLUME (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE-REST_VOLUME#] has-error[#endif#]">
+         <label for="rhvoice-rest_volume" class="col-lg-3 control-label">
+         Громкость 0-100
+         </label>
+         <div class="col-lg-9"><input id="rhvoice-rest_volume" name="rhvoice-rest_volume" value="[#RHVOICE-REST_VOLUME#]" type="text" class="form-control"></div>
+        </div>
+        <hr/>
+        <h2>RHVoice</h2>
+        <p>!!!Крайне не рекомендуется, используйте rhvoice-rest</br>RHVoice TTS, получающий поток от RHVoice-test. Для работы с кэшем еще нужен lame.</br>Библиотека загружается и инициализируется для каждой фразы, это очень медленно.</br>Отклик на апельсинке ~2.2 сек.</p>
+        <!-- RHVOICE_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE_SPEAKER#] has-error[#endif#]">
+         <label for="rhvoice_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="rhvoice_speaker" class="form-control" id="rhvoice_speaker">
+                <option value="anna"[#if RHVOICE_SPEAKER=="anna"#] selected[#endif#]>Анна</option>
+            </select>
+            </div>
+        </div>
+
+        
+        
+        
+        
+        
+
+
+
+
+
 
         <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
         <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
