@@ -328,7 +328,7 @@ EOD;
         global $$param;
         $value = $$param;
         $param=strtoupper($param);
-        $data = Array(<<<EOD
+        $db = <<<EOD
         mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
         mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
         mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
@@ -380,15 +380,21 @@ EOD;
         mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT TRUE
         mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
         mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
-EOD
-        );
-        foreach($data as $curarray)
+EOD;
+        $data = split("[\n|\r]", $db);
+        //$data = explode("\n", $db);
+        //debmes($data);
+        //debmes('"' . $param . '" - "' . $value . '" - "' . $data[1] . '"');
+        foreach($data as $cur)
         {
+            //debmes($cur);
             $curarray = explode(" ", $cur);
-            if ($curarray[1] == $param)
+            //debmes('  -->-->-->-->--> ' . $curarray);
+            //debmes('-->--> "' . $curarray[9] . '" - "' . $curarray[10] . '" - "' . $curarray[14] . '" - "' . $value . '"');
+            if ($curarray[9] == $param)
             {
-                if(!$value) $value = $curarray[6];
-                if($curarray[2] == 'TINYINT' or substr($curarray[2],0,3) == 'INT') $value=(int)$value;
+                if(!$value) $value = $curarray[14];
+                if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT') $value=(int)$value;
             }
         }
         return $value;

@@ -51,7 +51,36 @@
         //updating 'settings_providerstt' (varchar)
          $rec['SETTINGS_PROVIDERSTT']=  $this->validate('settings_providerstt');
 
-       
+        //updating 'yandex_apikeytts' (varchar)
+         $rec['YANDEX_APIKEYTTS']= $this->validate('yandex_apikeytts');
+        //updating 'yandex_apikeystt' (varchar)
+         $rec['YANDEX_APIKEYSTT']= $this->validate('yandex_apikeystt');
+        //updating 'yandex_emotion' (varchar)
+         $rec['YANDEX_EMOTION']= $this->validate('yandex_emotion');
+        //updating 'yandex_speaker' (varchar)
+         $rec['YANDEX_SPEAKER']= $this->validate('yandex_speaker');
+        //updating 'aws_speaker' (varchar)
+         $rec['AWS_SPEAKER']= $this->validate('aws_speaker');
+        //updating 'aws_access_key_id' (varchar)
+         $rec['AWS_ACCESS_KEY_ID']= $this->validate('aws_access_key_id');
+        //updating 'aws_secret_access_key' (varchar)
+         $rec['AWS_SECRET_ACCESS_KEY']= $this->validate('aws_secret_access_key');
+        //updating 'aws_region' (varchar)
+         $rec['AWS_REGION']= $this->validate('aws_region');
+        //updating 'aws_boto3' (varchar)
+         $rec['AWS_BOTO3']= $this->validate('aws_boto3');
+        //updating 'rhvoice-rest_server' (varchar)
+        // $rec['RHVOICE-REST_SERVER']= $this->validate('rhvoice-rest_server');
+        //updating 'rhvoice-rest_speaker' (varchar)
+         $rec['RHVOICE-REST_SPEAKER']= $this->validate('rhvoice-rest_speaker');
+        //updating 'rhvoice-rest_rate' (varchar)
+         $rec['RHVOICE-REST_RATE']= $this->validate('rhvoice-rest_rate');
+        //updating 'rhvoice-rest_pitch' (varchar)
+         $rec['RHVOICE-REST_PITCH']= $this->validate('rhvoice-rest_pitch');
+        //updating 'rhvoice-rest_volume' (varchar)
+         $rec['RHVOICE-REST_VOLUME']= $this->validate('rhvoice-rest_volume');
+        //updating 'rhvoice_speaker' (varchar)
+         $rec['RHVOICE_SPEAKER']= $this->validate('rhvoice_speaker');
    }
    else {
         //updating 'settings_alarmkwactivated' (BOOLEAN)
