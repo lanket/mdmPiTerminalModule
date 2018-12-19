@@ -9,7 +9,6 @@
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
   if ($this->mode=='update') {
    $ok=1;
-   
     //options for 'ID_TERMINAL' (select)
     global $id_terminal;
     $rec['ID_TERMINAL'] = $id_terminal;
@@ -70,7 +69,7 @@
         //updating 'aws_boto3' (varchar)
          $rec['AWS_BOTO3']= $this->validate('aws_boto3');
         //updating 'rhvoice-rest_server' (varchar)
-        // $rec['RHVOICE-REST_SERVER']= $this->validate('rhvoice-rest_server');
+         $rec['RHVOICE-REST_SERVER']= $this->validate('rhvoice-rest_server');
         //updating 'rhvoice-rest_speaker' (varchar)
          $rec['RHVOICE-REST_SPEAKER']= $this->validate('rhvoice-rest_speaker');
         //updating 'rhvoice-rest_rate' (varchar)
@@ -159,7 +158,9 @@
  
  */
   //UPDATING RECORD
+   if($this->debug == 1) debmes('mpt edit befour ok');
    if ($ok) {
+    if($this->debug == 1) debmes('mpt edit after ok');
     if ($rec['ID']) {
      SQLUpdate($table_name, $rec); // update sql
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
@@ -171,6 +172,7 @@
      if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
     } else {
+                if($this->debug == 1) debmes('mpt edit no recid insert');
      $new_rec=1;
      $rec['ID']=SQLInsert($table_name, $rec); // adding new record
      $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
