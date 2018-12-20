@@ -382,7 +382,7 @@ EOD;
         mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
         mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
 EOD;
-        $data = split("[\n|\r]", $db);
+        $data = explode("\n",  $db);
         //$data = explode("\n", $db);
         //debmes($data);
         //debmes('"' . $param . '" - "' . $value . '" - "' . $data[1] . '"');
