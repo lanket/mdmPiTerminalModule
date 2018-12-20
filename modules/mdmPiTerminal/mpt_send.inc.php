@@ -8,6 +8,8 @@
  */
 
     $service_port='7999';
+    if (isset($data['ID'])) unset($data['ID']);
+    if (isset($data['ID_TERMINAL'])) unset ($data['ID_TERMINAL']);
     $in= $command.':'.$data;
     
     if($this->debug == 1) debmes('mpt send - ' . $in . '; to = ' . $target);

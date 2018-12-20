@@ -68,17 +68,17 @@
          $rec['AWS_REGION']= $this->validate('aws_region');
         //updating 'aws_boto3' (varchar)
          $rec['AWS_BOTO3']= $this->validate('aws_boto3');
-        //updating 'rhvoice-rest_server' (varchar)
-         $rec['RHVOICE-REST_SERVER']= $this->validate('rhvoice-rest_server');
-        //updating 'rhvoice-rest_speaker' (varchar)
-         $rec['RHVOICE-REST_SPEAKER']= $this->validate('rhvoice-rest_speaker');
-        //updating 'rhvoice-rest_rate' (varchar)
-         $rec['RHVOICE-REST_RATE']= $this->validate('rhvoice-rest_rate');
-        //updating 'rhvoice-rest_pitch' (varchar)
-         $rec['RHVOICE-REST_PITCH']= $this->validate('rhvoice-rest_pitch');
-        //updating 'rhvoice-rest_volume' (varchar)
-         $rec['RHVOICE-REST_VOLUME']= $this->validate('rhvoice-rest_volume');
-        //updating 'rhvoice_speaker' (varchar)
+        //updating 'rhvoice0rest_server' (varchar)
+         $rec['RHVOICE0REST_SERVER']= $this->validate('rhvoice0rest_server');
+        //updating 'rhvoice0rest_speaker' (varchar)
+         $rec['RHVOICE0REST_SPEAKER']= $this->validate('rhvoice0rest_speaker');
+        //updating 'rhvoice0rest_rate' (varchar)
+         $rec['RHVOICE0REST_RATE']= $this->validate('rhvoice0rest_rate');
+        //updating 'rhvoice0rest_pitch' (varchar)
+         $rec['RHVOICE0REST_PITCH']= $this->validate('rhvoice0rest_pitch');
+        //updating 'rhvoice0rest_volume' (varchar)
+         $rec['RHVOICE0REST_VOLUME']= $this->validate('rhvoice0rest_volume');
+        //updating 'rhvoice_rest_volume' (varchar)
          $rec['RHVOICE_SPEAKER']= $this->validate('rhvoice_speaker');
    }
    else {
@@ -102,51 +102,6 @@
          $rec['SETTINGS_CHROME_CHOKE']=  $this->validate('settings_chrome_choke');
         //updating 'settings_chrome_alarmstt' (BOOLEAN)
          $rec['SETTINGS_CHROME_ALARMSTT']=  $this->validate('settings_chrome_alarmstt');
-
-       
-/*
-
-        //updating 'alarmkwactivated' (varchar)
-         global $alarmkwactivated;
-         if(!$alarmkwactivated) $alarmkwactivated = 0;
-         $rec['ALARMKWACTIVATED']=$alarmkwactivated;
-        //updating 'alarmtts' (varchar)
-         global $alarmtts;
-         if(!$alarmtts) $alarmtts=0;
-         $rec['ALARMTTS']=$alarmtts;
-        //updating 'alarmstt' (varchar)
-         global $alarmstt;
-         if(!$alarmstt) $alarmstt=0;
-         $rec['ALARMSTT']=$alarmstt;
-        //updating 'ask_me_again' (TINYINT)
-         global $ask_me_again;
-         if(!$ask_me_again) $ask_me_again=0;
-         $rec['ASK_ME_AGAIN']=$ask_me_again;
-        //updating 'quiet' (BOOLEAN)
-         global $quiet;
-         if(!$quiet) $quiet=FALSE;
-         $rec['QUIET']=$quiet;
-        //updating 'no_hello' (BOOLEAN)
-         global $no_hello;
-         if(!$no_hello) $no_hello=FALSE;
-         $rec['NO_HELLO']=$no_hello;
-        //updating 'phrase_time_limit' (TINYINT)
-         global $phrase_time_limit;
-         if(!$phrase_time_limit) $phrase_time_limit=15;
-         $rec['PHRASE_TIME_LIMIT']=$phrase_time_limit;
-        //updating 'chrome_mode' (TINYINT)
-         global $chrome_mode;
-         if(!$chrome_mode) $chrome_mode=2;
-         $rec['CHROME_MODE']=$chrome_mode;
-        //updating 'chrome_choke' (BOOLEAN)
-         global $chrome_choke;
-         if(!$chrome_choke) $chrome_choke=FALSE;
-         $rec['CHROME_CHOKE']=$chrome_choke;
-        //updating 'chrome_alarmstt' (BOOLEAN)
-         global $chrome_alarmstt;
-         if(!$chrome_alarmstt) $chrome_alarmstt=FALSE;
-         $rec['CHROME_ALARMSTT']=$chrome_alarmstt;
- */
    }
 /*
    //updating '<%LANG_LINKED_OBJECT%>' (varchar)
@@ -169,6 +124,7 @@
      $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
      // unset($rec['ID'],$rec['ID_TERMINAL']);
      $senddata = json_encode($rec);
+     
      if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
      $this->send_mpt('settings',$senddata,$ip);
     } else {
