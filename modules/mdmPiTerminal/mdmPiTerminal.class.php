@@ -17,7 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 0;
+  $this->debug = 1;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
