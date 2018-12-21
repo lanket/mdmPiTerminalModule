@@ -237,10 +237,36 @@ function usual(&$out) {
     unsubscribeFromEvent($this->name, 'SAY');
     unsubscribeFromEvent($this->name, 'SAYTO');
     unsubscribeFromEvent($this->name, 'ASK');
-//  subscribeToEvent($this->name, 'SAY','',10);
-//  subscribeToEvent($this->name, 'SAYTO','',20);
-//  subscribeToEvent($this->name, 'ASK','',20);
-  parent::install();
+    addClass('Terminals');
+    $phpcode = <<<EOD
+/*
+Параметры передаваемые с вызовом
+
+    uptime: Аптайм терминала на момент регистрации вызова в секундах. Присутствует всегда.
+    username: Если username задан то будет присылать его всегда.
+    terminal: Если terminal задан то будет присылать его всегда.
+    volume: Системная громкость терминала, -1 если не настроено или при ошибке чтения.
+    mpd_volume: Громкость mpd, -1 при ошибке подключения или если громкость не регулируется.
+    status: Причина вызова. Отсутствует при изменении громкости или если вызов произошел по таймеру.
+
+Возможные значения status:
+
+    start_record: Начало записи голоса (обычно после распознавания ключевого слова).
+    stop_record: Окончание записи голоса.
+    voice_activated: Терминал распознал ключевое слово. Только в chrome_mode = 0, в chrome_mode > 0 ему эквивалентен start_record.
+    speech_recognized_success: Голосовая команда успешно распознана и обрабатывается.
+    start_talking: Терминал начал говорить.
+    stop_talking: Терминал закончил говорить.
+    mpd_play, mpd_stop, mpd_pause: Статус mpd изменился на play, stop, pause.
+    mpd_error: Ошибка получения статуса mpd.
+
+Пример метода который сохраняет все параметры в свойства:
+EOD;
+
+    $phpcode .=chr(13) .'    foreach ($params as $param => $value) { '. chr(13) .'        $this->setProperty($param, $value);'. chr(13) .'    };'. chr(13) .'        */';
+    addClassMethod('Terminals','GetDataFromTerminal',"");
+    addClassMethod('Terminals','TerminalDataProcessing',$phpcode);
+    parent::install();
  }
 /**
 * Uninstall
@@ -250,9 +276,6 @@ function usual(&$out) {
 * @access public
 */
  function uninstall() {
-    unsubscribeFromEvent($this->name, 'SAY');
-    unsubscribeFromEvent($this->name, 'SAYTO');
-    unsubscribeFromEvent($this->name, 'ASK');
   SQLExec('DROP TABLE IF EXISTS mpt');
   parent::uninstall();
  }

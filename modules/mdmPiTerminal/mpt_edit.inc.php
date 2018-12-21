@@ -115,31 +115,25 @@
   //UPDATING RECORD
    if($this->debug == 1) debmes('mpt edit befour ok');
    if ($ok) {
-    if($this->debug == 1) debmes('mpt edit after ok');
-    if ($rec['ID']) {
-     SQLUpdate($table_name, $rec); // update sql
-     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     $ip = $tmp['HOST'];
-     if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
-     $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-     // unset($rec['ID'],$rec['ID_TERMINAL']);
-     $senddata = json_encode($rec);
-     
-     if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$ip);
-    } else {
-                if($this->debug == 1) debmes('mpt edit no recid insert');
-     $new_rec=1;
-     $rec['ID']=SQLInsert($table_name, $rec); // adding new record
-     $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-     $ip = $tmp['HOST'];
-     $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-     // unset($rec['ID'],$rec['ID_TERMINAL']);
-     $senddata = json_encode($rec);
-     if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
-     $this->send_mpt('settings',$senddata,$ip);
-    }
-    $out['OK']=1;
+        if($this->debug == 1) debmes('mpt edit after ok');
+        $tmp = SQLSelectOne('SELECT HOST, NAME FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+        //$ip = $tmp['HOST'];
+        if ($rec['ID']) {
+            SQLUpdate($table_name, $rec); // update sql
+            if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
+        } else {
+            if($this->debug == 1) debmes('mpt edit no recid insert');
+            $new_rec=1;
+            $rec['ID']=SQLInsert($table_name, $rec); // adding new record
+        }
+        $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
+        $senddata = json_encode($rec);
+        $this->send_mpt('settings',$senddata,$tmp['HOST']);
+        if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
+        $nmTerm = $tmp['NAME'];
+        if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
+        addClassObject('Terminals', $nmTerm);
+        $out['OK']=1;
    } else {
     $out['ERR']=1;
    }
