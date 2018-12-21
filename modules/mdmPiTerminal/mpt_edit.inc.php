@@ -132,7 +132,7 @@
         if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
         $nmTerm = $tmp['NAME'];
         if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
-        addClassObject('Terminals', $nmTerm);
+        $this->addObject($nmTerm);
         $out['OK']=1;
    } else {
     $out['ERR']=1;

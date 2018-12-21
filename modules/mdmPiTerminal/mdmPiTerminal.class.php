@@ -113,6 +113,14 @@ function run() {
 * @access public
 */
 function admin(&$out) {
+    $this->getConfig();
+    $out['CREATE_CLASS']=$this->config['CREATE_CLASS'];
+    if ($this->view_mode=='update_settings') {
+        global $create_class;
+        $this->config['CREATE_CLASS']=$create_class;
+        $this->saveConfig();
+        $this->redirect("?");
+    }
     global $sendCommand;
     if ($sendCommand)
     {
@@ -188,6 +196,7 @@ function usual(&$out) {
   SQLExec("DELETE FROM mpt WHERE ID='".$rec['ID']."'");
  }
  function propertySetHandle($object, $property, $value) {
+   $this->getConfig();
    $table='mpt';
    $properties=SQLSelect("SELECT ID FROM $table WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($properties);
@@ -237,6 +246,16 @@ function usual(&$out) {
     unsubscribeFromEvent($this->name, 'SAY');
     unsubscribeFromEvent($this->name, 'SAYTO');
     unsubscribeFromEvent($this->name, 'ASK');
+    parent::install();
+ }
+
+ 
+ function addObject($nmTerm) {
+    //global $create_class;
+    if($this->debug == 1) debmes('mpt addObject create class : ' . $this->config['CREATE_CLASS']);
+    if($this->debug == 1) debmes('mpt addObject nmTerm : ' . $nmTerm);
+    if ($this->config['CREATE_CLASS'] <> 1)        return;
+    if($this->debug == 1) debmes('mpt addObject after return ' . $nmTerm);
     addClass('Terminals');
     $phpcode = <<<EOD
 /*
@@ -266,9 +285,12 @@ EOD;
     $phpcode .=chr(13) .'    foreach ($params as $param => $value) { '. chr(13) .'        $this->setProperty($param, $value);'. chr(13) .'    };'. chr(13) .'        */';
     addClassMethod('Terminals','GetDataFromTerminal',"");
     addClassMethod('Terminals','TerminalDataProcessing',$phpcode);
-    parent::install();
+    if($this->debug == 1) debmes('mpt addObject befour add object ' . $nmTerm);
+    addClassObject('Terminals',$nmTerm);
+    if($this->debug == 1) debmes('mpt addObject after add object ' . $nmTerm);
  }
-/**
+ 
+ /**
 * Uninstall
 *
 * Module uninstall routine

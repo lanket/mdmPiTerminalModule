@@ -1,3 +1,30 @@
+<!-- table zwave_devices search -->
+<div>
+ [ <a href="#" onClick="$('#create_class_set').toggle();return false;"><#LANG_SETUP#></a> ]
+</div>
+<div style="display:none" id='create_class_set'>
+&nbsp;
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+<fieldset>
+<div class="form-group">
+ <label class="control-label"[#if ERR_CREATE_CLASS#] style="color:red;font-weight:bold"[#endif#]>
+ Создавать класс 'Terminals', объекты и методы автоматически
+ </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="create_class" value="1"[#if CREATE_CLASS="1"#] checked[#endif#]>
+         </div>
+</div>
+<div class="form-actions">
+<input type="hidden" name="view_mode" value="update_settings">
+<input type="hidden" name="mode" value="update">
+</div>
+</fieldset>
+<button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
+</form>
+</div>
+
+
+
 
  <!-- action usual -->
  <!-- table mpt search -->
