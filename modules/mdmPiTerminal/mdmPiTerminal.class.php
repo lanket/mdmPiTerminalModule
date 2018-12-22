@@ -254,7 +254,6 @@ function usual(&$out) {
     //global $create_class;
     if($this->debug == 1) debmes('mpt addObject create class : ' . $this->config['CREATE_CLASS']);
     if($this->debug == 1) debmes('mpt addObject nmTerm : ' . $nmTerm);
-    if ($this->config['CREATE_CLASS'] <> 1)        return;
     if($this->debug == 1) debmes('mpt addObject after return ' . $nmTerm);
     addClass('Terminals');
     $phpcode = <<<EOD
@@ -329,7 +328,7 @@ mpt -
  mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
  mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
  mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
- mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT '0'
+ mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
  mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT TRUE
  mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
  mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
@@ -364,6 +363,7 @@ mpt -
  mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT TRUE
  mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
  mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
+ mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
 EOD;
   parent::dbInstall($data);
  }
@@ -389,7 +389,7 @@ EOD;
         mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
         mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
         mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
-        mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT '0'
+        mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
         mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT TRUE
         mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
         mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
@@ -424,6 +424,7 @@ EOD;
         mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT TRUE
         mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
         mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
+        mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
 EOD;
         $data = explode("\n",  $db);
         //$data = explode("\n", $db);

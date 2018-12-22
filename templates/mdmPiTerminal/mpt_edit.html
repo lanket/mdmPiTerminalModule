@@ -179,6 +179,32 @@
               <input type="checkbox" name="settings_chrome_alarmstt" value="1"[#if SETTINGS_CHROME_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
+
+        <!-- MAJORDOMO_OBJECT_NAME (varchar) LINKED_OBJECT --> 
+        <div class="form-group[#if ERR_MAJORDOMO_OBJECT_NAME#] has-error[#endif#]">
+         <label for="majordomo_object_name" class="col-lg-3 control-label">
+         <#LANG_LINKED_OBJECT#>:
+         </label>
+         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
+        </div>
+        <!-- MAJORDOMO_OBJECT_METHOD (varchar) LINKED_METHOD -->
+        <div class="form-group[#if ERR_MAJORDOMO_OBJECT_METHOD#] has-error[#endif#]">
+         <label for="majordomo_object_method" class="col-lg-3 control-label">
+         <#LANG_METHOD#>:
+         </label>
+         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
+        </div>
+        [#if CREATE_CLASS<>"1"#]
+        [#module name="linkedobject" object_field="majordomo_object_name" method_field="majordomo_object_method"#]
+        [#endif#]
+        <!-- MAJORDOMO_HEARTBEAT_TIMEOUT (varchar) -->
+        <div class="form-group[#if ERR_MAJORDOMO_HEARTBEAT_TIMEOUT#] has-error[#endif#]">
+         <label for="majordomo_heartbeat_timeout" class="col-lg-3 control-label">
+         Контроль работоспособности в сек <img src="/img/helpicon.png" title="Если объект и метод заданы, будет отправлять запросы при неактивности терминала, интервал задается в секундах, параметр status отсутствует. 0 - отключено."/>
+         </label>
+         <div class="col-lg-9"><input id="majordomo_heartbeat_timeout" name="majordomo_heartbeat_timeout" value="[#MAJORDOMO_HEARTBEAT_TIMEOUT#]" type="text" class="form-control"></div>
+        </div>
+        
         <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
         <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
         <input type="hidden" name="mode" value="update">

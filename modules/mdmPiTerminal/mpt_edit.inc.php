@@ -21,25 +21,11 @@
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
     }
-  //updating '<%LANG_TITLE%>' (varchar, required)
-   /*
-   global $title;
-   $rec['TITLE']=$title;
-   if ($rec['TITLE']=='') {
-    $out['ERR_TITLE']=1;
-    $ok=0;
-   }
-  //updating 'name' (varchar)
-   global $name;
-   $rec['NAME']=$name;
-  //updating 'linkedRoom' (varchar)
-   global $linkedroom;
-   $rec['LINKEDROOM']=$linkedroom;
-  //updating 'ip' (varchar)
-   global $ip;
-   $rec['IP']=$ip;
-   */
-   if($_POST['panel_voice'])
+    else
+
+        
+        
+    if($_POST['panel_voice'])
    {
         //updating 'snowboy_token' (varchar)
          $rec['SNOWBOY_TOKEN']=  $this->validate('snowboy_token');
@@ -102,17 +88,14 @@
          $rec['SETTINGS_CHROME_CHOKE']=  $this->validate('settings_chrome_choke');
         //updating 'settings_chrome_alarmstt' (BOOLEAN)
          $rec['SETTINGS_CHROME_ALARMSTT']=  $this->validate('settings_chrome_alarmstt');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['MAJORDOMO_OBJECT_NAME']= $this->validate('majordomo_object_name');
+        //updating 'majordomo_object_method' (varchar)
+         $rec['MAJORDOMO_OBJECT_METHOD']= $this->validate('majordomo_object_method');
+        //updating 'majordomo_heartbeat_timeout' (varchar)
+         $rec['MAJORDOMO_HEARTBEAT_TIMEOUT']= $this->validate('majordomo_heartbeat_timeout');
    }
-/*
-   //updating '<%LANG_LINKED_OBJECT%>' (varchar)
-   global $linked_object;
-   $rec['LINKED_OBJECT']=$linked_object;
-  //updating '<%LANG_LINKED_PROPERTY%>' (varchar)
-   global $linked_property;
-   $rec['LINKED_PROPERTY']=$linked_property;
- 
- */
-  //UPDATING RECORD
+
    if($this->debug == 1) debmes('mpt edit befour ok');
    if ($ok) {
         if($this->debug == 1) debmes('mpt edit after ok');
@@ -124,15 +107,20 @@
         } else {
             if($this->debug == 1) debmes('mpt edit no recid insert');
             $new_rec=1;
+            $nmTerm = $tmp['NAME'];
+            if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
+            if ($this->config['CREATE_CLASS'] == 1)
+            {
+                $this->addObject($nmTerm);
+                $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
+                $rec['MAJORDOMO_OBJECT_NAME'] = $nmTerm;
+            }
             $rec['ID']=SQLInsert($table_name, $rec); // adding new record
         }
         $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-        //$senddata = json_encode($rec);
-        $this->send_mpt('settings',$rec,$tmp['HOST']);
         if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
-        $nmTerm = $tmp['NAME'];
-        if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
-        $this->addObject($nmTerm);
+        
+        $this->send_mpt('settings',$rec,$tmp['HOST']);
         $out['OK']=1;
    } else {
     $out['ERR']=1;
