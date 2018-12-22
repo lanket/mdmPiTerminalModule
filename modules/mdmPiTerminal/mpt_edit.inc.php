@@ -127,8 +127,8 @@
             $rec['ID']=SQLInsert($table_name, $rec); // adding new record
         }
         $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-        $senddata = json_encode($rec);
-        $this->send_mpt('settings',$senddata,$tmp['HOST']);
+        //$senddata = json_encode($rec);
+        $this->send_mpt('settings',$rec,$tmp['HOST']);
         if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
         $nmTerm = $tmp['NAME'];
         if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
