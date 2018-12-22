@@ -33,6 +33,8 @@
          $rec['SETTINGS_SENSITIVITY']=  $this->validate('settings_sensitivity');
         //updating 'settings_providertts' (varchar)
          $rec['SETTINGS_PROVIDERTTS']=  $this->validate('settings_providertts');
+        //updating 'cache_tts_priority' (varchar)
+         $rec['CACHE_TTS_PRIORITY']= $this->validate('cache_tts_priority');
         //updating 'settings_providerstt' (varchar)
          $rec['SETTINGS_PROVIDERSTT']=  $this->validate('settings_providerstt');
 
@@ -66,6 +68,8 @@
          $rec['RHVOICE0REST_VOLUME']= $this->validate('rhvoice0rest_volume');
         //updating 'rhvoice_rest_volume' (varchar)
          $rec['RHVOICE_SPEAKER']= $this->validate('rhvoice_speaker');
+        //updating 'pocketsphinx0rest_server' (varchar)
+         $rec['POCKETSPHINX0REST_SERVER']= $this->validate('pocketsphinx0rest_server');
    }
    else {
         //updating 'settings_alarmkwactivated' (BOOLEAN)
@@ -94,6 +98,12 @@
          $rec['MAJORDOMO_OBJECT_METHOD']= $this->validate('majordomo_object_method');
         //updating 'majordomo_heartbeat_timeout' (varchar)
          $rec['MAJORDOMO_HEARTBEAT_TIMEOUT']= $this->validate('majordomo_heartbeat_timeout');
+        //updating 'proxy_enable' (varchar)
+         $rec['PROXY_ENABLE']= $this->validate('proxy_enable');
+        //updating 'proxy_monkey_patching' (varchar)
+         $rec['PROXY_MONKEY_PATCHING']= $this->validate('proxy_monkey_patching');
+        //updating 'proxy_proxy' (varchar)
+         $rec['PROXY_PROXY']= $this->validate('proxy_proxy');
    }
 
    if($this->debug == 1) debmes('mpt edit befour ok');

@@ -180,6 +180,9 @@
          </div>
         </div>
 
+        <hr/>
+        <h2>Обратная связь с MajorDomo</h2>
+
         <!-- MAJORDOMO_OBJECT_NAME (varchar) LINKED_OBJECT --> 
         <div class="form-group[#if ERR_MAJORDOMO_OBJECT_NAME#] has-error[#endif#]">
          <label for="majordomo_object_name" class="col-lg-3 control-label">
@@ -204,6 +207,42 @@
          </label>
          <div class="col-lg-9"><input id="majordomo_heartbeat_timeout" name="majordomo_heartbeat_timeout" value="[#MAJORDOMO_HEARTBEAT_TIMEOUT#]" type="text" class="form-control"></div>
         </div>
+        
+        <hr/>
+        <h2>Proxy</h2>
+        <p><a href="https://github.com/Aculeasis/mdmTerminal2/wiki/proxy">Подробнее о настройках прокси</a></p>
+        <!-- PROXY_ENABLE (varchar) -->
+        <div class="form-group[#if ERR_PROXY_ENABLE#] has-error[#endif#]">
+         <label for="proxy_enable" class="col-lg-3 control-label">
+         Использовать прокси
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="proxy_enable" value="1"[#if PROXY_ENABLE="1"#] checked[#endif#]>
+         </div>
+        </div>
+        <!-- PROXY_MONKEY_PATCHING (varchar) -->
+        <div class="form-group[#if ERR_PROXY_MONKEY_PATCHING#] has-error[#endif#]">
+         <label for="proxy_monkey_patching" class="col-lg-3 control-label">
+         proxy_monkey_patching
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="proxy_monkey_patching" value="1"[#if PROXY_MONKEY_PATCHING="1"#] checked[#endif#]>
+         </div>
+        </div>
+        <!-- PROXY_PROXY (varchar) -->
+        <div class="form-group[#if ERR_PROXY_PROXY#] has-error[#endif#]">
+         <label for="proxy_proxy" class="col-lg-3 control-label">
+         Адрес
+         </label>
+         <div class="col-lg-9"><input id="proxy_proxy" name="proxy_proxy" value="[#PROXY_PROXY#]" type="text" class="form-control"></div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
         
         <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
         <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
@@ -287,9 +326,30 @@
                 <option value="Aws"[#if SETTINGS_PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
                 <option value="Rhvoice"[#if SETTINGS_PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
                 <option value="Rhvoice-rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
             </select>
          </div>
          </div>
+        <hr/>
+
+        <!-- CACHE_TTS_PRIORITY (varchar) -->
+        <div class="form-group[#if ERR_CACHE_TTS_PRIORITY#] has-error[#endif#]">
+         <label for="cache_tts_priority" class="col-lg-3 control-label">
+         Приоритет при поиске в кэше
+         </label>
+            <div class="col-lg-4">
+            <select name="cache_tts_priority" class="form-control" id="cache_tts_priority">
+                <option value="0"[#if CACHE_TTS_PRIORITY=="0"#] selected[#endif#]>Берет кэш только текущего провайдера</option>
+                <option value="1"[#if CACHE_TTS_PRIORITY=="1"#] selected[#endif#]>Вначале текущего, потом любого</option>
+                <option value="Yandex"[#if CACHE_TTS_PRIORITY=="Yandex"#] selected[#endif#]>Вначале Yandex</option>
+                <option value="Google"[#if CACHE_TTS_PRIORITY=="Google"#] selected[#endif#]>Вначале Google</option>
+                <option value="Aws"[#if CACHE_TTS_PRIORITY=="Aws"#] selected[#endif#]>Вначале Polly от AWS</option>
+                <option value="Rhvoice"[#if CACHE_TTS_PRIORITY=="Rhvoice"#] selected[#endif#]>Вначале Rhvoice offline</option>
+                <option value="Rhvoice-rest"[#if CACHE_TTS_PRIORITY=="Rhvoice-rest"#] selected[#endif#]>Вначале Rhvoice-rest offline</option>
+                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Вначале Pocketsphinx-rest offline</option>
+            </select>
+            </div>
+        </div>
         <hr/>
         
         <!-- SETTINGS_PROVIDERSTT (varchar) -->
@@ -492,6 +552,13 @@
                 <option value="talgat"[#if RHVOICE_SPEAKER=="talgat"#] selected[#endif#]>Talgat Татарский</option>
             </select>
             </div>
+        </div>
+        <!-- POCKETSPHINX0REST_SERVER (varchar) -->
+        <div class="form-group[#if ERR_POCKETSPHINX0REST_SERVER#] has-error[#endif#]">
+            <label for="pocketsphinx0rest_server" class="col-lg-3 control-label">
+                Pocketsphinx-rest server
+            </label>
+            <div class="col-lg-9"><input id="pocketsphinx-rest_server" name="pocketsphinx0rest_server" value="[#POCKETSPHINX0REST_SERVER#]" type="text" class="form-control"></div>
         </div>
 
         
