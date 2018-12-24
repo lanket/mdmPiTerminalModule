@@ -266,7 +266,7 @@
     <!-- panel_voice -->
     <div id="panel_voice" class="tab-pane fade in">
 
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
         [#if OK#]
         <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
         [#endif OK#]
@@ -325,8 +325,8 @@
                 <option value="Google"[#if SETTINGS_PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
                 <option value="Aws"[#if SETTINGS_PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
                 <option value="Rhvoice"[#if SETTINGS_PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
-                <option value="Rhvoice-rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
-                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
+                <option value="Rhvoice_rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice_rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+                <option value="Pocketsphinx_rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx_rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
             </select>
          </div>
          </div>
@@ -479,21 +479,21 @@
          </label>
             <div class="col-lg-4">
             <select name="rhvoice0rest_speaker" class="form-control" id="rhvoice0rest_speaker">
-                <option value="anna"[#if RHVOICE_SPEAKER=="anna"#] selected[#endif#]>Анна Русская</option>
-                <option value="elena"[#if RHVOICE_SPEAKER=="elena"#] selected[#endif#]>Елена Русская</option>
-                <option value="irina"[#if RHVOICE_SPEAKER=="irina"#] selected[#endif#]>Ирина Русская</option>
-                <option value="aleksandr"[#if RHVOICE_SPEAKER=="aleksandr"#] selected[#endif#]>Александр Русский</option>
-                <option value="natalia"[#if RHVOICE_SPEAKER=="natalia"#] selected[#endif#]>Наталья Украинский</option>
-                <option value="anatol"[#if RHVOICE_SPEAKER=="anatol"#] selected[#endif#]>Анатольй Украинский</option>
-                <option value="alan"[#if RHVOICE_SPEAKER=="alan"#] selected[#endif#]>Alan English</option>
-                <option value="bdl"[#if RHVOICE_SPEAKER=="bdl"#] selected[#endif#]>Bubligum English</option>
-                <option value="clb"[#if RHVOICE_SPEAKER=="clb"#] selected[#endif#]>Caribian English</option>
-                <option value="slt"[#if RHVOICE_SPEAKER=="slt"#] selected[#endif#]>Sultan English</option>
-                <option value="spomenka"[#if RHVOICE_SPEAKER=="spomenka"#] selected[#endif#]>Spomenka Esperanto</option>
-                <option value="natia"[#if RHVOICE_SPEAKER=="natia"#] selected[#endif#]>Natia Georgian</option>
-                <option value="azamat"[#if RHVOICE_SPEAKER=="azamat"#] selected[#endif#]>Azamat Киргизский</option>
-                <option value="nazgul"[#if RHVOICE_SPEAKER=="nazgul"#] selected[#endif#]>Nazgul Киргизский</option>
-                <option value="talgat"[#if RHVOICE_SPEAKER=="talgat"#] selected[#endif#]>Talgat Татарский</option>
+                <option value="anna"[#if RHVOICE0REST_SPEAKER=="anna"#] selected[#endif#]>Анна Русская</option>
+                <option value="elena"[#if RHVOICE0REST_SPEAKER=="elena"#] selected[#endif#]>Елена Русская</option>
+                <option value="irina"[#if RHVOICE0REST_SPEAKER=="irina"#] selected[#endif#]>Ирина Русская</option>
+                <option value="aleksandr"[#if RHVOICE0REST_SPEAKER=="aleksandr"#] selected[#endif#]>Александр Русский</option>
+                <option value="natalia"[#if RHVOICE0REST_SPEAKER=="natalia"#] selected[#endif#]>Наталья Украинский</option>
+                <option value="anatol"[#if RHVOICE0REST_SPEAKER=="anatol"#] selected[#endif#]>Анатольй Украинский</option>
+                <option value="alan"[#if RHVOICE0REST_SPEAKER=="alan"#] selected[#endif#]>Alan English</option>
+                <option value="bdl"[#if RHVOICE0REST_SPEAKER=="bdl"#] selected[#endif#]>Bubligum English</option>
+                <option value="clb"[#if RHVOICE0REST_SPEAKER=="clb"#] selected[#endif#]>Caribian English</option>
+                <option value="slt"[#if RHVOICE0REST_SPEAKER=="slt"#] selected[#endif#]>Sultan English</option>
+                <option value="spomenka"[#if RHVOICE0REST_SPEAKER=="spomenka"#] selected[#endif#]>Spomenka Esperanto</option>
+                <option value="natia"[#if RHVOICE0REST_SPEAKER=="natia"#] selected[#endif#]>Natia Georgian</option>
+                <option value="azamat"[#if RHVOICE0REST_SPEAKER=="azamat"#] selected[#endif#]>Azamat Киргизский</option>
+                <option value="nazgul"[#if RHVOICE0REST_SPEAKER=="nazgul"#] selected[#endif#]>Nazgul Киргизский</option>
+                <option value="talgat"[#if RHVOICE0REST_SPEAKER=="talgat"#] selected[#endif#]>Talgat Татарский</option>
             </select>
             </div>
         </div>

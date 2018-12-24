@@ -7,6 +7,7 @@
   }
   $table_name='mpt';
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
+  
   if ($this->mode=='update') {
    $ok=1;
     //options for 'ID_TERMINAL' (select)
@@ -23,10 +24,13 @@
     }
     else
 
-        
+    global $postdata;
+    $postdata = array();
+    
         
     if($_POST['panel_voice'])
    {
+        if($this->debug == 1) debmes("mpt edit panel_voice" );
         //updating 'snowboy_token' (varchar)
          $rec['SNOWBOY_TOKEN']=  $this->validate('snowboy_token');
         //updating 'settings_sensitivity' (varchar)
@@ -71,7 +75,9 @@
         //updating 'pocketsphinx0rest_server' (varchar)
          $rec['POCKETSPHINX0REST_SERVER']= $this->validate('pocketsphinx0rest_server');
    }
-   else {
+   else 
+   {
+        if($this->debug == 1) debmes("mpt edit not panel_voice" );
         //updating 'settings_alarmkwactivated' (BOOLEAN)
          $rec['SETTINGS_ALARMKWACTIVATED']=  $this->validate('settings_alarmkwactivated');
         //updating 'settings_alarmtts' (BOOLEAN)
@@ -128,9 +134,9 @@
             $rec['ID']=SQLInsert($table_name, $rec); // adding new record
         }
         $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
-        if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
+        // if($this->debug == 1) debmes('mpt edit send: ' . $senddata);
         
-        $this->send_mpt('settings',$rec,$tmp['HOST']);
+        $this->send_mpt('settings', $postdata, $tmp['HOST']);
         $out['OK']=1;
    } else {
     $out['ERR']=1;

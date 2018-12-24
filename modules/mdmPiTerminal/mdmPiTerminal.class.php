@@ -17,7 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 0;
+  $this->debug = 1;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
@@ -373,8 +373,9 @@ EOD;
         global $$param;
         $value = $$param;
         $param=strtoupper($param);
+        if($this->debug == 1) $oldvalue = $value;
         $db = <<<EOD
-        mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
+        mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT "'
         mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
         mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
         mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
@@ -430,7 +431,6 @@ EOD;
         //$data = explode("\n", $db);
         //debmes($data);
         //debmes('"' . $param . '" - "' . $value . '" - "' . $data[1] . '"');
-        if($param == 'RHVOICE-REST_VOLUME') debmes('mpt validate RHVOICE-REST_VOLUME = ' . $value);
         foreach($data as $cur)
         {
             //debmes($cur);
@@ -443,7 +443,10 @@ EOD;
                 if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT') $value=(int)$value;
             }
         }
-        if($param == 'RHVOICE-REST_VOLUME') debmes('mpt validate RHVOICE-REST_VOLUME = ' . $value);
+        if($this->debug == 1) debmes("mpt edit befour validate : $param = $oldvalue > $value" );
+        global $postdata;
+        $postdata[$param] = $value;
+
         return $value;
     }
 // mpt: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''
