@@ -373,7 +373,6 @@ EOD;
         global $$param;
         $value = $$param;
         $param=strtoupper($param);
-        if($this->debug == 1) $oldvalue = $value;
         $db = <<<EOD
         mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT "'
         mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
@@ -439,7 +438,7 @@ EOD;
             //debmes('-->--> "' . $curarray[9] . '" - "' . $curarray[10] . '" - "' . $curarray[14] . '" - "' . $value . '"');
             if ($curarray[9] == $param)
             {
-                if(!$value) $value = $curarray[14];
+                if(!$value) $value = str_replace("'","",$curarray[14]);
                 if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT') $value=(int)$value;
             }
         }
