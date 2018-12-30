@@ -74,7 +74,7 @@
          Сигнал о распознавании ключевого слова:
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="settings_alarmkwactivated" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>
+             <input type="checkbox" name="settings_alarmkwactivated" value="true"[#if SETTINGS_ALARMKWACTIVATED="true"#] checked[#endif#]>
          </div>
         </div>
         
@@ -84,7 +84,7 @@
          Сигнал перед сообщением:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_alarmtts" value="1"[#if SETTINGS_ALARMTTS="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmtts" value="true"[#if SETTINGS_ALARMTTS="true"#] checked[#endif#]>
          </div>
         </div>
         
@@ -94,7 +94,7 @@
          Сигнал перед началом распознавания речи:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_alarmstt" value="1"[#if SETTINGS_ALARMSTT="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmstt" value="true"[#if SETTINGS_ALARMSTT="true"#] checked[#endif#]>
          </div>
         </div>
         
@@ -112,7 +112,7 @@
          Тихий запуск <img src="/img/helpicon.png" title="Несущественные сообщения не будут произнесены"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_quiet" value="1"[#if SETTINGS_QUIET="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_quiet" value="true"[#if SETTINGS_QUIET="true"#] checked[#endif#]>
          </div>
         </div>
 
@@ -122,7 +122,7 @@
          Старт без приветствия <img src="/img/helpicon.png" title="Терминал не будет произносить приветствие при голосовой активации"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_no_hello" value="1"[#if SETTINGS_NO_HELLO="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_no_hello" value="true"[#if SETTINGS_NO_HELLO="true"#] checked[#endif#]>
          </div>
         </div>
 
@@ -166,7 +166,7 @@
          Глушить музыку <img src="/img/helpicon.png" title="Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_chrome_choke" value="1"[#if SETTINGS_CHROME_CHOKE="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_choke" value="true"[#if SETTINGS_CHROME_CHOKE="true"#] checked[#endif#]>
          </div>
         </div>
 
@@ -176,7 +176,7 @@
          Сигнал перед распознованием <img src="/img/helpicon.png" title="Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_chrome_alarmstt" value="1"[#if SETTINGS_CHROME_ALARMSTT="1"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_alarmstt" value="true"[#if SETTINGS_CHROME_ALARMSTT="true"#] checked[#endif#]>
          </div>
         </div>
 
@@ -188,16 +188,16 @@
          <label for="majordomo_object_name" class="col-lg-3 control-label">
          <#LANG_LINKED_OBJECT#>:
          </label>
-         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
+         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
         </div>
         <!-- MAJORDOMO_OBJECT_METHOD (varchar) LINKED_METHOD -->
         <div class="form-group[#if ERR_MAJORDOMO_OBJECT_METHOD#] has-error[#endif#]">
          <label for="majordomo_object_method" class="col-lg-3 control-label">
          <#LANG_METHOD#>:
          </label>
-         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
+         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
         </div>
-        [#if CREATE_CLASS<>"1"#]
+        [#if CREATE_CLASS<>"true"#]
         [#module name="linkedobject" object_field="majordomo_object_name" method_field="majordomo_object_method"#]
         [#endif#]
         <!-- MAJORDOMO_HEARTBEAT_TIMEOUT (varchar) -->
@@ -217,7 +217,7 @@
          Использовать прокси
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="proxy_enable" value="1"[#if PROXY_ENABLE="1"#] checked[#endif#]>
+              <input type="checkbox" name="proxy_enable" value="true"[#if PROXY_ENABLE="true"#] checked[#endif#]>
          </div>
         </div>
         <!-- PROXY_MONKEY_PATCHING (varchar) -->
@@ -226,7 +226,7 @@
          proxy_monkey_patching
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="proxy_monkey_patching" value="1"[#if PROXY_MONKEY_PATCHING="1"#] checked[#endif#]>
+              <input type="checkbox" name="proxy_monkey_patching" value="true"[#if PROXY_MONKEY_PATCHING="true"#] checked[#endif#]>
          </div>
         </div>
         <!-- PROXY_PROXY (varchar) -->
@@ -325,8 +325,8 @@
                 <option value="Google"[#if SETTINGS_PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
                 <option value="Aws"[#if SETTINGS_PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
                 <option value="Rhvoice"[#if SETTINGS_PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
-                <option value="Rhvoice_rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice_rest"#] selected[#endif#]>Rhvoice-rest offline</option>
-                <option value="Pocketsphinx_rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx_rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
+                <option value="Rhvoice-rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
             </select>
          </div>
          </div>
@@ -466,7 +466,7 @@
          Использовать AWS SDK (boto3) для коммуникации вместо нативной реализации <img src="/img/helpicon.png" title="Polly будет отвечать на 200-300 ms быстрее, а прокси для aws перестанет работать. boto3 должен быть установлен: mdmTerminal2/env/bin/python -m pip install boto3"/>
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="aws_boto3" value="1"[#if AWS_BOTO3="1"#] checked[#endif#]>
+             <input type="checkbox" name="aws_boto3" value="true"[#if AWS_BOTO3="true"#] checked[#endif#]>
          </div>
         </div>
         <hr/>

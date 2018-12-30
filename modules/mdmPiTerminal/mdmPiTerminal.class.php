@@ -17,7 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 0;
+  $this->debug = 1;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
@@ -315,7 +315,7 @@ mpt -
  mpt: ID int(10) unsigned NOT NULL auto_increment
  mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
  mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
- mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT FALSE
  mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
  mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
  mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT FALSE
@@ -372,11 +372,13 @@ EOD;
     {
         global $$param;
         $value = $$param;
+        if($this->debug == 1) $oldvalue = $value;
+//        $setParam = !$_POST[$param];
         $param=strtoupper($param);
         $db = <<<EOD
-        mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT "'
+        mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
         mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
-        mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT FALSE
         mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
         mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
         mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT FALSE
@@ -427,30 +429,33 @@ EOD;
         mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
 EOD;
         $data = explode("\n",  $db);
-        //$data = explode("\n", $db);
-        //debmes($data);
-        //debmes('"' . $param . '" - "' . $value . '" - "' . $data[1] . '"');
         foreach($data as $cur)
         {
-            //debmes($cur);
             $curarray = explode(" ", $cur);
-            //debmes('  -->-->-->-->--> ' . $curarray);
-            //debmes('-->--> "' . $curarray[9] . '" - "' . $curarray[10] . '" - "' . $curarray[14] . '" - "' . $value . '"');
             if ($curarray[9] == $param)
             {
-                if(!$value) $value = str_replace("'","",$curarray[14]);
-                if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT') $value=(int)$value;
+                if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT')
+                {
+                    if($this->debug == 1) debmes(">mpt edit validate int : $param = $oldvalue > $value ! isset = $setParam xxx " . isset($value));
+//                    if(isset($value)) 
+//                    {
+//                        $value = str_replace("'","",$curarray[14]);
+//                        if($this->debug == 1) debmes(">mpt edit validate int != 0 : $param = $oldvalue > $value" );
+//                    }
+                    $value=(int)$value;
+                }
+                else
+                {
+                    if(!$value) $value = str_replace("'","",$curarray[14]);
+                }
             }
         }
-        if($this->debug == 1) debmes("mpt edit befour validate : $param = $oldvalue > $value" );
+        if($this->debug == 1) debmes("mpt edit validate : $param = $oldvalue > $value" );
         global $postdata;
         $postdata[$param] = $value;
 
         return $value;
     }
-// mpt: LINKED_OBJECT varchar(100) NOT NULL DEFAULT ''
-// mpt: MAJORDOMO_OBJECT_NAME varchar(255) NOT NULL DEFAULT ''
-// mpt: LINKED_METHOD varchar(100) NOT NULL DEFAULT ''
 
    // --------------------------------------------------------------------
 }
