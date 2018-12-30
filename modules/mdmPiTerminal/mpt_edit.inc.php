@@ -41,7 +41,6 @@
          $rec['CACHE_TTS_PRIORITY']= $this->validate('cache_tts_priority');
         //updating 'settings_providerstt' (varchar)
          $rec['SETTINGS_PROVIDERSTT']=  $this->validate('settings_providerstt');
-
         //updating 'yandex_apikeytts' (varchar)
          $rec['YANDEX_APIKEYTTS']= $this->validate('yandex_apikeytts');
         //updating 'yandex_apikeystt' (varchar)
