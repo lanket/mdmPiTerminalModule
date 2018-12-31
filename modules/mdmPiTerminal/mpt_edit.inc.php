@@ -7,6 +7,11 @@
   }
   $table_name='mpt';
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
+  if($rec['ID_TERMINAL'])  
+  {
+    $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+    $out['IP_TERMINAL'] = $tmp['HOST'];
+  }
   
   if ($this->mode=='update') {
    $ok=1;
@@ -22,7 +27,6 @@
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
     }
-    else
 
     global $postdata;
     $postdata = array();
@@ -114,8 +118,6 @@
    if($this->debug == 1) debmes('mpt edit befour ok');
    if ($ok) {
         if($this->debug == 1) debmes('mpt edit after ok');
-        $tmp = SQLSelectOne('SELECT HOST, NAME FROM terminals where ID = ' . $rec['ID_TERMINAL']);
-        //$ip = $tmp['HOST'];
         if ($rec['ID']) {
             SQLUpdate($table_name, $rec); // update sql
             if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
@@ -141,7 +143,7 @@
     $out['ERR']=1;
    }
   }
-    $tmp=SQLSelect("SELECT ID, TITLE as NAME FROM terminals ORDER BY NAME");
+    $tmp=SQLSelect("SELECT ID, TITLE, NAME, HOST, if(IS_ONLINE = 1, 'Online', 'Offline') as ONLINE FROM terminals ORDER BY NAME");
     $terminals_total=count($tmp);
     for($terminals_i=0;$terminals_i<$terminals_total;$terminals_i++) {
         $terminal_id_opt[$tmp[$terminals_i]['ID']]=$tmp[$terminals_i]['NAME'];

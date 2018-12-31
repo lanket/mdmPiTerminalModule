@@ -29,8 +29,8 @@
 <ul id="tab" class="nav nav-tabs">
     <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
     <li><a data-toggle="tab" href="#panel_voice">Выбор и настройка голосовых сервисов</a></li>
-    <li><a data-toggle="tab" href="#panel_admin">Обслуживание</a></li>
     <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
+    <li><a data-toggle="tab" href="#panel_admin">Обслуживание</a></li>
 </ul>
 <br>
 
@@ -60,7 +60,7 @@
             <div class="col-lg-5">
                 <select name="id_terminal" class="form-control [#if ERR_ID_TERMINAL#]alert-danger[#endif#]" >
                     <option value="">select
-                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#NAME#]
+                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#] | [#NAME#] | [#HOST#] | [#ONLINE#]
                     [#end ID_TERMINAL_OPTIONS#]
                 </select>
 
@@ -594,16 +594,6 @@
       </form>
 
     </div>
-    <!-- panel_admin -->
-    <div id="panel_admin" class="tab-pane fade in">
-        <p>Обновить терминал</p>
-        <button onclick="sendCommand([#ID#],'update_0_0',0);return false;" title="Обновить" class="btn btn-default">Обновить</button>
-        <hr/>
-
-        <p>Откатить термина до предыдущего успешного обновления</p>
-        <button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
-        <hr/>
-    </div>
     <!-- panel_record -->
     <div id="panel_record" class="tab-pane fade in">
         <p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
@@ -637,7 +627,94 @@
         -->
     </div>
 
+    <!-- panel_admin -->
+    <div id="panel_admin" class="tab-pane fade in">
+        <p>Обновить терминал</p>
+        <button onclick="sendCommand([#ID#],'update_0_0',0);return false;" title="Обновить" class="btn btn-default">Обновить</button>
+        <hr/>
 
+        <p>Откатить термина до предыдущего успешного обновления</p>
+        <button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
+        <hr/>
+        <p>Лог терминала</p>
+        <script language="javascript" type="text/javascript">
+          function init()
+          {
+                document.myform.url.value = "ws://[#IP_TERMINAL#]:8999/"
+                document.myform.ws_token.value = "token_is_unset"
+                document.myform.disconnectButton.disabled = false;
+          }
+          function doConnect()
+          {
+            websocket = new WebSocket(document.myform.url.value);
+            websocket.onopen = function(evt) { onOpen(evt) };
+            websocket.onclose = function(evt) { onClose(evt) };
+            websocket.onmessage = function(evt) { onMessage(evt) };
+            websocket.onerror = function(evt) { onError(evt) };
+          }
+          function onOpen(evt)
+          {
+            writeToScreen("connected\n");
+                document.myform.connectButton.disabled = true;
+                document.myform.disconnectButton.disabled = false;
+                websocket.send(document.myform.ws_token.value);
+                websocket.send("remote_log:raw");
+          }
+          function onClose(evt)
+          {
+                writeToScreen("disconnected\n");
+                document.myform.connectButton.disabled = false;
+                document.myform.disconnectButton.disabled = true;
+          }
+          function onMessage(evt)
+          {
+            writeToScreen(evt.data + '\n');
+          }
+          function onError(evt)
+          {
+                writeToScreen('error: ' + evt.data + '\n');
+                websocket.close();
+                document.myform.connectButton.disabled = false;
+                document.myform.disconnectButton.disabled = true;
+          }
+          function writeToScreen(message)
+          {
+                document.myform.outputtext.value += message
+                document.myform.outputtext.scrollTop = document.myform.outputtext.scrollHeight;
+          }
+          window.addEventListener("load", init, false);
+           function sendText() {
+                        doSend( document.myform.inputtext.value );
+           }
+          function clearText() {
+                        document.myform.outputtext.value = "";
+           }
+           function doDisconnect() {
+                        websocket.close();
+           }
+        </script>
+
+        <div id="output"></div>
+        <form name="myform">
+        <p>
+        <textarea name="outputtext" rows="50" cols="120"></textarea>
+        </p>
+        <p>
+        <input type="hidden" type="text" name="ws_token" size="40"></input>
+        </p>
+        <p>
+        <input type="hidden" type="text" name="url" size="40"></input>
+        </p>
+        <p>
+        <input type="button" name=clearButton value="Clear" onClick="clearText();">
+        <input type="button" name=disconnectButton value="Disconnect" onClick="doDisconnect();">
+        <input type="button" name=connectButton value="Connect" onClick="doConnect();">
+        </p>
+
+    </div>
+
+    
+    
 </div>
 <hr/>
 <script type="text/javascript">

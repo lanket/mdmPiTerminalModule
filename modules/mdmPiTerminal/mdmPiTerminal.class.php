@@ -17,7 +17,7 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 1;
+  $this->debug = 0;
   $this->name="mdmPiTerminal";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
@@ -126,8 +126,8 @@ function admin(&$out) {
     {
         header("HTTP/1.0: 200 OK\n");
         header('Content-Type: text/html; charset=utf-8');
-        global $id;
         global $cmd;
+        global $id;
         $tmp = SQLSelectOne("SELECT HOST FROM `terminals` inner join mpt on mpt.ID_TERMINAL = terminals.ID where mpt.ID =  $id");
         $target = $tmp['HOST'];
         $this->send_mpt('rec', $cmd, $target);
