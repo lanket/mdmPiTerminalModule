@@ -636,80 +636,141 @@
         <p>Откатить термина до предыдущего успешного обновления</p>
         <button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
         <hr/>
-        <p>Лог терминала</p>
+        <!-- remote_log -->
+        <style>
+            .log_outputtext {
+            background-color: black;
+            color: aliceblue;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-width: 1000px;
+            height: 500px;
+            font-family: monospace;
+            font-size: 12px;
+            border-color: black;
+            padding: 2px;
+            border-width: thick;
+            border-style: solid;
+            }
+        </style>
+        <form name="remote_log_form">
+            <p>
+                Лог терминала
+                <input type="button" name=clearButton value="Clear" onClick="clearText();">
+                <input type="button" name=connectButton value="Connect" onClick="doConnectDisconnect();">
+            </p>
+            <input type="hidden" name="ws_token" value="token_is_unset">
+            <input type="hidden" name="terminal_ip" value="[#IP_TERMINAL#]">
+        </form>
+        <div id="log_outputtext" class="log_outputtext"></div>
+
         <script language="javascript" type="text/javascript">
-          function init()
-          {
-                document.myform.url.value = "ws://[#IP_TERMINAL#]:8999/"
-                document.myform.ws_token.value = "token_is_unset"
-                document.myform.disconnectButton.disabled = false;
-          }
+            var remote_log = document.getElementById("log_outputtext");
+            // ansi color -> html; https://github.com/mmalecki/ansispan
+            var ansispan = function (str) {
+              Object.keys(ansispan.foregroundColors).forEach(function (ansi) {
+                var span = '<span style="color: ' + ansispan.foregroundColors[ansi] + '">';
+                str = str.replace(
+                  new RegExp('\033\\[' + ansi + 'm', 'g'),
+                  span
+                ).replace(
+                  new RegExp('\033\\[1;' + ansi + 'm', 'g'),
+                  span
+                );
+              });
+              return restoreURI(str.replace(/\033\[0m/g, '</span>'));
+            };
+
+            ansispan.foregroundColors = {
+              '36': 'cyan',
+              '90': 'gray',
+              '92': 'mediumspringgreen',
+              '93': 'yellow',
+              '91': 'red',
+              '95': 'darkred'
+            };
+
+            // replace start
+            var tagsToReplace = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;'
+            };
+
+            function replaceTag(tag) {
+                return tagsToReplace[tag] || tag;
+            }
+
+            function safe_tags_replace(str) {
+                return str.replace(/[&<>]/g, replaceTag);
+            }
+            function restoreURI(str) {
+                return str.includes('<span style="color: cyan">majordomo</span>') ? decodeURI(str) : str;
+            }
+            // replace end
+
           function doConnect()
           {
-            websocket = new WebSocket(document.myform.url.value);
+            websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":8999/");
             websocket.onopen = function(evt) { onOpen(evt) };
             websocket.onclose = function(evt) { onClose(evt) };
             websocket.onmessage = function(evt) { onMessage(evt) };
             websocket.onerror = function(evt) { onError(evt) };
           }
+
           function onOpen(evt)
           {
-            writeToScreen("connected\n");
-                document.myform.connectButton.disabled = true;
-                document.myform.disconnectButton.disabled = false;
-                websocket.send(document.myform.ws_token.value);
-                websocket.send("remote_log:raw");
+            writeToScreenMsg("connected");
+            document.remote_log_form.connectButton.value = "Disconnect";
+            websocket.send(document.remote_log_form.ws_token.value);
+            websocket.send('remote_log');
           }
+
           function onClose(evt)
           {
-                writeToScreen("disconnected\n");
-                document.myform.connectButton.disabled = false;
-                document.myform.disconnectButton.disabled = true;
+            writeToScreenMsg("disconnected");
+            document.remote_log_form.connectButton.value = "Connect";
           }
+
           function onMessage(evt)
           {
-            writeToScreen(evt.data + '\n');
+            writeToScreenLog(evt.data);
           }
+
           function onError(evt)
           {
-                writeToScreen('error: ' + evt.data + '\n');
-                websocket.close();
-                document.myform.connectButton.disabled = false;
-                document.myform.disconnectButton.disabled = true;
+            writeToScreenMsg('error: ' + evt.data);
+            websocket.close();
           }
+
+          function writeToScreenMsg(message)
+          {
+            writeToScreen('<span style="color: darkorange">' + message + '</span>');
+          }
+
+          function writeToScreenLog(message)
+          {
+            writeToScreen(ansispan(safe_tags_replace(message)));
+          }
+
           function writeToScreen(message)
           {
-                document.myform.outputtext.value += message
-                document.myform.outputtext.scrollTop = document.myform.outputtext.scrollHeight;
+            remote_log.innerHTML += message + "<br>";
+            remote_log.scrollTop = remote_log.scrollHeight;
           }
-          window.addEventListener("load", init, false);
-           function sendText() {
-                        doSend( document.myform.inputtext.value );
-           }
+
           function clearText() {
-                        document.myform.outputtext.value = "";
+                remote_log.innerHTML = "";
            }
+
            function doDisconnect() {
-                        websocket.close();
+                websocket.close();
+           }
+
+           function doConnectDisconnect() {
+                (document.remote_log_form.connectButton.value == "Connect") ? doConnect() : doDisconnect()
            }
         </script>
-
-        <div id="output"></div>
-        <form name="myform">
-        <p>
-        <textarea name="outputtext" rows="50" cols="120"></textarea>
-        </p>
-        <p>
-        <input type="hidden" type="text" name="ws_token" size="40"></input>
-        </p>
-        <p>
-        <input type="hidden" type="text" name="url" size="40"></input>
-        </p>
-        <p>
-        <input type="button" name=clearButton value="Clear" onClick="clearText();">
-        <input type="button" name=disconnectButton value="Disconnect" onClick="doDisconnect();">
-        <input type="button" name=connectButton value="Connect" onClick="doConnect();">
-        </p>
 
     </div>
 
