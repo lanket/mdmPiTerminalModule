@@ -711,7 +711,7 @@
 
           function doConnect()
           {
-            websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":8999/");
+            websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":7999/");
             websocket.onopen = function(evt) { onOpen(evt) };
             websocket.onclose = function(evt) { onClose(evt) };
             websocket.onmessage = function(evt) { onMessage(evt) };
