@@ -1,8 +1,8 @@
 <?php
 /**
-* РўРµСЂРјРёРЅР°Р» РіРѕР»РѕСЃРѕРІРѕРіРѕ СѓРїСЂР°РІР»РµРЅРёСЏ 
+* модуль для голосового терминала
 * @package project
-* @author Wizard <sergejey@gmail.com>
+* @author Wizard <info@lanket.ru>
 * @copyright http://majordomo.smartliving.ru/ (c)
 * @version 0.1 (wizard, 23:05:08 [May 07, 2018])
 */
@@ -113,13 +113,21 @@ function run() {
 * @access public
 */
 function admin(&$out) {
+    $this->getConfig();
+    $out['CREATE_CLASS']=$this->config['CREATE_CLASS'];
+    if ($this->view_mode=='update_settings') {
+        global $create_class;
+        $this->config['CREATE_CLASS']=$create_class;
+        $this->saveConfig();
+        $this->redirect("?");
+    }
     global $sendCommand;
     if ($sendCommand)
     {
         header("HTTP/1.0: 200 OK\n");
         header('Content-Type: text/html; charset=utf-8');
-        global $id;
         global $cmd;
+        global $id;
         $tmp = SQLSelectOne("SELECT HOST FROM `terminals` inner join mpt on mpt.ID_TERMINAL = terminals.ID where mpt.ID =  $id");
         $target = $tmp['HOST'];
         $this->send_mpt('rec', $cmd, $target);
@@ -188,6 +196,7 @@ function usual(&$out) {
   SQLExec("DELETE FROM mpt WHERE ID='".$rec['ID']."'");
  }
  function propertySetHandle($object, $property, $value) {
+   $this->getConfig();
    $table='mpt';
    $properties=SQLSelect("SELECT ID FROM $table WHERE LINKED_OBJECT LIKE '".DBSafe($object)."' AND LINKED_PROPERTY LIKE '".DBSafe($property)."'");
    $total=count($properties);
@@ -237,12 +246,50 @@ function usual(&$out) {
     unsubscribeFromEvent($this->name, 'SAY');
     unsubscribeFromEvent($this->name, 'SAYTO');
     unsubscribeFromEvent($this->name, 'ASK');
-//  subscribeToEvent($this->name, 'SAY','',10);
-//  subscribeToEvent($this->name, 'SAYTO','',20);
-//  subscribeToEvent($this->name, 'ASK','',20);
-  parent::install();
+    parent::install();
  }
-/**
+
+ 
+ function addObject($nmTerm) {
+    //global $create_class;
+    if($this->debug == 1) debmes('mpt addObject create class : ' . $this->config['CREATE_CLASS']);
+    if($this->debug == 1) debmes('mpt addObject nmTerm : ' . $nmTerm);
+    if($this->debug == 1) debmes('mpt addObject after return ' . $nmTerm);
+    addClass('Terminals');
+    $phpcode = <<<EOD
+/*
+Параметры передаваемые с вызовом
+
+    uptime: Аптайм терминала на момент регистрации вызова в секундах. Присутствует всегда.
+    username: Если username задан то будет присылать его всегда.
+    terminal: Если terminal задан то будет присылать его всегда.
+    volume: Системная громкость терминала, -1 если не настроено или при ошибке чтения.
+    mpd_volume: Громкость mpd, -1 при ошибке подключения или если громкость не регулируется.
+    status: Причина вызова. Отсутствует при изменении громкости или если вызов произошел по таймеру.
+
+Возможные значения status:
+
+    start_record: Начало записи голоса (обычно после распознавания ключевого слова).
+    stop_record: Окончание записи голоса.
+    voice_activated: Терминал распознал ключевое слово. Только в chrome_mode = 0, в chrome_mode > 0 ему эквивалентен start_record.
+    speech_recognized_success: Голосовая команда успешно распознана и обрабатывается.
+    start_talking: Терминал начал говорить.
+    stop_talking: Терминал закончил говорить.
+    mpd_play, mpd_stop, mpd_pause: Статус mpd изменился на play, stop, pause.
+    mpd_error: Ошибка получения статуса mpd.
+
+Пример метода который сохраняет все параметры в свойства:
+EOD;
+
+    $phpcode .=chr(13) .'    foreach ($params as $param => $value) { '. chr(13) .'        $this->setProperty($param, $value);'. chr(13) .'    };'. chr(13) .'        */';
+    addClassMethod('Terminals','GetDataFromTerminal',"");
+    addClassMethod('Terminals','TerminalDataProcessing',$phpcode);
+    if($this->debug == 1) debmes('mpt addObject befour add object ' . $nmTerm);
+    addClassObject('Terminals',$nmTerm);
+    if($this->debug == 1) debmes('mpt addObject after add object ' . $nmTerm);
+ }
+ 
+ /**
 * Uninstall
 *
 * Module uninstall routine
@@ -250,9 +297,6 @@ function usual(&$out) {
 * @access public
 */
  function uninstall() {
-    unsubscribeFromEvent($this->name, 'SAY');
-    unsubscribeFromEvent($this->name, 'SAYTO');
-    unsubscribeFromEvent($this->name, 'ASK');
   SQLExec('DROP TABLE IF EXISTS mpt');
   parent::uninstall();
  }
@@ -269,23 +313,154 @@ mpt -
 */
   $data = <<<EOD
  mpt: ID int(10) unsigned NOT NULL auto_increment
- mpt: ID_TERMINAL int(10) NOT NULL DEFAULT 1
- mpt: LINKEDROOM varchar(50) NOT NULL DEFAULT ''
- mpt: PROVIDERTTS varchar(20) NOT NULL DEFAULT 'Yandex'
- mpt: APIKEYTTS varchar(100) NOT NULL DEFAULT ''
- mpt: PROVIDERSTT varchar(20) NOT NULL DEFAULT 'Google'
- mpt: APIKEYSTT varchar(100) NOT NULL DEFAULT ''
- mpt: SENSITIVITY varchar(4) NOT NULL DEFAULT ''
- mpt: ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
- mpt: ALARMTTS BOOLEAN NOT NULL DEFAULT TRUE
- mpt: ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
+ mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
+ mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: SETTINGS_NO_HELLO BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: SETTINGS_PHRASE_TIME_LIMIT TINYINT NOT NULL DEFAULT 15
+ mpt: SETTINGS_CHROME_MODE TINYINT NOT NULL DEFAULT 2
+ mpt: SETTINGS_CHROME_CHOKE BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: SETTINGS_CHROME_ALARMSTT BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: SNOWBOY_TOKEN varchar(100) NOT NULL DEFAULT 'd4977cf8ff6ede6efb8d2277c1608c7dbebf18a7'
+ mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
+ mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
+ mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
+ mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
+ mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
+ mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
+ mpt: MPD_PAUSE BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: MPD_SMOOTHLY BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: MPD_QUIETER TINYINT NOT NULL DEFAULT 0
+ mpt: MPD_WAIT_RESUME TINYINT NOT NULL DEFAULT 5
+ mpt: YANDEX_APIKEYTTS varchar(100) NOT NULL DEFAULT ''
+ mpt: YANDEX_APIKEYSTT varchar(100) NOT NULL DEFAULT ''
+ mpt: YANDEX_EMOTION varchar(15) NOT NULL DEFAULT 'good'
+ mpt: YANDEX_SPEAKER varchar(15) NOT NULL DEFAULT 'alyss'
+ mpt: AWS_SPEAKER varchar(15) NOT NULL DEFAULT 'Tatyana'
+ mpt: AWS_ACCESS_KEY_ID varchar(100) NOT NULL DEFAULT ''
+ mpt: AWS_SECRET_ACCESS_KEY varchar(100) NOT NULL DEFAULT ''
+ mpt: AWS_REGION varchar(15) NOT NULL DEFAULT 'eu-central-1'
+ mpt: AWS_BOTO3 BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: RHVOICE0REST_SERVER varchar(100) NOT NULL DEFAULT 'http:\/\/127.0.0.1:8080'
+ mpt: RHVOICE0REST_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
+ mpt: RHVOICE0REST_RATE TINYINT NOT NULL DEFAULT 50
+ mpt: RHVOICE0REST_PITCH TINYINT NOT NULL DEFAULT 50
+ mpt: RHVOICE0REST_VOLUME TINYINT NOT NULL DEFAULT 50
+ mpt: RHVOICE_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
+ mpt: POCKETSPHINX0REST_SERVER varchar(100) NOT NULL DEFAULT 'http:\/\/127.0.0.1:8085'
+ mpt: CACHE_TTS_PRIORITY varchar(20) NOT NULL DEFAULT 'google'
+ mpt: PROXY_ENABLE BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: PROXY_MONKEY_PATCHING BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: PROXY_PROXY varchar(100) NOT NULL DEFAULT 'socks5h:\/\/127.0.0.1:9050'
+ mpt: UPDATE_INTERVAL TINYINT NOT NULL DEFAULT 0
+ mpt: UPDATE_TURNOFF TINYINT NOT NULL DEFAULT -1
+ mpt: UPDATE_FALLBACK BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: CACHE_TTS_SIZE  INT(3) NOT NULL DEFAULT '100'
+ mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT TRUE
+ mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
+ mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
+ mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
 EOD;
   parent::dbInstall($data);
  }
-// --------------------------------------------------------------------
+
+ function validate($param) 
+    {
+        global $$param;
+        $value = $$param;
+        if($this->debug == 1) $oldvalue = $value;
+//        $setParam = !$_POST[$param];
+        $param=strtoupper($param);
+        $db = <<<EOD
+        mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
+        mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
+        mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: SETTINGS_NO_HELLO BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: SETTINGS_PHRASE_TIME_LIMIT TINYINT NOT NULL DEFAULT 15
+        mpt: SETTINGS_CHROME_MODE TINYINT NOT NULL DEFAULT 2
+        mpt: SETTINGS_CHROME_CHOKE BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: SETTINGS_CHROME_ALARMSTT BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: SNOWBOY_TOKEN varchar(100) NOT NULL DEFAULT 'd4977cf8ff6ede6efb8d2277c1608c7dbebf18a7'
+        mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
+        mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
+        mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
+        mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
+        mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
+        mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
+        mpt: MPD_PAUSE BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: MPD_SMOOTHLY BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: MPD_QUIETER TINYINT NOT NULL DEFAULT 0
+        mpt: MPD_WAIT_RESUME TINYINT NOT NULL DEFAULT 5
+        mpt: YANDEX_APIKEYTTS varchar(100) NOT NULL DEFAULT ''
+        mpt: YANDEX_APIKEYSTT varchar(100) NOT NULL DEFAULT ''
+        mpt: YANDEX_EMOTION varchar(15) NOT NULL DEFAULT 'good'
+        mpt: YANDEX_SPEAKER varchar(15) NOT NULL DEFAULT 'alyss'
+        mpt: AWS_SPEAKER varchar(15) NOT NULL DEFAULT 'Tatyana'
+        mpt: AWS_ACCESS_KEY_ID varchar(100) NOT NULL DEFAULT ''
+        mpt: AWS_SECRET_ACCESS_KEY varchar(100) NOT NULL DEFAULT ''
+        mpt: AWS_REGION varchar(15) NOT NULL DEFAULT 'eu-central-1'
+        mpt: AWS_BOTO3 BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: RHVOICE0REST_SERVER varchar(100) NOT NULL DEFAULT 'http://127.0.0.1:8080'
+        mpt: RHVOICE0REST_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
+        mpt: RHVOICE0REST_RATE TINYINT NOT NULL DEFAULT 50
+        mpt: RHVOICE0REST_PITCH TINYINT NOT NULL DEFAULT 50
+        mpt: RHVOICE0REST_VOLUME TINYINT NOT NULL DEFAULT 50
+        mpt: RHVOICE_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
+        mpt: POCKETSPHINX0REST_SERVER varchar(100) NOT NULL DEFAULT 'http://127.0.0.1:8085'
+        mpt: CACHE_TTS_PRIORITY varchar(20) NOT NULL DEFAULT 'google'
+        mpt: PROXY_ENABLE BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: PROXY_MONKEY_PATCHING BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: PROXY_PROXY varchar(100) NOT NULL DEFAULT 'socks5h://127.0.0.1:9050'
+        mpt: UPDATE_INTERVAL TINYINT NOT NULL DEFAULT 0
+        mpt: UPDATE_TURNOFF TINYINT NOT NULL DEFAULT -1
+        mpt: UPDATE_FALLBACK BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: CACHE_TTS_SIZE  INT(3) NOT NULL DEFAULT '100'
+        mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT TRUE
+        mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT FALSE
+        mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
+        mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
+EOD;
+        $data = explode("\n",  $db);
+        foreach($data as $cur)
+        {
+            $curarray = explode(" ", $cur);
+            if ($curarray[9] == $param)
+            {
+                if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT')
+                {
+                    if($this->debug == 1) debmes(">mpt edit validate int : $param = $oldvalue > $value ! isset = $setParam xxx " . isset($value));
+//                    if(isset($value)) 
+//                    {
+//                        $value = str_replace("'","",$curarray[14]);
+//                        if($this->debug == 1) debmes(">mpt edit validate int != 0 : $param = $oldvalue > $value" );
+//                    }
+                    $value=(int)$value;
+                }
+                else
+                {
+                    if(!$value) $value = str_replace("'","",$curarray[14]);
+                }
+            }
+        }
+        if($this->debug == 1) debmes("mpt edit validate : $param = $oldvalue > $value" );
+        global $postdata;
+        $postdata[$param] = $value;
+
+        return $value;
+    }
+   // --------------------------------------------------------------------
 }
 /*
 *
 * TW9kdWxlIGNyZWF0ZWQgTWF5IDA3LCAyMDE4IHVzaW5nIFNlcmdlIEouIHdpemFyZCAoQWN0aXZlVW5pdCBJbmMgd3d3LmFjdGl2ZXVuaXQuY29tKQ==
 *
 */
+          

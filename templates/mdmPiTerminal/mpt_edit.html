@@ -28,14 +28,17 @@
 
 <ul id="tab" class="nav nav-tabs">
     <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
+    <li><a data-toggle="tab" href="#panel_voice">Выбор и настройка голосовых сервисов</a></li>
     <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
+    <li><a data-toggle="tab" href="#panel_admin">Обслуживание</a></li>
 </ul>
 <br>
 
 <div class="tab-content">
+    
+    <!-- panel_settings -->
     <div id="panel_settings" class="tab-pane fade in">
 
-        <!-- Table 'mpt' edit -->
         <form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
         [#if OK#]
         <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
@@ -47,17 +50,7 @@
         [#if ID=""#]
         <legend><#LANG_NEW_RECORD#></legend>
         [#endif ID#]
-        <!-- TITLE (varchar)
-        <div class="form-group">
-        <label for="title" class="col-lg-3 control-label"[#if ERR_TITLE#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_TITLE#>:
-         (*)
-         </label>
-         <div class="col-lg-4">
-            <input type="text" class="form-control" name="title" value="[#TITLE#]" id="title">
-         </div>
-        </div>
-        -->
+
         <!-- ID_TERMINAL (select) -->
         [#if !IS_SET_ID_TERMINAL#]
         <div class="form-group ">
@@ -67,79 +60,293 @@
             <div class="col-lg-5">
                 <select name="id_terminal" class="form-control [#if ERR_ID_TERMINAL#]alert-danger[#endif#]" >
                     <option value="">select
-                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#NAME#]
+                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#] | [#NAME#] | [#HOST#] | [#ONLINE#]
                     [#end ID_TERMINAL_OPTIONS#]
                 </select>
 
             </div>
         </div>
         [#endif IS_SET_ID_TERMINAL#]
-        <!-- NAME (varchar)
+
+        <!-- SETTINGS_ALARMKWACTIVATED (BOOLEAN) -->
         <div class="form-group">
-         <label for="name" class="col-lg-3 control-label"[#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
-         Системное имя:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="name" value="[#NAME#]" id="name"></div>
-        </div> -->
-        <!-- LINKEDROOM (varchar)
-        <div class="form-group">
-         <label for="linkedroom" class="col-lg-3 control-label"[#if ERR_LINKEDROOM#] style="color:red;font-weight:bold"[#endif#]>
-         Расположение:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linkedroom" value="[#LINKEDROOM#]" id="linkedroom"></div>
-        </div>-->
-        <!-- IP (varchar)
-        <div class="form-group">
-         <label for="ip" class="col-lg-3 control-label"[#if ERR_IP#] style="color:red;font-weight:bold"[#endif#]>
-         ip адрес терминала:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="ip" value="[#IP#]" id="ip"></div>
-        </div>-->
-        <!-- PROVIDERTTS (varchar) -->
-        <div class="form-group">
-         <label for="providertts" class="col-lg-3 control-label"[#if ERR_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис синтеза речи:
+         <label for="settings_alarmkwactivated" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
+         Сигнал о распознавании ключевого слова:
          </label>
          <div class="col-lg-4">
-            <select name="providertts" class="form-control" id="providertts">
-                <option value="Yandex"[#if PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
-                <option value="Google"[#if PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
-            </select>
+             <input type="checkbox" name="settings_alarmkwactivated" value="true"[#if SETTINGS_ALARMKWACTIVATED="true"#] checked[#endif#]>
          </div>
-         </div>
-        <!-- APIKEYTTS (varchar) -->
-        <div class="form-group">
-         <label for="apikeytts" class="col-lg-3 control-label"[#if ERR_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Ключ API сервиса синтеза речи:
-         </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeytts" value="[#APIKEYTTS#]" id="apikeytts"></div>
         </div>
-        <!-- PROVIDERSTT (varchar) -->
+        
+        <!-- SETTINGS_ALARMTTS (BOOLEAN) -->
         <div class="form-group">
-         <label for="providerstt" class="col-lg-3 control-label"[#if ERR_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис распознавания речи:
+         <label for="settings_alarmtts" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
+         Сигнал перед сообщением:
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_alarmtts" value="true"[#if SETTINGS_ALARMTTS="true"#] checked[#endif#]>
+         </div>
+        </div>
+        
+        <!-- SETTINGS_ALARMSTT (BOOLEAN) -->
+        <div class="form-group">
+         <label for="SETTINGS_ALARMSTT" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Сигнал перед началом распознавания речи:
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_alarmstt" value="true"[#if SETTINGS_ALARMSTT="true"#] checked[#endif#]>
+         </div>
+        </div>
+        
+        <!-- SETTINGS_ASK_ME_AGAIN (TINYINT) -->
+        <div class="form-group">
+         <label for="settings_ask_me_again" class="col-lg-3 control-label"[#if ERR_SETTINGS_ASK_ME_AGAIN#] style="color:red;font-weight:bold"[#endif#]>
+                Количество переспрашиваней <img src="/img/helpicon.png" title="Если в записи нет слов или STT не смог ничего распознать, будет переспрашивать данное количество раз. Если 0 - не переспрашивает"/>
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_ask_me_again" value="[#SETTINGS_ASK_ME_AGAIN#]" id="ask_me_again"></div>
+        </div>
+
+        <!-- SETTINGS_QUIET (BOOLEAN) -->
+        <div class="form-group">
+         <label for="settings_quiet" class="col-lg-3 control-label"[#if ERR_SETTINGS_QUIET#] style="color:red;font-weight:bold"[#endif#]>
+         Тихий запуск <img src="/img/helpicon.png" title="Несущественные сообщения не будут произнесены"/>
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_quiet" value="true"[#if SETTINGS_QUIET="true"#] checked[#endif#]>
+         </div>
+        </div>
+
+        <!-- SETTINGS_NO_HELLO (BOOLEAN) -->
+        <div class="form-group">
+         <label for="settings_no_hello" class="col-lg-3 control-label"[#if ERR_SETTINGS_NO_HELLO#] style="color:red;font-weight:bold"[#endif#]>
+         Старт без приветствия <img src="/img/helpicon.png" title="Терминал не будет произносить приветствие при голосовой активации"/>
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_no_hello" value="true"[#if SETTINGS_NO_HELLO="true"#] checked[#endif#]>
+         </div>
+        </div>
+
+        <!-- SETTINGS_PHRASE_TIME_LIMIT (TINYINT) -->
+        <div class="form-group">
+         <label for="settings_phrase_time_limit" class="col-lg-3 control-label"[#if ERR_SETTINGS_PHRASE_TIME_LIMIT#] style="color:red;font-weight:bold"[#endif#]>
+          Лимит распознования <img src="/img/helpicon.png" title="Лимит времени на запись после того как терминал распознал речь, в секундах"/>
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_phrase_time_limit" value="[#SETTINGS_PHRASE_TIME_LIMIT#]" id="settings_phrase_time_limit"></div>
+        </div>
+
+        <!-- SETTINGS_CHROME_MODE (TINYINT) -->
+        <div class="form-group">
+         <label for="settings_chrome_mode" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_MODE#] style="color:red;font-weight:bold"[#endif#]>
+         Ключевое в контексте команды <img src="/img/helpicon.png" title="Если включить то не надо ждать подтверждения от терминала реакции на ключевое слово, а можно будет одним предложением дать команду началом которого будет ключевое слово. 'Непрерывная оценка шума': Измерение шума будет происходить непрерывно, при условии что терминал сам не шумит. Это увечит потребление CPU в режиме ожидания примерно в 3 раза (5% -> 17%), но терминал может работать лучше если уровень шума часто меняется. 'Без оценки шума': Этот режим похож на предыдущий, но вместо измерения уровня шума используется способность snowboy выделять слова из аудиопотока. Нагрузка на CPU низкая. На качество выделения слов будут влиять настройки snowboy (audio_gain, sensitivity) и качество моделей. 'Параллельное распознавание': Этот режим похож на 'Без оценки шума', но распознавание голоса начнется после активации ключевым словом и будет идти вместе с записью. Может сократить время реакции терминала, особенно если фраза очень длинная. Лучше не включать его если у вас много ложных активаций. Опция 'Сигнал перед распознованием' по очевидным причинам работать не будет."/>
          </label>
             <div class="col-lg-4">
-            <select name="providerstt" class="form-control" id="providerstt">
-                <option value="Google"[#if PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
-                <option value="Wit.ai"[#if PROVIDERSTT=="Wit.ai"#] selected[#endif#]>Wit.ai</option>
-                <option value="Microsoft"[#if PROVIDERSTT=="Microsoft"#] selected[#endif#]>Microsoft voice</option>
+            <select name="settings_chrome_mode" class="form-control" id="settings_chrome_mode">
+                <option value="0"[#if SETTINGS_CHROME_MODE=="0"#] selected[#endif#]>Отключить</option>
+                <option value="1"[#if SETTINGS_CHROME_MODE=="1"#] selected[#endif#]>Включено</option>
+                <option value="2"[#if SETTINGS_CHROME_MODE=="2"#] selected[#endif#]>Непрерывная оценка шума</option>
+                <option value="3"[#if SETTINGS_CHROME_MODE=="3"#] selected[#endif#]>Без оценки шума</option>
+                <option value="4"[#if SETTINGS_CHROME_MODE=="4"#] selected[#endif#]>Параллельное распознавание</option>
             </select>
             </div>
         </div>
-        <!-- APIKEYSTT (varchar) -->
+        <!--
         <div class="form-group">
-         <label for="apikeystt" class="col-lg-3 control-label"[#if ERR_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Ключ API сервиса распознавания речи:
+         <label for="chrome_mode" class="col-lg-3 control-label"[#if ERR_CHROME_MODE#] style="color:red;font-weight:bold"[#endif#]>
+         Ключевое в контексте команды <img src="/img/helpicon.png" title="Если включить то не надо ждать подтверждения от терминала реакции на ключевое слово, а можно будет одним предложением дать команду началом которого будет ключевое слово"/>
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="apikeystt" value="[#APIKEYSTT#]" id="apikeystt"></div>
+         <div class="col-lg-4">
+              <input type="checkbox" name="chrome_mode" value="1"[#if CHROME_MODE="1"#] checked[#endif#]>
+         </div>
         </div>
-        <!-- SENSITIVITY (varchar) -->
+        -->
+        
+        <!-- SETTINGS_CHROME_CHOKE (BOOLEAN) -->
         <div class="form-group">
-         <label for="sensitivity" class="col-lg-3 control-label"[#if ERR_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
-         Чувствительность реагирования на ключевое слово:
+         <label for="settings_chrome_choke" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_CHOKE#] style="color:red;font-weight:bold"[#endif#]>
+         Глушить музыку <img src="/img/helpicon.png" title="Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям"/>
          </label>
-            <div class="col-lg-4">
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_chrome_choke" value="true"[#if SETTINGS_CHROME_CHOKE="true"#] checked[#endif#]>
+         </div>
+        </div>
+
+        <!-- SETTINGS_CHROME_ALARMSTT (BOOLEAN) -->
+        <div class="form-group">
+         <label for="settings_chrome_alarmstt" class="col-lg-3 control-label"[#if ERR_SETTINGS_CHROME_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Сигнал перед распознованием <img src="/img/helpicon.png" title="Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям"/>
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="settings_chrome_alarmstt" value="true"[#if SETTINGS_CHROME_ALARMSTT="true"#] checked[#endif#]>
+         </div>
+        </div>
+
+        <hr/>
+        <h2>Обратная связь с MajorDomo</h2>
+
+        <!-- MAJORDOMO_OBJECT_NAME (varchar) LINKED_OBJECT --> 
+        <div class="form-group[#if ERR_MAJORDOMO_OBJECT_NAME#] has-error[#endif#]">
+         <label for="majordomo_object_name" class="col-lg-3 control-label">
+         <#LANG_LINKED_OBJECT#>:
+         </label>
+         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
+        </div>
+        <!-- MAJORDOMO_OBJECT_METHOD (varchar) LINKED_METHOD -->
+        <div class="form-group[#if ERR_MAJORDOMO_OBJECT_METHOD#] has-error[#endif#]">
+         <label for="majordomo_object_method" class="col-lg-3 control-label">
+         <#LANG_METHOD#>:
+         </label>
+         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
+        </div>
+        [#if CREATE_CLASS<>"true"#]
+        [#module name="linkedobject" object_field="majordomo_object_name" method_field="majordomo_object_method"#]
+        [#endif#]
+        <!-- MAJORDOMO_HEARTBEAT_TIMEOUT (varchar) -->
+        <div class="form-group[#if ERR_MAJORDOMO_HEARTBEAT_TIMEOUT#] has-error[#endif#]">
+         <label for="majordomo_heartbeat_timeout" class="col-lg-3 control-label">
+         Контроль работоспособности в сек <img src="/img/helpicon.png" title="Если объект и метод заданы, будет отправлять запросы при неактивности терминала, интервал задается в секундах, параметр status отсутствует. 0 - отключено."/>
+         </label>
+         <div class="col-lg-9"><input id="majordomo_heartbeat_timeout" name="majordomo_heartbeat_timeout" value="[#MAJORDOMO_HEARTBEAT_TIMEOUT#]" type="text" class="form-control"></div>
+        </div>
+        
+        <hr/>
+        <h2>Proxy</h2>
+        <p><a href="https://github.com/Aculeasis/mdmTerminal2/wiki/proxy">Подробнее о настройках прокси</a></p>
+        <!-- PROXY_ENABLE (varchar) -->
+        <div class="form-group[#if ERR_PROXY_ENABLE#] has-error[#endif#]">
+         <label for="proxy_enable" class="col-lg-3 control-label">
+         Использовать прокси
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="proxy_enable" value="true"[#if PROXY_ENABLE="true"#] checked[#endif#]>
+         </div>
+        </div>
+        <!-- PROXY_MONKEY_PATCHING (varchar) -->
+        <div class="form-group[#if ERR_PROXY_MONKEY_PATCHING#] has-error[#endif#]">
+         <label for="proxy_monkey_patching" class="col-lg-3 control-label">
+         proxy_monkey_patching
+         </label>
+         <div class="col-lg-4">
+              <input type="checkbox" name="proxy_monkey_patching" value="true"[#if PROXY_MONKEY_PATCHING="true"#] checked[#endif#]>
+         </div>
+        </div>
+        <!-- PROXY_PROXY (varchar) -->
+        <div class="form-group[#if ERR_PROXY_PROXY#] has-error[#endif#]">
+         <label for="proxy_proxy" class="col-lg-3 control-label">
+         Адрес
+         </label>
+         <div class="col-lg-9"><input id="proxy_proxy" name="proxy_proxy" value="[#PROXY_PROXY#]" type="text" class="form-control"></div>
+        </div>
+        
+        <hr/>
+        <h2>MPD</h2>
+        <!-- MPD_CONTROL (varchar) -->
+        <div class="form-group[#if ERR_MPD_CONTROL#] has-error[#endif#]">
+         <label for="mpd_control" class="col-lg-3 control-label">
+         Подключается к mpd-серверу и управляет им. <img src="/img/helpicon.png" title="Будут работать play: и pause: пришедшие от MajorDoMo. Также может ставить mpd на паузу на время активности терминала. Можно настраивать громкость фразой 'громкость музыки <1..100>'"/>
+         </label>
+         <input type="checkbox" name="mpd_control" value="true"[#if MPD_CONTROL="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_IP (varchar) -->
+        <div class="form-group[#if ERR_MPD_IP#] has-error[#endif#]">
+         <label for="mpd_ip" class="col-lg-3 control-label">
+         IP MPD сервера
+         </label>
+         <div class="col-lg-9"><input id="mpd_ip" name="mpd_ip" value="[#MPD_IP#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_PORT (varchar) -->
+        <div class="form-group[#if ERR_MPD_PORT#] has-error[#endif#]">
+         <label for="mpd_port" class="col-lg-3 control-label">
+         Поррт MPD сервера
+         </label>
+         <div class="col-lg-9"><input id="mpd_port" name="mpd_port" value="[#MPD_PORT#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_PAUSE (varchar) -->
+        <div class="form-group[#if ERR_MPD_PAUSE#] has-error[#endif#]">
+         <label for="mpd_pause" class="col-lg-3 control-label">
+         Ставить MPD на паузу <img src="/img/helpicon.png" title="Поставит на паузу по: voice_activate, start_record или start_talking. Снимет по stop_talking и stop_record."/>
+         </label>
+         <input type="checkbox" name="mpd_pause" value="true"[#if MPD_PAUSE="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_SMOOTHLY (varchar) -->
+        <div class="form-group[#if ERR_MPD_SMOOTHLY#] has-error[#endif#]">
+         <label for="mpd_smoothly" class="col-lg-3 control-label">
+         При снятии с паузы поднимать громкость постепенно
+         </label>
+         <input type="checkbox" name="mpd_smoothly" value="true"[#if MPD_SMOOTHLY="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_QUIETER (varchar) -->
+        <div class="form-group[#if ERR_MPD_QUIETER#] has-error[#endif#]">
+         <label for="mpd_quieter" class="col-lg-3 control-label">
+         Громкость паузы <img src="/img/helpicon.png" title="Если больше 0, то вместо паузы будет уменьшать громкость до заданной."/>
+         </label>
+         <div class="col-lg-9"><input id="mpd_quieter" name="mpd_quieter" value="[#MPD_QUIETER#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_WAIT_RESUME (varchar) -->
+        <div class="form-group[#if ERR_MPD_WAIT_RESUME#] has-error[#endif#]">
+         <label for="mpd_wait_resume" class="col-lg-3 control-label">
+         Задержка перед снятием с автопаузы, в секундах.
+         </label>
+         <div class="col-lg-9"><input id="mpd_wait_resume" name="mpd_wait_resume" value="[#MPD_WAIT_RESUME#]" type="text" class="form-control"></div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+        <input type="hidden" name="mode" value="update">
+        [#if ID!=""#]
+            <input type="hidden" name="id" value="<#ID#>">
+        [#endif ID#]
+        </fieldset>
+        <div class="form-group">
+           <div class="col-lg-offset-3 col-lg-4">
+                [#if ID!=""#]
+                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+                [#else ID#]
+                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+                [#endif ID#]
+                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+            </div>
+       </div>
+      </form>
+    </div>
+    <!-- panel_voice -->
+    <div id="panel_voice" class="tab-pane fade in">
+
+        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
+        [#if OK#]
+        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+        [#endif OK#]
+        [#if ERR#]
+        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+        [#endif ERR#]
+        <fieldset>
+        [#if ID=""#]
+        <legend><#LANG_NEW_RECORD#></legend>
+        [#endif ID#]
+
+        <h2>SnowBoy</h2>
+
+        <!-- SNOWBOY_TOKEN (varchar) -->
+        <div class="form-group">
+         <label for="snowboy_token" class="col-lg-3 control-label"[#if ERR_SNOWBOY_TOKEN#] style="color:red;font-weight:bold"[#endif#]>
+         Токен Сноубоя <img src="/img/helpicon.png" title="Токен для API. Если этот перестанет работать можно задать свой"/>
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="snowboy_token" value="[#SNOWBOY_TOKEN#]" id="snowboy_token"></div>
+        </div>
+        <hr/>
+        
+        <!-- SETTINGS_SENSITIVITY (varchar) -->
+        <div class="form-group">
+         <label for="settings_sensitivity" class="col-lg-3 control-label"[#if ERR_SETTINGS_SENSITIVITY#] style="color:red;font-weight:bold"[#endif#]>
+         Чувствительность <img src="/img/helpicon.png" title="Чувствительность реагирования на ключевое слово. Диапозон от 0.2 до 0.7 , чем больше число тем лучше реагирует но больше вероятность ложных срабатываний."/>
+         </label>
+            <!-- <div class="col-lg-4">
              <select name="sensitivity" class="form-control" id="sensitivity">
                 <option value="0.2"[#if SENSITIVITY="0.2"#] selected[#endif#]>0.2</option>
                 <option value="0.25"[#if SENSITIVITY="0.25"#] selected[#endif#]>0.25</option>
@@ -152,69 +359,304 @@
                 <option value="0.6"[#if SENSITIVITY="0.6"#] selected[#endif#]>0.6</option>
                 <option value="0.65"[#if SENSITIVITY="0.65"#] selected[#endif#]>0.65</option>
                 <option value="0.7"[#if SENSITIVITY="0.7"#] selected[#endif#]>0.7</option>
+            </select>-->
+         <div class="col-lg-4"><input type="text" class="form-control" name="settings_sensitivity" value="[#SETTINGS_SENSITIVITY#]" id="settings_sensitivity"></div>
+         </div>
+        <hr/>
+        
+        <h2>Сервисы речи</h2>
+        
+        <!-- SETTINGS_PROVIDERTTS (varchar) -->
+        <div class="form-group">
+         <label for="settings_providertts" class="col-lg-3 control-label"[#if ERR_SETTINGS_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
+         Сервис синтеза речи 
+         </label>
+         <div class="col-lg-4">
+            <select name="settings_providertts" class="form-control" id="settings_providertts">
+                <option value="Yandex"[#if SETTINGS_PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if SETTINGS_PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
+                <option value="Aws"[#if SETTINGS_PROVIDERTTS=="Aws"#] selected[#endif#]>Polly от AWS</option>
+                <option value="Rhvoice"[#if SETTINGS_PROVIDERTTS=="Rhvoice"#] selected[#endif#]>Rhvoice offline</option>
+                <option value="Rhvoice-rest"[#if SETTINGS_PROVIDERTTS=="Rhvoice-rest"#] selected[#endif#]>Rhvoice-rest offline</option>
+                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
             </select>
-         <!-- <input type="text" class="form-control" name="sensitivity" value="[#SENSITIVITY#]" id="sensitivity"> -->
+         </div>
+         </div>
+        <hr/>
+
+        <!-- CACHE_TTS_PRIORITY (varchar) -->
+        <div class="form-group[#if ERR_CACHE_TTS_PRIORITY#] has-error[#endif#]">
+         <label for="cache_tts_priority" class="col-lg-3 control-label">
+         Приоритет при поиске в кэше
+         </label>
+            <div class="col-lg-4">
+            <select name="cache_tts_priority" class="form-control" id="cache_tts_priority">
+                <option value="0"[#if CACHE_TTS_PRIORITY=="0"#] selected[#endif#]>Берет кэш только текущего провайдера</option>
+                <option value="1"[#if CACHE_TTS_PRIORITY=="1"#] selected[#endif#]>Вначале текущего, потом любого</option>
+                <option value="Yandex"[#if CACHE_TTS_PRIORITY=="Yandex"#] selected[#endif#]>Вначале Yandex</option>
+                <option value="Google"[#if CACHE_TTS_PRIORITY=="Google"#] selected[#endif#]>Вначале Google</option>
+                <option value="Aws"[#if CACHE_TTS_PRIORITY=="Aws"#] selected[#endif#]>Вначале Polly от AWS</option>
+                <option value="Rhvoice"[#if CACHE_TTS_PRIORITY=="Rhvoice"#] selected[#endif#]>Вначале Rhvoice offline</option>
+                <option value="Rhvoice-rest"[#if CACHE_TTS_PRIORITY=="Rhvoice-rest"#] selected[#endif#]>Вначале Rhvoice-rest offline</option>
+                <option value="Pocketsphinx-rest"[#if SETTINGS_PROVIDERTTS=="Pocketsphinx-rest"#] selected[#endif#]>Вначале Pocketsphinx-rest offline</option>
+            </select>
             </div>
         </div>
-        <!-- ALARMKWACTIVATED (varchar) -->
+        <hr/>
+
+        <!-- CACHE_TTS_SIZE (varchar) -->
+        <div class="form-group[#if ERR_CACHE_TTS_SIZE#] has-error[#endif#]">
+         <label for="cache_tts_size" class="col-lg-3 control-label">
+         Размер кэша в Мб <img src="/img/helpicon.png" title="Если  0 - кэш не используется и будет очищен. Если -1 - кэш не используется и не будет очищен. С отключенным кэшем стрим от локальных провайдеров будет идти в wav а не mp3 что немного быстрее. Если вы используете rhvoice-rest лучше всего отключить кэш."/>
+         </label>
+         <div class="col-lg-9"><input id="cache_tts_size" name="cache_tts_size" value="[#CACHE_TTS_SIZE#]" type="text" class="form-control"></div>
+        </div>
+
+        <hr/>
+        
+        <!-- SETTINGS_PROVIDERSTT (varchar) -->
         <div class="form-group">
-         <label for="alarmkwactivated" class="col-lg-3 control-label"[#if ERR_ALARMKWACTIVATED#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал о распознавании ключевого слова:
+         <label for="settings_providerstt" class="col-lg-3 control-label"[#if ERR_SETTINGS_PROVIDERSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Сервис распознавания речи
+         </label>
+            <div class="col-lg-4">
+            <select name="settings_providerstt" class="form-control" id="settings_providerstt">
+                <option value="Yandex"[#if SETTINGS_PROVIDERSTT=="Yandex"#] selected[#endif#]>Yandex</option>
+                <option value="Google"[#if SETTINGS_PROVIDERSTT=="Google"#] selected[#endif#]>Google</option>
+                <option value="Wit"[#if SETTINGS_PROVIDERSTT=="Wit"#] selected[#endif#]>Wit.ai, Microsoft</option>
+                <option value="pocketsphinx-rest"[#if SETTINGS_PROVIDERSTT=="pocketsphinx-rest"#] selected[#endif#]>Pocketsphinx-rest offline</option>
+            </select>
+            </div>
+        </div>
+
+        <hr/>
+        <h2>Яндекс</h2>
+        <p>Ключи для синтеза\распознавания. Можно использовать разные.</br>Если ключ не указан, он будет взят с https://translate.yandex.ru, пока это работает.</br>Ключ дают бесплатно, на месяц, https://tech.yandex.ru/speechkit/cloud/</p>
+        <!-- YANDEX_APIKEYTTS (varchar) -->
+        <div class="form-group">
+         <label for="yandex_apikeytts" class="col-lg-3 control-label"[#if ERR_YANDEX_APIKEYTTS#] style="color:red;font-weight:bold"[#endif#]>
+         Ключ API сервиса генерации речи
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="yandex_apikeytts" value="[#YANDEX_APIKEYTTS#]" id="yandex_apikeytts"></div>
+        </div>
+        <hr/>
+        
+        <!-- YANDEX_APIKEYSTT (varchar) -->
+        <div class="form-group">
+         <label for="yandex_apikeystt" class="col-lg-3 control-label"[#if ERR_YANDEX_APIKEYSTT#] style="color:red;font-weight:bold"[#endif#]>
+         Ключ API сервиса распознавания речи
+         </label>
+         <div class="col-lg-4"><input type="text" class="form-control" name="yandex_apikeystt" value="[#YANDEX_APIKEYSTT#]" id="yandex_apikeystt"></div>
+        </div>
+
+        <!-- YANDEX_EMOTION (varchar) -->
+        <div class="form-group[#if ERR_YANDEX_EMOTION#] has-error[#endif#]">
+         <label for="yandex_emotion" class="col-lg-3 control-label">
+         Эмоциональная окраска голоса
+         </label>
+            <div class="col-lg-4">
+            <select name="yandex_emotion" class="form-control" id="yandex_emotion">
+                <option value="good"[#if YANDEX_EMOTION=="good"#] selected[#endif#]>Обычная</option>
+                <option value="neutral"[#if YANDEX_EMOTION=="neutral"#] selected[#endif#]>Нейтральная</option>
+                <option value="evil"[#if YANDEX_EMOTION=="evil"#] selected[#endif#]>Злая</option>
+            </select>
+            </div>
+        </div>
+        <!-- YANDEX_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_YANDEX_SPEAKER#] has-error[#endif#]">
+         <label for="yandex_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="yandex_speaker" class="form-control" id="yandex_speaker">
+                <option value="alyss"[#if YANDEX_SPEAKER=="alyss"#] selected[#endif#]>Алиса</option>
+                <option value="jane"[#if YANDEX_SPEAKER=="jane"#] selected[#endif#]>Жанна</option>
+                <option value="oksana"[#if YANDEX_SPEAKER=="oksana"#] selected[#endif#]>Оксана</option>
+                <option value="omazh"[#if YANDEX_SPEAKER=="omazh"#] selected[#endif#]>Олеся</option>
+                <option value="zahar"[#if YANDEX_SPEAKER=="zahar"#] selected[#endif#]>Захар</option>
+                <option value="ermil"[#if YANDEX_SPEAKER=="ermil"#] selected[#endif#]>Ермил</option>
+            </select>
+            </div>
+        </div>
+        <hr/>
+        <h2>Amazon AWS</h2>
+        <p>Для доступа нужен <a href="https://aws.amazon.com/ru/polly" target="_blank">аккаунт AWS</a>, первые 5 миллионов символов в месяц первые 12 месяцев бесплатно.</p>
+        <!-- AWS_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_AWS_SPEAKER#] has-error[#endif#]">
+         <label for="aws_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="aws_speaker" class="form-control" id="aws_speaker">
+                <option value="Tatyana"[#if AWS_SPEAKER=="Tatyana"#] selected[#endif#]>Татьяна Русский</option>
+                <option value="Maxim"[#if AWS_SPEAKER=="Maxim"#] selected[#endif#]>Максим Русский</option>
+                <option value="Ivy"[#if AWS_SPEAKER=="Ivy"#] selected[#endif#]>Ivy English</option>
+                <option value="Joanna"[#if AWS_SPEAKER=="Joanna"#] selected[#endif#]>Joanna English</option>
+                <option value="Kendra"[#if AWS_SPEAKER=="Kendra"#] selected[#endif#]>Kendra English</option>
+                <option value="Kimberly"[#if AWS_SPEAKER=="Kimberly"#] selected[#endif#]>Kimberly English</option>
+                <option value="Salli"[#if AWS_SPEAKER=="Salli"#] selected[#endif#]>Salli English</option>
+                <option value="Joey"[#if AWS_SPEAKER=="Joey"#] selected[#endif#]>Joey English</option>
+                <option value="Justin"[#if AWS_SPEAKER=="Justin"#] selected[#endif#]>Justin English</option>
+                <option value="Matthew"[#if AWS_SPEAKER=="Matthew"#] selected[#endif#]>Matthew English</option>
+            </select>
+            </div>
+        </div>
+        <!-- AWS_ACCESS_KEY_ID (varchar) -->
+        <div class="form-group[#if ERR_AWS_ACCESS_KEY_ID#] has-error[#endif#]">
+         <label for="aws_access_key_id" class="col-lg-3 control-label">
+         Access key id
+         </label>
+         <div class="col-lg-9"><input id="aws_access_key_id" name="aws_access_key_id" value="[#AWS_ACCESS_KEY_ID#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_SECRET_ACCESS_KEY (varchar) -->
+        <div class="form-group[#if ERR_AWS_SECRET_ACCESS_KEY#] has-error[#endif#]">
+         <label for="aws_secret_access_key" class="col-lg-3 control-label">
+         Secret access key
+         </label>
+         <div class="col-lg-9"><input id="aws_secret_access_key" name="aws_secret_access_key" value="[#AWS_SECRET_ACCESS_KEY#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_REGION (varchar) -->
+        <div class="form-group[#if ERR_AWS_REGION#] has-error[#endif#]">
+         <label for="aws_region" class="col-lg-3 control-label">
+         Region
+         </label>
+         <div class="col-lg-9"><input id="aws_region" name="aws_region" value="[#AWS_REGION#]" type="text" class="form-control"></div>
+        </div>
+        <!-- AWS_BOTO3 (BOOLEAN) -->
+        <div class="form-group[#if ERR_AWS_BOTO3#] has-error[#endif#]">
+         <label for="aws_boto3" class="col-lg-3 control-label">
+         Использовать AWS SDK (boto3) для коммуникации вместо нативной реализации <img src="/img/helpicon.png" title="Polly будет отвечать на 200-300 ms быстрее, а прокси для aws перестанет работать. boto3 должен быть установлен: mdmTerminal2/env/bin/python -m pip install boto3"/>
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="alarmkwactivated" value="1"[#if ALARMKWACTIVATED="1"#] checked[#endif#]>
-             <!-- <input type="text" class="form-control" name="alarmkwactivated" value="[#ALARMKWACTIVATED#]" id="alarmkwactivated"> -->
+             <input type="checkbox" name="aws_boto3" value="true"[#if AWS_BOTO3="true"#] checked[#endif#]>
          </div>
         </div>
-        <!-- ALARMTTS (varchar) -->
-        <div class="form-group">
-         <label for="alarmtts" class="col-lg-3 control-label"[#if ERR_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал перед сообщением:
+        <hr/>
+        <h2>RHVoice TTS запущенный в виде веб-сервиса.</h2>
+        <p>Голос лучше чем у гугла.</br>Один из самый быстрых в плане отклика.</br>Отклик на апельсинке с отключенным кэшем примерно 100 мс</br>На i7 в виртуалке ~ 20 мс.</br><a href="https://github.com/Aculeasis/rhvoice-rest" target="_blank">GitHub</a></p>
+        <!-- RHVOICE0REST_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE0REST_SPEAKER#] has-error[#endif#]">
+         <label for="rhvoice0rest_speaker" class="col-lg-3 control-label">
+         Голос
          </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="alarmtts" value="1"[#if ALARMTTS="1"#] checked[#endif#]>
-         </div>
+            <div class="col-lg-4">
+            <select name="rhvoice0rest_speaker" class="form-control" id="rhvoice0rest_speaker">
+                <option value="anna"[#if RHVOICE0REST_SPEAKER=="anna"#] selected[#endif#]>Анна Русская</option>
+                <option value="elena"[#if RHVOICE0REST_SPEAKER=="elena"#] selected[#endif#]>Елена Русская</option>
+                <option value="irina"[#if RHVOICE0REST_SPEAKER=="irina"#] selected[#endif#]>Ирина Русская</option>
+                <option value="aleksandr"[#if RHVOICE0REST_SPEAKER=="aleksandr"#] selected[#endif#]>Александр Русский</option>
+                <option value="natalia"[#if RHVOICE0REST_SPEAKER=="natalia"#] selected[#endif#]>Наталья Украинский</option>
+                <option value="anatol"[#if RHVOICE0REST_SPEAKER=="anatol"#] selected[#endif#]>Анатольй Украинский</option>
+                <option value="alan"[#if RHVOICE0REST_SPEAKER=="alan"#] selected[#endif#]>Alan English</option>
+                <option value="bdl"[#if RHVOICE0REST_SPEAKER=="bdl"#] selected[#endif#]>Bubligum English</option>
+                <option value="clb"[#if RHVOICE0REST_SPEAKER=="clb"#] selected[#endif#]>Caribian English</option>
+                <option value="slt"[#if RHVOICE0REST_SPEAKER=="slt"#] selected[#endif#]>Sultan English</option>
+                <option value="spomenka"[#if RHVOICE0REST_SPEAKER=="spomenka"#] selected[#endif#]>Spomenka Esperanto</option>
+                <option value="natia"[#if RHVOICE0REST_SPEAKER=="natia"#] selected[#endif#]>Natia Georgian</option>
+                <option value="azamat"[#if RHVOICE0REST_SPEAKER=="azamat"#] selected[#endif#]>Azamat Киргизский</option>
+                <option value="nazgul"[#if RHVOICE0REST_SPEAKER=="nazgul"#] selected[#endif#]>Nazgul Киргизский</option>
+                <option value="talgat"[#if RHVOICE0REST_SPEAKER=="talgat"#] selected[#endif#]>Talgat Татарский</option>
+            </select>
+            </div>
         </div>
-        <!-- ALARMSTT (varchar) -->
-        <div class="form-group">
-         <label for="alarmstt" class="col-lg-3 control-label"[#if ERR_ALARMSTT#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал перед началом распознавания речи:
+        <!-- RHVOICE0REST_SERVER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE0REST_SERVER#] has-error[#endif#]">
+         <label for="rhvoice0rest_server" class="col-lg-3 control-label">
+         Server
          </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="alarmstt" value="1"[#if ALARMSTT="1"#] checked[#endif#]>
-         </div>
+         <div class="col-lg-9"><input id="rhvoice0rest_server" name="rhvoice0rest_server" value="[#RHVOICE0REST_SERVER#]" type="text" class="form-control"></div>
         </div>
-        <!-- LINKED_OBJECT (varchar)
-        <div class="form-group">
-         <label for="linked_object" class="col-lg-3 control-label"[#if ERR_LINKED_OBJECT#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_LINKED_OBJECT#>:
+        <!-- RHVOICE0REST_RATE (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE0REST_RATE#] has-error[#endif#]">
+         <label for="rhvoice0rest_rate" class="col-lg-3 control-label">
+         Темп голоса 0-100
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linked_object" value="[#LINKED_OBJECT#]" id="linked_object"></div>
-        </div> -->
-        <!-- LINKED_PROPERTY (varchar)
-        <div class="form-group">
-         <label for="linked_property" class="col-lg-3 control-label"[#if ERR_LINKED_PROPERTY#] style="color:red;font-weight:bold"[#endif#]>
-         <#LANG_LINKED_PROPERTY#>:
+         <div class="col-lg-9"><input id="rhvoice0rest_rate" name="rhvoice0rest_rate" value="[#RHVOICE0REST_RATE#]" type="text" class="form-control"></div>
+        </div>
+        <!-- RHVOICE0REST_PITCH (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE0REST_PITCH#] has-error[#endif#]">
+         <label for="rhvoice0rest_pitch" class="col-lg-3 control-label">
+         Высота голоса 0-100
          </label>
-         <div class="col-lg-4"><input type="text" class="form-control" name="linked_property" value="[#LINKED_PROPERTY#]" id="linked_property"></div>
-			 </div>-->
-        <div class="form-group">
-                <div class="col-lg-offset-3 col-lg-4">
-         [#if ID!=""#]
-         <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-         [#else ID#]
-         <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-         [#endif ID#]
-         <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-        <input type="hidden" name="id" value="<#ID#>">
+         <div class="col-lg-9"><input id="rhvoice0rest_pitch" name="rhvoice0rest_pitch" value="[#RHVOICE0REST_PITCH#]" type="text" class="form-control"></div>
+        </div>
+        <!-- RHVOICE0REST_VOLUME (TINYINT) -->
+        <div class="form-group[#if ERR_RHVOICE0REST_VOLUME#] has-error[#endif#]">
+         <label for="rhvoice0rest_volume" class="col-lg-3 control-label">
+         Громкость 0-100
+         </label>
+         <div class="col-lg-9"><input id="rhvoice0rest_volume" name="rhvoice0rest_volume" value="[#RHVOICE0REST_VOLUME#]" type="text" class="form-control"></div>
+        </div>
+        <hr/>
+        <h2>RHVoice</h2>
+        <p>!!!Крайне не рекомендуется, используйте rhvoice-rest</br>RHVoice TTS, получающий поток от RHVoice-test. Для работы с кэшем еще нужен lame.</br>Библиотека загружается и инициализируется для каждой фразы, это очень медленно.</br>Отклик на апельсинке ~2.2 сек.</p>
+        <!-- RHVOICE_SPEAKER (varchar) -->
+        <div class="form-group[#if ERR_RHVOICE_SPEAKER#] has-error[#endif#]">
+         <label for="rhvoice_speaker" class="col-lg-3 control-label">
+         Голос
+         </label>
+            <div class="col-lg-4">
+            <select name="rhvoice_speaker" class="form-control" id="rhvoice_speaker">
+                <option value="anna"[#if RHVOICE_SPEAKER=="anna"#] selected[#endif#]>Анна Русская</option>
+                <option value="elena"[#if RHVOICE_SPEAKER=="elena"#] selected[#endif#]>Елена Русская</option>
+                <option value="irina"[#if RHVOICE_SPEAKER=="irina"#] selected[#endif#]>Ирина Русская</option>
+                <option value="aleksandr"[#if RHVOICE_SPEAKER=="aleksandr"#] selected[#endif#]>Александр Русский</option>
+                <option value="natalia"[#if RHVOICE_SPEAKER=="natalia"#] selected[#endif#]>Наталья Украинский</option>
+                <option value="anatol"[#if RHVOICE_SPEAKER=="anatol"#] selected[#endif#]>Анатольй Украинский</option>
+                <option value="alan"[#if RHVOICE_SPEAKER=="alan"#] selected[#endif#]>Alan English</option>
+                <option value="bdl"[#if RHVOICE_SPEAKER=="bdl"#] selected[#endif#]>Bubligum English</option>
+                <option value="clb"[#if RHVOICE_SPEAKER=="clb"#] selected[#endif#]>Caribian English</option>
+                <option value="slt"[#if RHVOICE_SPEAKER=="slt"#] selected[#endif#]>Sultan English</option>
+                <option value="spomenka"[#if RHVOICE_SPEAKER=="spomenka"#] selected[#endif#]>Spomenka Esperanto</option>
+                <option value="natia"[#if RHVOICE_SPEAKER=="natia"#] selected[#endif#]>Natia Georgian</option>
+                <option value="azamat"[#if RHVOICE_SPEAKER=="azamat"#] selected[#endif#]>Azamat Киргизский</option>
+                <option value="nazgul"[#if RHVOICE_SPEAKER=="nazgul"#] selected[#endif#]>Nazgul Киргизский</option>
+                <option value="talgat"[#if RHVOICE_SPEAKER=="talgat"#] selected[#endif#]>Talgat Татарский</option>
+            </select>
+            </div>
+        </div>
+        <!-- POCKETSPHINX0REST_SERVER (varchar) -->
+        <div class="form-group[#if ERR_POCKETSPHINX0REST_SERVER#] has-error[#endif#]">
+            <label for="pocketsphinx0rest_server" class="col-lg-3 control-label">
+                Pocketsphinx-rest server
+            </label>
+            <div class="col-lg-9"><input id="pocketsphinx-rest_server" name="pocketsphinx0rest_server" value="[#POCKETSPHINX0REST_SERVER#]" type="text" class="form-control"></div>
+        </div>
+
+        
+        
+        
+        
+        
+
+
+
+
+
+
         <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
         <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-        <input type="hidden" name="mode" value="update">
-                </div>
-        </div>
+        <input type="hidden" name="panel_voice" value="1">
+        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
+            <input type="hidden" name="mode" value="update">
+        [#if ID!=""#]
+            <input type="hidden" name="id" value="[#ID#]">
+        [#endif ID#]
         </fieldset>
-        </form>
+        <div class="form-group">
+           <div class="col-lg-offset-3 col-lg-4">
+                [#if ID!=""#]
+                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+                [#else ID#]
+                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+                [#endif ID#]
+                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+            </div>
+       </div>
+      </form>
+
     </div>
+    <!-- panel_record -->
     <div id="panel_record" class="tab-pane fade in">
         <p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
         <input name="kw" type="radio" value="1" checked> 1е слово
@@ -226,28 +668,267 @@
         <hr/>
         <p>Запись первого образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,1',1);return false;" title="Стоп записи 1го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись второго образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,2',1);return false;" title="Стоп записи 2го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Запись третьего образца ключевого слова</p>
         <button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
-        <!--<button onclick="sendCommand([#ID#],'stop,3',1);return false;" title="Стоп записи 3го образца ключевого слова" class="btn btn-default">Стоп записи</button>
-        -->
         <button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
         <hr/>
         <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
         <button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
-				<hr/>
-				<p>Применить настройки на терминале</p>
+	<hr/>
+	<p>Удалить модель</p>
+        <button onclick="sendCommand([#ID#],'del_0_1',0);return false;" title="Удалить модель" class="btn btn-default">Удалить</button>
+	<!-- <hr/>
+	<p>Применить настройки на терминале</p>
         <button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
+        -->
     </div>
+
+    <!-- panel_admin -->
+    <div id="panel_admin" class="tab-pane fade in">
+        <p>Обновить терминал</p>
+        <button onclick="sendCommand([#ID#],'update_0_0',0);return false;" title="Обновить" class="btn btn-default">Обновить</button>
+        <hr/>
+
+        <p>Откатить термина до предыдущего успешного обновления</p>
+        <button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
+        <hr/>
+        <!-- remote_log -->
+        <style>
+            .log_outputtext {
+            background-color: black;
+            color: aliceblue;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-width: 1000px;
+            height: 500px;
+            font-family: monospace;
+            font-size: 12px;
+            border-color: black;
+            padding: 2px;
+            border-width: thick;
+            border-style: solid;
+            }
+        </style>
+        <form name="remote_log_form">
+            <p>
+                Лог терминала
+                <input type="button" name=clearButton value="Clear" onClick="clearText();">
+                <input type="button" name=connectButton value="Connect" onClick="doConnectDisconnect();">
+            </p>
+            <input type="hidden" name="ws_token" value="token_is_unset">
+            <input type="hidden" name="terminal_ip" value="[#IP_TERMINAL#]">
+        </form>
+        <div id="log_outputtext" class="log_outputtext"></div>
+
+        <script language="javascript" type="text/javascript">
+            var remote_log = document.getElementById("log_outputtext");
+            // ansi color -> html; https://github.com/mmalecki/ansispan
+            var ansispan = function (str) {
+              Object.keys(ansispan.foregroundColors).forEach(function (ansi) {
+                var span = '<span style="color: ' + ansispan.foregroundColors[ansi] + '">';
+                str = str.replace(
+                  new RegExp('\033\\[' + ansi + 'm', 'g'),
+                  span
+                ).replace(
+                  new RegExp('\033\\[1;' + ansi + 'm', 'g'),
+                  span
+                );
+              });
+              return restoreURI(str.replace(/\033\[0m/g, '</span>'));
+            };
+
+            ansispan.foregroundColors = {
+              '36': 'cyan',
+              '90': 'gray',
+              '92': 'mediumspringgreen',
+              '93': 'yellow',
+              '91': 'red',
+              '95': 'darkred'
+            };
+
+            // replace start
+            var tagsToReplace = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;'
+            };
+
+            function replaceTag(tag) {
+                return tagsToReplace[tag] || tag;
+            }
+
+            function safe_tags_replace(str) {
+                return str.replace(/[&<>]/g, replaceTag);
+            }
+            function restoreURI(str) {
+                return str.includes('<span style="color: cyan">majordomo</span>') ? decodeURI(str) : str;
+            }
+            // replace end
+
+          function doConnect()
+          {
+            websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":7999/");
+            websocket.onopen = function(evt) { onOpen(evt) };
+            websocket.onclose = function(evt) { onClose(evt) };
+            websocket.onmessage = function(evt) { onMessage(evt) };
+            websocket.onerror = function(evt) { onError(evt) };
+          }
+
+          function onOpen(evt)
+          {
+            writeToScreenMsg("connected");
+            document.remote_log_form.connectButton.value = "Disconnect";
+            websocket.send(document.remote_log_form.ws_token.value);
+            websocket.send('remote_log');
+          }
+
+          function onClose(evt)
+          {
+            writeToScreenMsg("disconnected");
+            document.remote_log_form.connectButton.value = "Connect";
+          }
+
+          function onMessage(evt)
+          {
+            writeToScreenLog(evt.data);
+          }
+
+          function onError(evt)
+          {
+            writeToScreenMsg('error: ' + evt.data);
+            websocket.close();
+          }
+
+          function writeToScreenMsg(message)
+          {
+            writeToScreen('<span style="color: darkorange">' + message + '</span>');
+          }
+
+          function writeToScreenLog(message)
+          {
+            writeToScreen(ansispan(safe_tags_replace(message)));
+          }
+
+          function writeToScreen(message)
+          {
+            remote_log.innerHTML += message + "<br>";
+            remote_log.scrollTop = remote_log.scrollHeight;
+          }
+
+          function clearText() {
+                remote_log.innerHTML = "";
+           }
+
+           function doDisconnect() {
+                websocket.close();
+           }
+
+           function doConnectDisconnect() {
+                (document.remote_log_form.connectButton.value == "Connect") ? doConnect() : doDisconnect()
+           }
+        </script>
+        
+        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
+        [#if OK#]
+        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+        [#endif OK#]
+        [#if ERR#]
+        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+        [#endif ERR#]
+        <fieldset>
+        [#if ID=""#]
+        <legend><#LANG_NEW_RECORD#></legend>
+        [#endif ID#]
+        
+        <hr/>
+        <h2>Настройки обновления</h2>
+        <p> Терминал может самостоятельно обновляться с помощью стандартных механизмов гит.
+Для этого он должен быть установлен через git clone, а директория терминала должна
+оставаться валидным и доступным для git pull локальным репозиторием, pull не сработает
+если вы изменяли файлы терминала. Проверить доступность можно с помощью git status.
+
+Обновление засчитывается если хоть один .py файл в src/ изменился, 
+или в Requirements/ появились новые пакеты.
+Время последней проверки обновления и хеш коммита от предыдущего обновления хранятся
+в update.json
+</p>
+        <!-- UPDATE_INTERVAL (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_INTERVAL#] has-error[#endif#]">
+         <label for="update_interval" class="col-lg-3 control-label">
+         Интервал автоматической проверки обновлений в днях <img src="/img/helpicon.png" title="Интервал автоматической проверки обновлений в днях, минимум 1 день. Терминал не будет проговаривать результат проверок, но пришлет уведомление в MJD при ошибке. Если 0 отключено. Также триггерится через rec:update_0_0"/>
+         </label>
+         <div class="col-lg-9"><input id="update_interval" name="update_interval" value="[#UPDATE_INTERVAL#]" type="text" class="form-control"></div>
+        </div>
+        <!-- UPDATE_TURNOFF (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_TURNOFF#] has-error[#endif#]">
+         <label for="update_turnoff" class="col-lg-3 control-label">
+         Выключение поле обновления
+         </label>
+            <div class="col-lg-4">
+            <select name="update_turnoff" class="form-control" id="update_turnoff">
+                <option value="1"[#if UPDATE_TURNOFF=="1"#] selected[#endif#]>Завершится после обновления, systemd должен сам его перезапустить</option>
+                <option value="0"[#if UPDATE_TURNOFF=="0"#] selected[#endif#]>Ничего не делает</option>
+                <option value="-1"[#if UPDATE_TURNOFF=="-1"#] selected[#endif#]>Сам примет решение завершаться ему или нет</option>
+            </select>
+            </div>
+        </div>
+        <!-- UPDATE_FALLBACK (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_FALLBACK#] has-error[#endif#]">
+         <label for="update_fallback" class="col-lg-3 control-label">
+         Откат при ошибке <img src="/img/helpicon.png" title="При ошибке попытается выполнить откат сделанных изменений. Это не относится к новым пакетам pip и apt, только файлы терминала. Откат до последнего успешного обновления триггерится rec:rollback_0_0"/>
+         </label>
+         <input type="checkbox" name="update_fallback" value="true"[#if UPDATE_FALLBACK="true"#] checked[#endif#]>
+        </div>
+        <!-- UPDATE_PIP (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_PIP#] has-error[#endif#]">
+         <label for="update_pip" class="col-lg-3 control-label">
+         Установит новые пакеты через pip <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/pip-requirements.txt через pip При установке по инструкции это должно работать. Неудача считается ошибкой."/>
+         </label>
+         <input type="checkbox" name="update_pip" value="true"[#if UPDATE_PIP="true"#] checked[#endif#]>
+        </div>
+        <!-- UPDATE_APT (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_APT#] has-error[#endif#]">
+         <label for="update_apt" class="col-lg-3 control-label">
+         Установит новые пакеты через apt-get <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/system-requirements.txt через apt-get Не сработает если терминал запущен не от рута. Неудача считается ошибкой."/>
+         </label>
+         <input type="checkbox" name="update_apt" value="true"[#if UPDATE_APT="true"#] checked[#endif#]>
+        </div>
+
+
+
+        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+        <input type="hidden" name="panel_admin" value="1">
+        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
+            <input type="hidden" name="mode" value="update">
+        [#if ID!=""#]
+            <input type="hidden" name="id" value="[#ID#]">
+        [#endif ID#]
+        </fieldset>
+        <div class="form-group">
+           <div class="col-lg-offset-3 col-lg-4">
+                [#if ID!=""#]
+                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+                [#else ID#]
+                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+                [#endif ID#]
+                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+            </div>
+       </div>
+      </form>
+
+
+        
+    </div>
+
+    
+    
 </div>
 <hr/>
 <script type="text/javascript">

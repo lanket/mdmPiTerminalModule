@@ -35,23 +35,24 @@
         <tbody>
         [#begin RESULT#]
         <tr>
-         <td
-          >
+         <td>
           <b>
            [#TITLE#]
-          </a></b>
+          </b>
          </td>
-         <td
-          >
+         <td>
           <b>
            [#NAME#]
-          </a></b>
+          </b>
          </td>
-          <td
-          >
+          <td>
           <b>
            [#HOST#]
-          </a></b>
+          </b>
+         </td>
+          <td>
+           [#if IS_ONLINE=="1"#]<font color="green">Online</font>[#endif#]
+           [#if IS_ONLINE=="0"#]<font color="red">Offline</font>[#endif#]
          </td>
         <td width="1%" nowrap>
           <div>
