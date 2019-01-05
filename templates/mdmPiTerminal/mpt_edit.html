@@ -237,6 +237,58 @@
          <div class="col-lg-9"><input id="proxy_proxy" name="proxy_proxy" value="[#PROXY_PROXY#]" type="text" class="form-control"></div>
         </div>
         
+        <hr/>
+        <h2>MPD</h2>
+        <!-- MPD_CONTROL (varchar) -->
+        <div class="form-group[#if ERR_MPD_CONTROL#] has-error[#endif#]">
+         <label for="mpd_control" class="col-lg-3 control-label">
+         Подключается к mpd-серверу и управляет им. <img src="/img/helpicon.png" title="Будут работать play: и pause: пришедшие от MajorDoMo. Также может ставить mpd на паузу на время активности терминала. Можно настраивать громкость фразой 'громкость музыки <1..100>'"/>
+         </label>
+         <input type="checkbox" name="mpd_control" value="true"[#if MPD_CONTROL="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_IP (varchar) -->
+        <div class="form-group[#if ERR_MPD_IP#] has-error[#endif#]">
+         <label for="mpd_ip" class="col-lg-3 control-label">
+         IP MPD сервера
+         </label>
+         <div class="col-lg-9"><input id="mpd_ip" name="mpd_ip" value="[#MPD_IP#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_PORT (varchar) -->
+        <div class="form-group[#if ERR_MPD_PORT#] has-error[#endif#]">
+         <label for="mpd_port" class="col-lg-3 control-label">
+         Поррт MPD сервера
+         </label>
+         <div class="col-lg-9"><input id="mpd_port" name="mpd_port" value="[#MPD_PORT#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_PAUSE (varchar) -->
+        <div class="form-group[#if ERR_MPD_PAUSE#] has-error[#endif#]">
+         <label for="mpd_pause" class="col-lg-3 control-label">
+         Ставить MPD на паузу <img src="/img/helpicon.png" title="Поставит на паузу по: voice_activate, start_record или start_talking. Снимет по stop_talking и stop_record."/>
+         </label>
+         <input type="checkbox" name="mpd_pause" value="true"[#if MPD_PAUSE="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_SMOOTHLY (varchar) -->
+        <div class="form-group[#if ERR_MPD_SMOOTHLY#] has-error[#endif#]">
+         <label for="mpd_smoothly" class="col-lg-3 control-label">
+         При снятии с паузы поднимать громкость постепенно
+         </label>
+         <input type="checkbox" name="mpd_smoothly" value="true"[#if MPD_SMOOTHLY="true"#] checked[#endif#]>
+        </div>
+        <!-- MPD_QUIETER (varchar) -->
+        <div class="form-group[#if ERR_MPD_QUIETER#] has-error[#endif#]">
+         <label for="mpd_quieter" class="col-lg-3 control-label">
+         Громкость паузы <img src="/img/helpicon.png" title="Если больше 0, то вместо паузы будет уменьшать громкость до заданной."/>
+         </label>
+         <div class="col-lg-9"><input id="mpd_quieter" name="mpd_quieter" value="[#MPD_QUIETER#]" type="text" class="form-control"></div>
+        </div>
+        <!-- MPD_WAIT_RESUME (varchar) -->
+        <div class="form-group[#if ERR_MPD_WAIT_RESUME#] has-error[#endif#]">
+         <label for="mpd_wait_resume" class="col-lg-3 control-label">
+         Задержка перед снятием с автопаузы, в секундах.
+         </label>
+         <div class="col-lg-9"><input id="mpd_wait_resume" name="mpd_wait_resume" value="[#MPD_WAIT_RESUME#]" type="text" class="form-control"></div>
+        </div>
+        
         
         
         
@@ -350,6 +402,16 @@
             </select>
             </div>
         </div>
+        <hr/>
+
+        <!-- CACHE_TTS_SIZE (varchar) -->
+        <div class="form-group[#if ERR_CACHE_TTS_SIZE#] has-error[#endif#]">
+         <label for="cache_tts_size" class="col-lg-3 control-label">
+         Размер кэша в Мб <img src="/img/helpicon.png" title="Если  0 - кэш не используется и будет очищен. Если -1 - кэш не используется и не будет очищен. С отключенным кэшем стрим от локальных провайдеров будет идти в wav а не mp3 что немного быстрее. Если вы используете rhvoice-rest лучше всего отключить кэш."/>
+         </label>
+         <div class="col-lg-9"><input id="cache_tts_size" name="cache_tts_size" value="[#CACHE_TTS_SIZE#]" type="text" class="form-control"></div>
+        </div>
+
         <hr/>
         
         <!-- SETTINGS_PROVIDERSTT (varchar) -->
@@ -771,7 +833,98 @@
                 (document.remote_log_form.connectButton.value == "Connect") ? doConnect() : doDisconnect()
            }
         </script>
+        
+        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
+        [#if OK#]
+        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+        [#endif OK#]
+        [#if ERR#]
+        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+        [#endif ERR#]
+        <fieldset>
+        [#if ID=""#]
+        <legend><#LANG_NEW_RECORD#></legend>
+        [#endif ID#]
+        
+        <hr/>
+        <h2>Настройки обновления</h2>
+        <p> Терминал может самостоятельно обновляться с помощью стандартных механизмов гит.
+Для этого он должен быть установлен через git clone, а директория терминала должна
+оставаться валидным и доступным для git pull локальным репозиторием, pull не сработает
+если вы изменяли файлы терминала. Проверить доступность можно с помощью git status.
 
+Обновление засчитывается если хоть один .py файл в src/ изменился, 
+или в Requirements/ появились новые пакеты.
+Время последней проверки обновления и хеш коммита от предыдущего обновления хранятся
+в update.json
+</p>
+        <!-- UPDATE_INTERVAL (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_INTERVAL#] has-error[#endif#]">
+         <label for="update_interval" class="col-lg-3 control-label">
+         Интервал автоматической проверки обновлений в днях <img src="/img/helpicon.png" title="Интервал автоматической проверки обновлений в днях, минимум 1 день. Терминал не будет проговаривать результат проверок, но пришлет уведомление в MJD при ошибке. Если 0 отключено. Также триггерится через rec:update_0_0"/>
+         </label>
+         <div class="col-lg-9"><input id="update_interval" name="update_interval" value="[#UPDATE_INTERVAL#]" type="text" class="form-control"></div>
+        </div>
+        <!-- UPDATE_TURNOFF (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_TURNOFF#] has-error[#endif#]">
+         <label for="update_turnoff" class="col-lg-3 control-label">
+         Выключение поле обновления
+         </label>
+            <div class="col-lg-4">
+            <select name="update_turnoff" class="form-control" id="update_turnoff">
+                <option value="1"[#if UPDATE_TURNOFF=="1"#] selected[#endif#]>Завершится после обновления, systemd должен сам его перезапустить</option>
+                <option value="0"[#if UPDATE_TURNOFF=="0"#] selected[#endif#]>Ничего не делает</option>
+                <option value="-1"[#if UPDATE_TURNOFF=="-1"#] selected[#endif#]>Сам примет решение завершаться ему или нет</option>
+            </select>
+            </div>
+        </div>
+        <!-- UPDATE_FALLBACK (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_FALLBACK#] has-error[#endif#]">
+         <label for="update_fallback" class="col-lg-3 control-label">
+         Откат при ошибке <img src="/img/helpicon.png" title="При ошибке попытается выполнить откат сделанных изменений. Это не относится к новым пакетам pip и apt, только файлы терминала. Откат до последнего успешного обновления триггерится rec:rollback_0_0"/>
+         </label>
+         <input type="checkbox" name="update_fallback" value="true"[#if UPDATE_FALLBACK="true"#] checked[#endif#]>
+        </div>
+        <!-- UPDATE_PIP (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_PIP#] has-error[#endif#]">
+         <label for="update_pip" class="col-lg-3 control-label">
+         Установит новые пакеты через pip <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/pip-requirements.txt через pip При установке по инструкции это должно работать. Неудача считается ошибкой."/>
+         </label>
+         <input type="checkbox" name="update_pip" value="true"[#if UPDATE_PIP="true"#] checked[#endif#]>
+        </div>
+        <!-- UPDATE_APT (varchar) -->
+        <div class="form-group[#if ERR_UPDATE_APT#] has-error[#endif#]">
+         <label for="update_apt" class="col-lg-3 control-label">
+         Установит новые пакеты через apt-get <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/system-requirements.txt через apt-get Не сработает если терминал запущен не от рута. Неудача считается ошибкой."/>
+         </label>
+         <input type="checkbox" name="update_apt" value="true"[#if UPDATE_APT="true"#] checked[#endif#]>
+        </div>
+
+
+
+        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+        <input type="hidden" name="panel_admin" value="1">
+        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
+            <input type="hidden" name="mode" value="update">
+        [#if ID!=""#]
+            <input type="hidden" name="id" value="[#ID#]">
+        [#endif ID#]
+        </fieldset>
+        <div class="form-group">
+           <div class="col-lg-offset-3 col-lg-4">
+                [#if ID!=""#]
+                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+                [#else ID#]
+                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+                [#endif ID#]
+                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
+            </div>
+       </div>
+      </form>
+
+
+        
     </div>
 
     

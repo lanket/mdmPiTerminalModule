@@ -43,6 +43,8 @@
          $rec['SETTINGS_PROVIDERTTS']=  $this->validate('settings_providertts');
         //updating 'cache_tts_priority' (varchar)
          $rec['CACHE_TTS_PRIORITY']= $this->validate('cache_tts_priority');
+        //updating 'cache_tts_size' (varchar)
+         $rec['CACHE_TTS_SIZE']= $this->validate('cache_tts_size');
         //updating 'settings_providerstt' (varchar)
          $rec['SETTINGS_PROVIDERSTT']=  $this->validate('settings_providerstt');
         //updating 'yandex_apikeytts' (varchar)
@@ -77,6 +79,19 @@
          $rec['RHVOICE_SPEAKER']= $this->validate('rhvoice_speaker');
         //updating 'pocketsphinx0rest_server' (varchar)
          $rec['POCKETSPHINX0REST_SERVER']= $this->validate('pocketsphinx0rest_server');
+   }
+   else if($_POST['panel_admin'])
+   {
+        //updating 'update_interval' (varchar)
+         $rec['UPDATE_INTERVAL']= $this->validate('update_interval');
+        //updating 'update_turnoff' (varchar)
+         $rec['UPDATE_TURNOFF']= $this->validate('update_turnoff');
+        //updating 'update_fallback' (varchar)
+         $rec['UPDATE_FALLBACK']= $this->validate('update_fallback');
+        //updating 'update_pip' (varchar)
+         $rec['UPDATE_PIP']= $this->validate('update_pip');
+        //updating 'update_apt' (varchar)
+         $rec['UPDATE_APT']= $this->validate('update_apt');
    }
    else 
    {
@@ -113,6 +128,20 @@
          $rec['PROXY_MONKEY_PATCHING']= $this->validate('proxy_monkey_patching');
         //updating 'proxy_proxy' (varchar)
          $rec['PROXY_PROXY']= $this->validate('proxy_proxy');
+        //updating 'mpd_control' (varchar)
+         $rec['MPD_CONTROL']= $this->validate('mpd_control');
+        //updating 'mpd_ip' (varchar)
+         $rec['MPD_IP']= $this->validate('mpd_ip');
+        //updating 'mpd_port' (varchar)
+         $rec['MPD_PORT']= $this->validate('mpd_port');
+        //updating 'mpd_pause' (varchar)
+         $rec['MPD_PAUSE']= $this->validate('mpd_pause');
+        //updating 'mpd_smoothly' (varchar)
+         $rec['MPD_SMOOTHLY']= $this->validate('mpd_smoothly');
+        //updating 'mpd_quieter' (varchar)
+         $rec['MPD_QUIETER']= $this->validate('mpd_quieter');
+        //updating 'mpd_wait_resume' (varchar)
+         $rec['MPD_WAIT_RESUME']= $this->validate('mpd_wait_resume');
    }
 
    if($this->debug == 1) debmes('mpt edit befour ok');
