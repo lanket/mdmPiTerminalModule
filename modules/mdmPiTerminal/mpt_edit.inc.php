@@ -9,7 +9,7 @@
   $rec=SQLSelectOne("SELECT * FROM $table_name WHERE ID='$id'");
   if($rec['ID_TERMINAL'])  
   {
-    $tmp = SQLSelectOne('SELECT HOST FROM terminals where ID = ' . $rec['ID_TERMINAL']);
+    $tmp = SQLSelectOne('SELECT HOST , NAME FROM terminals where ID = ' . $rec['ID_TERMINAL']);
     $out['IP_TERMINAL'] = $tmp['HOST'];
   }
   
@@ -22,7 +22,7 @@
     if($rec['ID']) $qry = " and ID <> " . $rec['ID'];
     $findduble=SQLSelectOne("SELECT * FROM $table_name WHERE ID_TERMINAL='$id_terminal' $qry");
     // chech not empy terminal and mast no dubles
-    if(($rec['ID_TERMINAL'] == '' or $findduble['ID']) and !$_POST['panel_voice'])
+    if(($rec['ID_TERMINAL'] == '' or $findduble['ID']) and !$_POST['panel_voice'] and !$_POST['panel_admin'])
     {
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
@@ -147,13 +147,21 @@
    if($this->debug == 1) debmes('mpt edit befour ok');
    if ($ok) {
         if($this->debug == 1) debmes('mpt edit after ok');
+        $nmTerm = $tmp['NAME'];
         if ($rec['ID']) {
+            if($this->debug == 1) debmes("mpt edit update : $nmTerm ! ip: " . $tmp['HOST']);
+            if ($this->config['CREATE_CLASS'] == 1)
+            {
+                if($this->debug == 1) debmes("mpt edit update CreateClass=True : $nmTerm ! ip: " . $tmp['HOST']);
+                $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
+                $rec['MAJORDOMO_OBJECT_NAME'] = $nmTerm;
+                $postdata['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
+                $postdata['MAJORDOMO_OBJECT_NAME'] = $nmTerm;
+            }
             SQLUpdate($table_name, $rec); // update sql
-            if($this->debug == 1) debmes('mpt: ' . $tmp['HOST']);
         } else {
             if($this->debug == 1) debmes('mpt edit no recid insert');
             $new_rec=1;
-            $nmTerm = $tmp['NAME'];
             if($this->debug == 1) debmes('mpt edit add object: ' . $nmTerm);
             if ($this->config['CREATE_CLASS'] == 1)
             {
