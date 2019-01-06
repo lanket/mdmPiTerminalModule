@@ -74,7 +74,7 @@
          Сигнал о распознавании ключевого слова:
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="settings_alarmkwactivated" value="true"[#if SETTINGS_ALARMKWACTIVATED="true"#] checked[#endif#]>
+             <input type="checkbox" name="settings_alarmkwactivated" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>
          </div>
         </div>
         
@@ -84,7 +84,7 @@
          Сигнал перед сообщением:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_alarmtts" value="true"[#if SETTINGS_ALARMTTS="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmtts" value="1"[#if SETTINGS_ALARMTTS="1"#] checked[#endif#]>
          </div>
         </div>
         
@@ -94,7 +94,7 @@
          Сигнал перед началом распознавания речи:
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_alarmstt" value="true"[#if SETTINGS_ALARMSTT="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_alarmstt" value="1"[#if SETTINGS_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
         
@@ -112,7 +112,7 @@
          Тихий запуск <img src="/img/helpicon.png" title="Несущественные сообщения не будут произнесены"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_quiet" value="true"[#if SETTINGS_QUIET="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_quiet" value="1"[#if SETTINGS_QUIET="1"#] checked[#endif#]>
          </div>
         </div>
 
@@ -122,7 +122,7 @@
          Старт без приветствия <img src="/img/helpicon.png" title="Терминал не будет произносить приветствие при голосовой активации"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_no_hello" value="true"[#if SETTINGS_NO_HELLO="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_no_hello" value="1"[#if SETTINGS_NO_HELLO="1"#] checked[#endif#]>
          </div>
         </div>
 
@@ -143,9 +143,9 @@
             <select name="settings_chrome_mode" class="form-control" id="settings_chrome_mode">
                 <option value="0"[#if SETTINGS_CHROME_MODE=="0"#] selected[#endif#]>Отключить</option>
                 <option value="1"[#if SETTINGS_CHROME_MODE=="1"#] selected[#endif#]>Включено</option>
-                <option value="2"[#if SETTINGS_CHROME_MODE=="2"#] selected[#endif#]>Непрерывная оценка шума</option>
+<!--                <option value="2"[#if SETTINGS_CHROME_MODE=="2"#] selected[#endif#]>Непрерывная оценка шума</option>
                 <option value="3"[#if SETTINGS_CHROME_MODE=="3"#] selected[#endif#]>Без оценки шума</option>
-                <option value="4"[#if SETTINGS_CHROME_MODE=="4"#] selected[#endif#]>Параллельное распознавание</option>
+                <option value="4"[#if SETTINGS_CHROME_MODE=="4"#] selected[#endif#]>Параллельное распознавание</option> -->
             </select>
             </div>
         </div>
@@ -166,7 +166,7 @@
          Глушить музыку <img src="/img/helpicon.png" title="Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки и ставить mpd на паузу. Это может быть не очень удобно, т.к. подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_chrome_choke" value="true"[#if SETTINGS_CHROME_CHOKE="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_choke" value="1"[#if SETTINGS_CHROME_CHOKE="1"#] checked[#endif#]>
          </div>
         </div>
 
@@ -176,7 +176,7 @@
          Сигнал перед распознованием <img src="/img/helpicon.png" title="Если включено будет издавать сигнал перед тем как распознать записанную фразу в chrome_mode. Подвержено ложным срабатываниям"/>
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="settings_chrome_alarmstt" value="true"[#if SETTINGS_CHROME_ALARMSTT="true"#] checked[#endif#]>
+              <input type="checkbox" name="settings_chrome_alarmstt" value="1"[#if SETTINGS_CHROME_ALARMSTT="1"#] checked[#endif#]>
          </div>
         </div>
 
@@ -188,16 +188,16 @@
          <label for="majordomo_object_name" class="col-lg-3 control-label">
          <#LANG_LINKED_OBJECT#>:
          </label>
-         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
+         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
         </div>
         <!-- MAJORDOMO_OBJECT_METHOD (varchar) LINKED_METHOD -->
         <div class="form-group[#if ERR_MAJORDOMO_OBJECT_METHOD#] has-error[#endif#]">
          <label for="majordomo_object_method" class="col-lg-3 control-label">
          <#LANG_METHOD#>:
          </label>
-         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="true"#] disabled[#endif#]></div>
+         <div class="col-lg-9"><input id="majordomo_object_method" name="majordomo_object_method" value="[#MAJORDOMO_OBJECT_METHOD#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
         </div>
-        [#if CREATE_CLASS<>"true"#]
+        [#if CREATE_CLASS<>"1"#]
         [#module name="linkedobject" object_field="majordomo_object_name" method_field="majordomo_object_method"#]
         [#endif#]
         <!-- MAJORDOMO_HEARTBEAT_TIMEOUT (varchar) -->
@@ -217,7 +217,7 @@
          Использовать прокси
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="proxy_enable" value="true"[#if PROXY_ENABLE="true"#] checked[#endif#]>
+              <input type="checkbox" name="proxy_enable" value="1"[#if PROXY_ENABLE="1"#] checked[#endif#]>
          </div>
         </div>
         <!-- PROXY_MONKEY_PATCHING (varchar) -->
@@ -226,7 +226,7 @@
          proxy_monkey_patching
          </label>
          <div class="col-lg-4">
-              <input type="checkbox" name="proxy_monkey_patching" value="true"[#if PROXY_MONKEY_PATCHING="true"#] checked[#endif#]>
+              <input type="checkbox" name="proxy_monkey_patching" value="1"[#if PROXY_MONKEY_PATCHING="1"#] checked[#endif#]>
          </div>
         </div>
         <!-- PROXY_PROXY (varchar) -->
@@ -244,7 +244,7 @@
          <label for="mpd_control" class="col-lg-3 control-label">
          Подключается к mpd-серверу и управляет им. <img src="/img/helpicon.png" title="Будут работать play: и pause: пришедшие от MajorDoMo. Также может ставить mpd на паузу на время активности терминала. Можно настраивать громкость фразой 'громкость музыки <1..100>'"/>
          </label>
-         <input type="checkbox" name="mpd_control" value="true"[#if MPD_CONTROL="true"#] checked[#endif#]>
+         <input type="checkbox" name="mpd_control" value="1"[#if MPD_CONTROL="1"#] checked[#endif#]>
         </div>
         <!-- MPD_IP (varchar) -->
         <div class="form-group[#if ERR_MPD_IP#] has-error[#endif#]">
@@ -265,14 +265,14 @@
          <label for="mpd_pause" class="col-lg-3 control-label">
          Ставить MPD на паузу <img src="/img/helpicon.png" title="Поставит на паузу по: voice_activate, start_record или start_talking. Снимет по stop_talking и stop_record."/>
          </label>
-         <input type="checkbox" name="mpd_pause" value="true"[#if MPD_PAUSE="true"#] checked[#endif#]>
+         <input type="checkbox" name="mpd_pause" value="1"[#if MPD_PAUSE="1"#] checked[#endif#]>
         </div>
         <!-- MPD_SMOOTHLY (varchar) -->
         <div class="form-group[#if ERR_MPD_SMOOTHLY#] has-error[#endif#]">
          <label for="mpd_smoothly" class="col-lg-3 control-label">
          При снятии с паузы поднимать громкость постепенно
          </label>
-         <input type="checkbox" name="mpd_smoothly" value="true"[#if MPD_SMOOTHLY="true"#] checked[#endif#]>
+         <input type="checkbox" name="mpd_smoothly" value="1"[#if MPD_SMOOTHLY="1"#] checked[#endif#]>
         </div>
         <!-- MPD_QUIETER (varchar) -->
         <div class="form-group[#if ERR_MPD_QUIETER#] has-error[#endif#]">
@@ -528,7 +528,7 @@
          Использовать AWS SDK (boto3) для коммуникации вместо нативной реализации <img src="/img/helpicon.png" title="Polly будет отвечать на 200-300 ms быстрее, а прокси для aws перестанет работать. boto3 должен быть установлен: mdmTerminal2/env/bin/python -m pip install boto3"/>
          </label>
          <div class="col-lg-4">
-             <input type="checkbox" name="aws_boto3" value="true"[#if AWS_BOTO3="true"#] checked[#endif#]>
+             <input type="checkbox" name="aws_boto3" value="1"[#if AWS_BOTO3="1"#] checked[#endif#]>
          </div>
         </div>
         <hr/>
@@ -834,7 +834,7 @@
            }
         </script>
         
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
+        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit3" class="form-horizontal">
         [#if OK#]
         <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
         [#endif OK#]
@@ -883,21 +883,21 @@
          <label for="update_fallback" class="col-lg-3 control-label">
          Откат при ошибке <img src="/img/helpicon.png" title="При ошибке попытается выполнить откат сделанных изменений. Это не относится к новым пакетам pip и apt, только файлы терминала. Откат до последнего успешного обновления триггерится rec:rollback_0_0"/>
          </label>
-         <input type="checkbox" name="update_fallback" value="true"[#if UPDATE_FALLBACK="true"#] checked[#endif#]>
+         <input type="checkbox" name="update_fallback" value="1"[#if UPDATE_FALLBACK="1"#] checked[#endif#]>
         </div>
         <!-- UPDATE_PIP (varchar) -->
         <div class="form-group[#if ERR_UPDATE_PIP#] has-error[#endif#]">
          <label for="update_pip" class="col-lg-3 control-label">
          Установит новые пакеты через pip <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/pip-requirements.txt через pip При установке по инструкции это должно работать. Неудача считается ошибкой."/>
          </label>
-         <input type="checkbox" name="update_pip" value="true"[#if UPDATE_PIP="true"#] checked[#endif#]>
+         <input type="checkbox" name="update_pip" value="1"[#if UPDATE_PIP="1"#] checked[#endif#]>
         </div>
         <!-- UPDATE_APT (varchar) -->
         <div class="form-group[#if ERR_UPDATE_APT#] has-error[#endif#]">
          <label for="update_apt" class="col-lg-3 control-label">
          Установит новые пакеты через apt-get <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/system-requirements.txt через apt-get Не сработает если терминал запущен не от рута. Неудача считается ошибкой."/>
          </label>
-         <input type="checkbox" name="update_apt" value="true"[#if UPDATE_APT="true"#] checked[#endif#]>
+         <input type="checkbox" name="update_apt" value="1"[#if UPDATE_APT="1"#] checked[#endif#]>
         </div>
 
 
