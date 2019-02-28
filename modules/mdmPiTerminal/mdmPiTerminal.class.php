@@ -134,7 +134,7 @@ function admin(&$out) {
         echo "Ok";
         exit;
     }
- 
+
  if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
   $out['SET_DATASOURCE']=1;
  }
@@ -185,6 +185,14 @@ function usual(&$out) {
  function send_mpt($command, $data, $target) {
   require(DIR_MODULES.$this->name.'/mpt_send.inc.php');
  }
+ /**
+ * Read map of settings from terminal
+ *
+ * @access public
+ */
+  function read_map_settings_mpt($target) {
+   require(DIR_MODULES.$this->name.'/mpt_read.inc.php');
+  }
 /**
 * mpt delete record
 *
@@ -217,24 +225,24 @@ function usual(&$out) {
 *
 * @access private
 */
- 
+
  function targetToIp($target='') {
     if(!$target) return null;
     if (preg_match('/^[\d\.]+$/',$target))
     {
-        if($this->debug == 1) debmes('mpt ttIp 1: ' . $target);    
+        if($this->debug == 1) debmes('mpt ttIp 1: ' . $target);
         return $target;
     }
     else
     {
         $qry = "terminals.NAME LIKE '".DBSafe($target)."' OR terminals.TITLE LIKE '".DBSafe($target)."'";
         $res = SQLSelectOne("SELECT terminals.HOST FROM `mpt` inner join terminals on mpt.ID_TERMINAL = terminals.ID where $qry");
-        if($this->debug == 1) debmes('mpt ttIp 2: ' . $res['HOST']);    
+        if($this->debug == 1) debmes('mpt ttIp 2: ' . $res['HOST']);
         if(!res) return null;
         return $res['HOST'];
     }
  }
- 
+
 /**
 * Install
 *
@@ -249,7 +257,7 @@ function usual(&$out) {
     parent::install();
  }
 
- 
+
  function addObject($nmTerm) {
     //global $create_class;
     if($this->debug == 1) debmes('mpt addObject create class : ' . $this->config['CREATE_CLASS']);
@@ -288,7 +296,7 @@ EOD;
     addClassObject('Terminals',$nmTerm);
     if($this->debug == 1) debmes('mpt addObject after add object ' . $nmTerm);
  }
- 
+
  /**
 * Uninstall
 *
@@ -309,124 +317,25 @@ EOD;
 */
  function dbInstall($data) {
 /*
-mpt - 
+mpt -
 */
   $data = <<<EOD
  mpt: ID int(10) unsigned NOT NULL auto_increment
  mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
- mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT 1
- mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT 0
- mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT 1
- mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
- mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT 0
- mpt: SETTINGS_NO_HELLO BOOLEAN NOT NULL DEFAULT 0
- mpt: SETTINGS_PHRASE_TIME_LIMIT TINYINT NOT NULL DEFAULT 15
- mpt: SETTINGS_CHROME_MODE TINYINT NOT NULL DEFAULT 2
- mpt: SETTINGS_CHROME_CHOKE BOOLEAN NOT NULL DEFAULT 0
- mpt: SETTINGS_CHROME_ALARMSTT BOOLEAN NOT NULL DEFAULT 0
- mpt: SNOWBOY_TOKEN varchar(100) NOT NULL DEFAULT 'd4977cf8ff6ede6efb8d2277c1608c7dbebf18a7'
- mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
- mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
- mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
- mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
- mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT 1
- mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
- mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
- mpt: MPD_PAUSE BOOLEAN NOT NULL DEFAULT 1
- mpt: MPD_SMOOTHLY BOOLEAN NOT NULL DEFAULT 0
- mpt: MPD_QUIETER TINYINT NOT NULL DEFAULT 0
- mpt: MPD_WAIT_RESUME TINYINT NOT NULL DEFAULT 5
- mpt: YANDEX_APIKEYTTS varchar(100) NOT NULL DEFAULT ''
- mpt: YANDEX_APIKEYSTT varchar(100) NOT NULL DEFAULT ''
- mpt: YANDEX_EMOTION varchar(15) NOT NULL DEFAULT 'good'
- mpt: YANDEX_SPEAKER varchar(15) NOT NULL DEFAULT 'alyss'
- mpt: AWS_SPEAKER varchar(15) NOT NULL DEFAULT 'Tatyana'
- mpt: AWS_ACCESS_KEY_ID varchar(100) NOT NULL DEFAULT ''
- mpt: AWS_SECRET_ACCESS_KEY varchar(100) NOT NULL DEFAULT ''
- mpt: AWS_REGION varchar(15) NOT NULL DEFAULT 'eu-central-1'
- mpt: AWS_BOTO3 BOOLEAN NOT NULL DEFAULT 0
- mpt: RHVOICE0REST_SERVER varchar(100) NOT NULL DEFAULT 'http:\/\/127.0.0.1:8080'
- mpt: RHVOICE0REST_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
- mpt: RHVOICE0REST_RATE TINYINT NOT NULL DEFAULT 50
- mpt: RHVOICE0REST_PITCH TINYINT NOT NULL DEFAULT 50
- mpt: RHVOICE0REST_VOLUME TINYINT NOT NULL DEFAULT 50
- mpt: RHVOICE_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
- mpt: POCKETSPHINX0REST_SERVER varchar(100) NOT NULL DEFAULT 'http:\/\/127.0.0.1:8085'
- mpt: CACHE_TTS_PRIORITY varchar(20) NOT NULL DEFAULT 'google'
- mpt: PROXY_ENABLE BOOLEAN NOT NULL DEFAULT 0
- mpt: PROXY_MONKEY_PATCHING BOOLEAN NOT NULL DEFAULT 1
- mpt: PROXY_PROXY varchar(100) NOT NULL DEFAULT 'socks5h:\/\/127.0.0.1:9050'
- mpt: UPDATE_INTERVAL TINYINT NOT NULL DEFAULT 0
- mpt: UPDATE_TURNOFF TINYINT NOT NULL DEFAULT -1
- mpt: UPDATE_FALLBACK BOOLEAN NOT NULL DEFAULT 1
- mpt: CACHE_TTS_SIZE  INT(3) NOT NULL DEFAULT '100'
- mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT 1
- mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT 0
- mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
- mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
+ mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
 EOD;
   parent::dbInstall($data);
  }
 
- function validate($param) 
+ function validate($param)
     {
         global $$param;
         $value = $$param;
         if($this->debug == 1) $oldvalue = $value;
 //        $setParam = !$_POST[$param];
         $param=strtoupper($param);
-        $db = <<<EOD
+/*       $db = <<<EOD
         mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
-        mpt: SETTINGS_ALARMKWACTIVATED BOOLEAN NOT NULL DEFAULT 1
-        mpt: SETTINGS_ALARMTTS BOOLEAN NOT NULL DEFAULT 0
-        mpt: SETTINGS_ALARMSTT BOOLEAN NOT NULL DEFAULT 1
-        mpt: SETTINGS_ASK_ME_AGAIN TINYINT NOT NULL DEFAULT 0
-        mpt: SETTINGS_QUIET BOOLEAN NOT NULL DEFAULT 0
-        mpt: SETTINGS_NO_HELLO BOOLEAN NOT NULL DEFAULT 0
-        mpt: SETTINGS_PHRASE_TIME_LIMIT TINYINT NOT NULL DEFAULT 15
-        mpt: SETTINGS_CHROME_MODE TINYINT NOT NULL DEFAULT 2
-        mpt: SETTINGS_CHROME_CHOKE BOOLEAN NOT NULL DEFAULT 0
-        mpt: SETTINGS_CHROME_ALARMSTT BOOLEAN NOT NULL DEFAULT 0
-        mpt: SNOWBOY_TOKEN varchar(100) NOT NULL DEFAULT 'd4977cf8ff6ede6efb8d2277c1608c7dbebf18a7'
-        mpt: SETTINGS_SENSITIVITY varchar(3) NOT NULL DEFAULT '0.7'
-        mpt: SETTINGS_PROVIDERTTS varchar(20) NOT NULL DEFAULT 'google'
-        mpt: SETTINGS_PROVIDERSTT varchar(20) NOT NULL DEFAULT 'google'
-        mpt: MAJORDOMO_HEARTBEAT_TIMEOUT INT(4) NOT NULL DEFAULT 0
-        mpt: MPD_CONTROL BOOLEAN NOT NULL DEFAULT 1
-        mpt: MPD_IP varchar(15) NOT NULL DEFAULT '127.0.0.1'
-        mpt: MPD_PORT varchar(5) NOT NULL DEFAULT '6600'
-        mpt: MPD_PAUSE BOOLEAN NOT NULL DEFAULT 1
-        mpt: MPD_SMOOTHLY BOOLEAN NOT NULL DEFAULT 0
-        mpt: MPD_QUIETER TINYINT NOT NULL DEFAULT 0
-        mpt: MPD_WAIT_RESUME TINYINT NOT NULL DEFAULT 5
-        mpt: YANDEX_APIKEYTTS varchar(100) NOT NULL DEFAULT ''
-        mpt: YANDEX_APIKEYSTT varchar(100) NOT NULL DEFAULT ''
-        mpt: YANDEX_EMOTION varchar(15) NOT NULL DEFAULT 'good'
-        mpt: YANDEX_SPEAKER varchar(15) NOT NULL DEFAULT 'alyss'
-        mpt: AWS_SPEAKER varchar(15) NOT NULL DEFAULT 'Tatyana'
-        mpt: AWS_ACCESS_KEY_ID varchar(100) NOT NULL DEFAULT ''
-        mpt: AWS_SECRET_ACCESS_KEY varchar(100) NOT NULL DEFAULT ''
-        mpt: AWS_REGION varchar(15) NOT NULL DEFAULT 'eu-central-1'
-        mpt: AWS_BOTO3 BOOLEAN NOT NULL DEFAULT 0
-        mpt: RHVOICE0REST_SERVER varchar(100) NOT NULL DEFAULT 'http://127.0.0.1:8080'
-        mpt: RHVOICE0REST_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
-        mpt: RHVOICE0REST_RATE TINYINT NOT NULL DEFAULT 50
-        mpt: RHVOICE0REST_PITCH TINYINT NOT NULL DEFAULT 50
-        mpt: RHVOICE0REST_VOLUME TINYINT NOT NULL DEFAULT 50
-        mpt: RHVOICE_SPEAKER varchar(15) NOT NULL DEFAULT 'anna'
-        mpt: POCKETSPHINX0REST_SERVER varchar(100) NOT NULL DEFAULT 'http://127.0.0.1:8085'
-        mpt: CACHE_TTS_PRIORITY varchar(20) NOT NULL DEFAULT 'google'
-        mpt: PROXY_ENABLE BOOLEAN NOT NULL DEFAULT 0
-        mpt: PROXY_MONKEY_PATCHING BOOLEAN NOT NULL DEFAULT 1
-        mpt: PROXY_PROXY varchar(100) NOT NULL DEFAULT 'socks5h://127.0.0.1:9050'
-        mpt: UPDATE_INTERVAL TINYINT NOT NULL DEFAULT 0
-        mpt: UPDATE_TURNOFF TINYINT NOT NULL DEFAULT -1
-        mpt: UPDATE_FALLBACK BOOLEAN NOT NULL DEFAULT 1
-        mpt: CACHE_TTS_SIZE  INT(3) NOT NULL DEFAULT 100
-        mpt: UPDATE_PIP BOOLEAN NOT NULL DEFAULT 1
-        mpt: UPDATE_APT BOOLEAN NOT NULL DEFAULT 0
-        mpt: MAJORDOMO_OBJECT_METHOD varchar(100) NOT NULL DEFAULT ''
-        mpt: MAJORDOMO_OBJECT_NAME varchar(100) NOT NULL DEFAULT ''
 EOD;
         $data = explode("\n",  $db);
         foreach($data as $cur)
@@ -437,7 +346,7 @@ EOD;
                 if($curarray[10] == 'TINYINT' or substr($curarray[2],0,3) == 'INT' or $curarray[10] == 'BOOLEAN')
                 {
                     if($this->debug == 1) debmes(">mpt edit validate int : $param = $oldvalue > $value ! isset = $setParam xxx " . isset($value));
-//                    if(isset($value)) 
+//                    if(isset($value))
 //                    {
 //                        $value = str_replace("'","",$curarray[14]);
 //                        if($this->debug == 1) debmes(">mpt edit validate int != 0 : $param = $oldvalue > $value" );
@@ -453,6 +362,7 @@ EOD;
         if($this->debug == 1) debmes("mpt edit validate : $param = $oldvalue > $value" );
         global $postdata;
         $postdata[$param] = $value;
+        */
 
         return $value;
     }
@@ -463,4 +373,3 @@ EOD;
 * TW9kdWxlIGNyZWF0ZWQgTWF5IDA3LCAyMDE4IHVzaW5nIFNlcmdlIEouIHdpemFyZCAoQWN0aXZlVW5pdCBJbmMgd3d3LmFjdGl2ZXVuaXQuY29tKQ==
 *
 */
-          
