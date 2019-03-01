@@ -1,0 +1,1142 @@
+{
+  "Настройки": {
+    "settings": {
+      "providertts": {
+        "name": "Провайдер синтеза речи",
+        "desc": "Провайдер синтеза речи\ngoogle - Ключ не нужен, голос так себе.\nyandex - cм. [yandex]\naws - Polly от AWS. Нужен аккаунт AWS.\nazure - MS Azure, см. [azure]\nrhvoice, rhvoice-rest - \"локальные провайдеры\". См. соответствующие секции.",
+        "type": "select",
+        "default": "google",
+        "options": [
+          "google",
+          "yandex",
+          "aws",
+          "azure",
+          "rhvoice-rest",
+          "rhvoice"
+        ]
+      },
+      "providerstt": {
+        "name": "Провайдер распознавания речи",
+        "desc": "Провайдер распознавания речи.\ngoogle - Ключ не нужен, хорошо распознает речь.\nwit.ai - нужен ключ.\nmicrosoft - нужен ключ, не тестировалось.\nyandex - см. [yandex]\nazure - MS Azure, см. [azure]\npocketsphinx-rest - \"локальный провайдер\". См. [pocketsphinx-rest]",
+        "type": "select",
+        "default": "google",
+        "options": [
+          "google",
+          "yandex",
+          "pocketsphinx-rest",
+          "wit.ai",
+          "microsoft",
+          "azure",
+          "google-assistant-stt"
+        ]
+      },
+      "ip": {
+        "name": "IP терминала",
+        "desc": "IP терминала, определяется автоматически при первом запуске.\nИспользуется только для проговаривания.",
+        "type": "text",
+        "default": ""
+      },
+      "sensitivity": {
+        "name": "sensitivity",
+        "desc": "Чувствительность детектора на фразы-активаторы, задается от 0 до 1.\nЧем выше, тем лучше snowboy будет реагировать на фразы и больше ложных срабатываний.",
+        "type": "text",
+        "default": 0.45
+      },
+      "alarmkwactivated": {
+        "name": "alarmkwactivated",
+        "desc": "Будет проигрывать ding.wav при активации",
+        "type": "checkbox",
+        "default": true
+      },
+      "alarmtts": {
+        "name": "alarmtts",
+        "desc": "Будет проигрывать dong.wav перед фразами. Исключение - уточняющие вопросы",
+        "type": "checkbox",
+        "default": true
+      },
+      "alarmstt": {
+        "name": "alarmstt",
+        "desc": "Будет проигрывать dong.wav по окончанию записи фразы.\n!!!Если blocking_listener = off, это НЕ сигнал перед началом распознавания речи.\nРаспознавание идет параллельно с фразой и начинается почти сразу после ding.wav\nЖдать пока терминал закончит фразу не обязательно.",
+        "type": "checkbox",
+        "default": true
+      },
+      "alarm_recognized": {
+        "name": "alarm_recognized",
+        "desc": "Сигнал о том что команда успешно распознана и принята в обработку.",
+        "type": "checkbox",
+        "default": false
+      },
+      "first_love": {
+        "name": "first_love",
+        "desc": "Если 'ip_server' не задан, то ip первого кто подключится к терминалу станет 'ip_server'.\nИсключение - 127.0.0.1",
+        "type": "checkbox",
+        "default": true
+      },
+      "last_love": {
+        "name": "last_love",
+        "desc": "Терминал будет отвергать подключения от ip не совпадающих с 'ip_server'\nВключение этой опции без first_love сделает удаленную конфигурацию невозможной.\nИсключение - 127.0.0.1",
+        "type": "checkbox",
+        "default": false
+      },
+      "mic_index": {
+        "name": "mic_index",
+        "desc": "Индекс микрофона. Посмотреть индексы можно запустив mdmTerminal2/scripts/mic.py\nЕсли -1 - устройство по умолчанию.",
+        "type": "text",
+        "default": -1
+      },
+      "optimistic_nonblock_tts": {
+        "name": "optimistic_nonblock_tts",
+        "desc": "Запрос к провайдеру TTS не будет блокировать выполнение до генерации аудио.\nЭто сокращает время ответа, т.к. запрос будет идти параллельно всяким динг-донгам\nесли время отклика TTS большое, паузы между сигналами и фразой могут напрягать.",
+        "type": "checkbox",
+        "default": true
+      },
+      "ask_me_again": {
+        "name": "ask_me_again",
+        "desc": "Если в записи нет слов или STT не смог ничего распознать, будет переспрашивать\nданное количество раз. Если 0 - не переспрашивает.",
+        "type": "text",
+        "default": 0
+      },
+      "quiet": {
+        "name": "quiet",
+        "desc": "Несущественные сообщения не будут произнесены (тихий запуск)",
+        "type": "checkbox",
+        "default": false
+      },
+      "no_hello": {
+        "name": "no_hello",
+        "desc": "Терминал не будет произносить приветствие при голосовой активации",
+        "type": "checkbox",
+        "default": false
+      },
+      "blocking_listener": {
+        "name": "blocking_listener",
+        "desc": "Включает блокирующее распознавание речи (как в mdmTerminal)\nРаспознавание начнется после приветствия или звукового сигнала\nПри отключении не нужно ждать окончания приветствия,\nтерминал будет записывать голос параллельно но может начать записывать сам себя :)",
+        "type": "checkbox",
+        "default": true
+      },
+      "audio_gain": {
+        "name": "audio_gain",
+        "desc": "Задает уровень коррекции громкости микрофона при поиске ключевых слов.\nЕсли у вас тихий микрофон попробуйте увеличить значение (например до 2.0),\nесли громкий то наоборот - уменьшить. 1.0 - уровень без коррекции.",
+        "type": "text",
+        "default": 1
+      },
+      "phrase_time_limit": {
+        "name": "phrase_time_limit",
+        "desc": "Лимит времени на запись после того как терминал распознал речь, в секундах.",
+        "type": "text",
+        "default": 12
+      },
+      "no_background_play": {
+        "name": "no_background_play",
+        "desc": "Делает все воспроизведения терминала блокирующими.\nУменьшает вероятность того что терминал запишет сам себя, но его нельзя будет перебить.",
+        "type": "checkbox",
+        "default": false
+      },
+      "chrome_mode": {
+        "name": "chrome_mode",
+        "desc": "См. chrome_mode",
+        "type": "checkbox",
+        "default": true
+      },
+      "chrome_choke": {
+        "name": "chrome_choke",
+        "desc": "Если включено обнаружение ключевой фразы в chrome_mode будет глушить все звуки.\nЭто может быть не очень удобно, т.к. подвержено ложным срабатываниям.",
+        "type": "checkbox",
+        "default": false
+      },
+      "chrome_alarmstt": {
+        "name": "chrome_alarmstt",
+        "desc": "Если включено будет издавать сигнал по окончанию записи в chrome_mode.\nПодвержено ложным срабатываниям.",
+        "type": "checkbox",
+        "default": false
+      },
+      "lang": {
+        "name": "lang",
+        "desc": "Язык локализации, доступен только русский (и gt_en для тестов).\nПараметры отсутствующие в файле выбранного языка будут взяты из базового языка.\nБазовым языком является ru (src/languages/ru.py).\nДля работы chrome_mode нужно пересоздать все модели при изменении языка.",
+        "type": "text",
+        "default": "ru"
+      },
+      "lang_check": {
+        "name": "lang_check",
+        "desc": "Выводит результаты сравнения выбранного языка с базовым при загрузке.\nМожет помочь в поиске ошибок. Если выбран базовый язык ничего не делает.",
+        "type": "checkbox",
+        "default": false
+      },
+      "software_player": {
+        "name": "software_player",
+        "desc": "Позволяет использовать all-in-one плеер вместо mpg123 и aplay для воспроизведения.\nСоответствующий плеер должен быть установлен. Используйте при проблемах с mpg123/aplay.\nВозможные значения:\n- mpv: Использовать mpv.",
+        "type": "text",
+        "default": ""
+      },
+      "lazy_record": {
+        "name": "lazy_record",
+        "desc": "Терминал будет сохранять настройки один раз - при завершении работы.\nУдобно, если они меняются часто и нужно сократить операции записи.\nПри нештатном завершении работы настройки будут потеряны.",
+        "type": "checkbox",
+        "default": false
+      },
+      "description": "'apikeytts' и 'apikeystt' теперь хранятся не в settings, а в секциях провайдеров\nУ каждого провайдера свои 'apikeytts' и 'apikeystt'.\n'ip_server' переименован в [smarthome] ip.\nЕсли терминал найдет их в settings, то сам перенес в нужную секцию."
+    },
+    "listener": {
+      "stream_recognition": {
+        "name": "stream_recognition",
+        "desc": "Терминал не ждет окончания записи, а начинает сразу распознавать голос,\nувеличивает частоту запросов к stt.",
+        "type": "checkbox",
+        "default": true
+      },
+      "vad_mode": {
+        "name": "vad_mode",
+        "desc": "VAD для определение слов в аудиопотоке: snowboy, webrtc, apm, energy.\nЕсли использование VAD невозможно, будет использован energy.\nВсе режимы кроме snowboy немного увеличивают нагрзуку на CPU.",
+        "type": "select",
+        "default": "snowboy",
+        "options": [
+          "snowboy",
+          "webrtc",
+          "apm",
+          "energy"
+        ]
+      },
+      "vad_chrome": {
+        "name": "vad_chrome",
+        "desc": "Позволяет выбрать другой детектор для chrome_mode, значения аналогичны vad_mode,\nпустое значение - детектор из vad_mode.\nНапример, `vad_mode = energy, vad_chrome = snowboy` нравится мне больше.",
+        "type": "select",
+        "default": "",
+        "options": [
+          "snowboy",
+          "webrtc",
+          "apm",
+          "energy"
+        ]
+      },
+      "vad_lvl": {
+        "name": "vad_lvl",
+        "desc": "Чувствительность VAD, только для amp и webrtc. 0...3.",
+        "type": "select",
+        "default": 0,
+        "options": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "energy_lvl": {
+        "name": "energy_lvl",
+        "desc": "Начальный порог энергии для отделения слов от шума, работает только с energy.\nЕсли меньше 10, будет определен автоматически. Иначе будет использоваться заданный.",
+        "type": "text",
+        "default": 0
+      },
+      "energy_dynamic": {
+        "name": "energy_dynamic",
+        "desc": "Динамическая адаптация порога энергии, для energy. ",
+        "type": "checkbox",
+        "default": true
+      },
+      "silent_multiplier": {
+        "name": "silent_multiplier",
+        "desc": "Множитель продолжительности тишины между словами.\nПри низком значении может расценить паузу между словами как окончание фразы,\nно будет быстрее заканчивать запись.\nПри высоком значении будет дольше слушать тишину.\nМинимальное значение 0.1, максимальное 5.0.",
+        "type": "text",
+        "default": 1
+      },
+      "no_listen_music": {
+        "name": "no_listen_music",
+        "desc": "Терминал не будет слушать, пока музыкальный плеер играет.\nНужно подключение к плееру.",
+        "type": "checkbox",
+        "default": false
+      }
+    },
+    "smarthome": {
+      "ip": {
+        "name": "ip",
+        "desc": "IP сервера majordomo, нужен для отправки команд.\nПока он не задан терминал будет проговаривать свой IP при старте.",
+        "type": "text",
+        "default": ""
+      },
+      "outgoing_socket": {
+        "name": "outgoing_socket",
+        "desc": "Если задан, терминал будет подключаться по указанному адресу в duplex mode.\nФормат строго <proto>:<ip>:<port>\nПоддерживается proto - tcp, tls, ws и wss (TCP, TLS, WebSocket и WebSocketSecure).\noutgoing_socket = tcp:127.0.0.1:7575\nНесовместимо с MajorDoMo.",
+        "type": "text",
+        "default": ""
+      },
+      "token": {
+        "name": "token",
+        "desc": "Используется для авторизации входящих\\исходящих соединений.\nЕсли не задан терминал будет использовать случайное значение при исходящих,\nи авторизировать без проверки при входящих соединениях.",
+        "type": "text",
+        "default": ""
+      },
+      "terminal": {
+        "name": "terminal",
+        "desc": "Если у вас много терминалов можно задать системное имя терминала\nтогда ответы будут приходить только на терминал с которого пришел запрос (наверное).",
+        "type": "text",
+        "default": ""
+      },
+      "username": {
+        "name": "username",
+        "desc": "Если задано уйдет с запросом. Зачем? Я не знаю.",
+        "type": "text",
+        "default": ""
+      },
+      "password": {
+        "name": "password",
+        "desc": "Если задан и задан username запросы пойдут с базовой аутентификацией.",
+        "type": "text",
+        "default": ""
+      },
+      "object_name": {
+        "name": "object_name",
+        "desc": "Если объект и метод задан будет отправлять уведомления через API\nПодробнее https://github.com/Aculeasis/mdmTerminal2/wiki/callback",
+        "type": "text",
+        "default": ""
+      },
+      "object_method": {
+        "name": "object_method",
+        "desc": "Если объект и метод задан будет отправлять уведомления через API\nПодробнее https://github.com/Aculeasis/mdmTerminal2/wiki/callback",
+        "type": "text",
+        "default": ""
+      },
+      "heartbeat_timeout": {
+        "name": "heartbeat_timeout",
+        "desc": "Если объект и метод заданы, будет отправлять запросы при неактивности терминала,\nинтервал задается в секундах, параметр status отсутствует.\n0 - отключено.",
+        "type": "text",
+        "default": 0
+      },
+      "disable_http": {
+        "name": "disable_http",
+        "desc": "Подавляет любые исходящие HTTP-запросы на сервер.\nУдобно для использования с duplex mode.\nВключение этой опции ломает совместимость с MajorDoMo.",
+        "type": "checkbox",
+        "default": false
+      },
+      "disable_server": {
+        "name": "disable_server",
+        "desc": "Отключает сервер на 7999 порту.\nВключение этой опции ломает совместимость с MajorDoMo.",
+        "type": "checkbox",
+        "default": false
+      }
+    },
+    "proxy": {
+      "enable": {
+        "name": "enable",
+        "desc": "description",
+        "type": "text",
+        "default": 0
+      },
+      "monkey_patching": {
+        "name": "monkey_patching",
+        "desc": "description",
+        "type": "checkbox",
+        "default": true
+      },
+      "proxy": {
+        "name": "proxy",
+        "desc": "description",
+        "type": "text",
+        "default": "socks5h://127.0.0.1:9050"
+      },
+      "description": "Подробнее о настройках прокси https://github.com/Aculeasis/mdmTerminal2/wiki/proxy"
+    },
+    "music": {
+      "control": {
+        "name": "control",
+        "desc": "Подключается к медиа-серверу и управляет им.\nБудут работать play: и pause: пришедшие от контроллера умного дома.\nТакже может ставить воспроизведение на паузу на время активности терминала.\nМожно настраивать громкость фразой 'громкость музыки <1..100>'",
+        "type": "checkbox",
+        "default": true
+      },
+      "type": {
+        "name": "type",
+        "desc": "Тип плеера, к которому подключается терминал. Доступно:\n- mpd: Music Player Daemon (port 6600)\n- lms: Logitech Media Server (port 9090)",
+        "type": "select",
+        "default": "mpd",
+        "options": [
+          "mpd",
+          "lms"
+        ]
+      },
+      "ip": {
+        "name": "ip",
+        "desc": "ip и порт сервера.",
+        "type": "text",
+        "default": "127.0.0.1"
+      },
+      "port": {
+        "name": "port",
+        "desc": "ip и порт сервера.",
+        "type": "text",
+        "default": 6600
+      },
+      "username": {
+        "name": "username",
+        "desc": "Логин и пароль для аутентификации.",
+        "type": "text",
+        "default": ""
+      },
+      "password": {
+        "name": "password",
+        "desc": "Логин и пароль для аутентификации.",
+        "type": "text",
+        "default": ""
+      },
+      "pause": {
+        "name": "pause",
+        "desc": "Поставит на паузу по: voice_activate, start_record или start_talking.\nСнимет по stop_talking и stop_record.",
+        "type": "checkbox",
+        "default": true
+      },
+      "smoothly": {
+        "name": "smoothly",
+        "desc": "При снятии с паузы поднимать громкость постепенно.",
+        "type": "checkbox",
+        "default": false
+      },
+      "quieter": {
+        "name": "quieter",
+        "desc": "Если больше 0, то вместо паузы будет уменьшать громкость до заданной.",
+        "type": "text",
+        "default": 0
+      },
+      "wait_resume": {
+        "name": "wait_resume",
+        "desc": "Задержка перед снятием с автопаузы, в секундах.",
+        "type": "text",
+        "default": 5
+      },
+      "lms_player": {
+        "name": "lms_player",
+        "desc": "Для LMS.\nТерминал подключится к первому плееру при совпадении с name, id или ip.\nИначе, к первому плееру с тем же ip что и у терминала.\nИначе, к первому попавшемуся плеер.",
+        "type": "text",
+        "default": ""
+      }
+    }
+  },
+  "Выбор и настройка голосовых сервисов": {
+    "noise_suppression": {
+      "snowboy_apply_frontend": {
+        "name": "snowboy_apply_frontend",
+        "desc": "Включает алгоритмы обработки аудио встроенные в Snowboy (NS, AGC etc.).\nОпция никак не зависит от `enable` и других настроек секции.\nРаботает только для snowboy (детектор ключевых слов и vad_mode = snowboy),\nтакже увеличивает потребление CPU.\nРекомендуется включить для некоторых универсальных (.umdl) моделей.\nКрайне не рекомендуется включать вместе с APM.\nhttps://github.com/Kitt-AI/snowboy/blob/master/include/snowboy-detect.h#L126",
+        "type": "checkbox",
+        "default": false
+      },
+      "enable": {
+        "name": "enable",
+        "desc": "Включает APM. Удаление шума будет работать всегда, остальное надо включить.\nНагрзука на CPU будет выше - 3% -> 9%",
+        "type": "checkbox",
+        "default": false
+      },
+      "conservative": {
+        "name": "conservative",
+        "desc": "APM не будет использоваться пока ключевое слово не распознано. Значительно снижает\nнагрузку на CPU, но может ухудшить адаптацию к уровню шума.\nРаботает только в chrome_mode.",
+        "type": "checkbox",
+        "default": false
+      },
+      "ns_lvl": {
+        "name": "ns_lvl",
+        "desc": "Агрессивность удаления шума, от 0 до 3\nhttps://github.com/xiongyihui/python-webrtc-audio-processing\nОстальные настройки APM. Я плохо понимаю что они делают, так что не стал включать\nв конфиг. Если самостоятельно добавить их в конфиг, то они начнут работать.\nТип AEC, от 1 до 2. При 0 AEC выключен\naec_type = 0\nУровень AEC. От 0 до 2. Возможно, работает только с aec_type = 2.\naec_lvl = 0\nAudio Gain Control. 0 - выключено, 1 - Adaptive Digital AGC, 2 - Adaptive Analog AGC\nagc_type = 0\nЦель AGC, от 0 до 31.\nagc_target = 30\nУровень AGC, от 0 до 100. Возможно, работает только с agc_type = 2\nagc_lvl = 100",
+        "type": "select",
+        "default": 0,
+        "options": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "snowboy": {
+      "clear_models": {
+        "name": "clear_models",
+        "desc": "Если включено сноубой не будет компилировать модель если хоть один из образцов отличается\nпо звучанию. Позволяет избежать создания плохих моделей.",
+        "type": "checkbox",
+        "default": false
+      },
+      "token": {
+        "name": "token",
+        "desc": "Токен для API. Если этот перестанет работать можно задать свой.",
+        "type": "text",
+        "default": "d4977cf8ff6ede6efb8d2277c1608c7dbebf18a7"
+      },
+      "name": {
+        "name": "name",
+        "desc": "Похоже что все эти настройки ни на что не влияют, можно не менять.",
+        "type": "text",
+        "default": "unknown"
+      },
+      "age_group": {
+        "name": "age_group",
+        "desc": "Похоже что все эти настройки ни на что не влияют, можно не менять.",
+        "type": "select",
+        "default": "30_39",
+        "options": [
+          "40_49",
+          "60+",
+          "30_39",
+          "20_29",
+          "10_19",
+          "0_9",
+          "50_59"
+        ]
+      },
+      "gender": {
+        "name": "gender",
+        "desc": "Похоже что все эти настройки ни на что не влияют, можно не менять.",
+        "type": "select",
+        "default": "M",
+        "options": [
+          "M",
+          "F"
+        ]
+      },
+      "microphone": {
+        "name": "microphone",
+        "desc": "Похоже что все эти настройки ни на что не влияют, можно не менять.",
+        "type": "text",
+        "default": "mic"
+      }
+    },
+    "yandex": {
+      "api": {
+        "name": "api",
+        "desc": "Если равно 2 используется новый API от Yandex.Cloud\nВместо старых ключей надо указывать <folderId>:<OAuth> (терминал сам получит IAM),\nо том где их взять: https://cloud.yandex.ru/docs/speechkit/concepts/auth\nhttps://cloud.yandex.ru/docs/iam/operations/iam-token/create\nДля работы с аудио используется opus, так что opus-tools должен быть установлен.",
+        "type": "select",
+        "default": 1,
+        "options": [
+          1,
+          2
+        ]
+      },
+      "emotion": {
+        "name": "emotion",
+        "desc": "Эмоциональная окраска голоса. Доступно: good, neutral, evil.",
+        "type": "select",
+        "default": "good",
+        "options": [
+          "good",
+          "neutral",
+          "evil"
+        ]
+      },
+      "speaker": {
+        "name": "speaker",
+        "desc": "Голос. Женские: jane, oksana, alyss, omazh. Мужские: zahar, ermil.",
+        "type": "select",
+        "default": "alyss",
+        "options": [
+          "jane",
+          "oksana",
+          "alyss",
+          "omazh",
+          "zahar",
+          "ermil"
+        ]
+      },
+      "speed": {
+        "name": "speed",
+        "desc": "Скорость (темп) речи. От 0.1 до 3.0, 1.0 - средняя скорость человеческой речи.",
+        "type": "text",
+        "default": 1
+      },
+      "grpc": {
+        "name": "grpc",
+        "desc": "Использовать gRPC вместо унылого HTTP REST API.\nПотоковое распознавание речи будет происходить намного быстрее,\nа с `stream_recognition = on` Yandex сможет сам находить окончание фраз.\nРаботает только с Yandex.Cloud (`api = 2`).\nДля поддержки gRPC нужно вручную установить пакеты:\nmdmTerminal2/env/bin/python -m pip install grpcio protobuf",
+        "type": "checkbox",
+        "default": false
+      }
+    },
+    "aws": {
+      "speaker": {
+        "name": "speaker",
+        "desc": "для русского доступны Tatyana и Maxim",
+        "type": "select",
+        "default": "Tatyana",
+        "options": [
+          "Tatyana",
+          "Maxim"
+        ]
+      },
+      "access_key_id": {
+        "name": "access_key_id",
+        "desc": "Данные IAM, для работы достаточно прав на \"polly:SynthesizeSpeech\" ",
+        "type": "text",
+        "default": ""
+      },
+      "secret_access_key": {
+        "name": "secret_access_key",
+        "desc": "Данные IAM, для работы достаточно прав на \"polly:SynthesizeSpeech\" ",
+        "type": "text",
+        "default": ""
+      },
+      "region": {
+        "name": "region",
+        "desc": "Регион AWS",
+        "type": "select",
+        "default": "eu-central-1",
+        "options": [
+          "us-west-1",
+          "ap-northeast-1",
+          "eu-west-3",
+          "ap-south-1",
+          "eu-west-1",
+          "us-east-2",
+          "eu-west-2",
+          "us-west-2",
+          "ap-southeast-2",
+          "ap-southeast-1",
+          "ca-central-1",
+          "us-east-1",
+          "ap-northeast-2",
+          "sa-east-1",
+          "eu-central-1"
+        ]
+      },
+      "boto3": {
+        "name": "boto3",
+        "desc": "Использовать AWS SDK (boto3) для коммуникации вместо нативной реализации.\nPolly будет отвечать на 200-300 ms быстрее, а прокси для aws перестанет работать.\nboto3 должен быть установлен:\nmdmTerminal2/env/bin/python -m pip install boto3",
+        "type": "checkbox",
+        "default": false
+      },
+      "description": "https://aws.amazon.com/ru/polly\nДля доступа нужен акк AWS, первые 5 миллионов символов в месяц первые 12 месяцев бесплатно"
+    },
+    "azure": {
+      "speaker": {
+        "name": "speaker",
+        "desc": "Русские голоса (без кавычек):\n'EkaterinaRUS'; 'Irina, Apollo'; 'Pavel, Apollo'",
+        "type": "text",
+        "default": "EkaterinaRUS"
+      },
+      "region": {
+        "name": "region",
+        "desc": "Регион, с триальными ключами это первое слово в ссылке, например:\nEndpoint: https://westus.api.cognitive.microsoft.com/sts/v1.0",
+        "type": "text",
+        "default": "westus"
+      },
+      "description": "MS Azure, позволяет распознавать и синтезировать речь.\nРаспознает плохо."
+    },
+    "rhvoice-rest": {
+      "server": {
+        "name": "server",
+        "desc": "Адрес и порт сервера.",
+        "type": "text",
+        "default": "http://127.0.0.1:8080"
+      },
+      "speaker": {
+        "name": "speaker",
+        "desc": "Голос. Женские: anna, elena, irina. Мужской - aleksandr.\nМожно прописать голос для другого языка, но не все из них могут читать русский.",
+        "type": "select",
+        "default": "anna",
+        "options": [
+          "anna",
+          "elena",
+          "irina",
+          "aleksandr"
+        ]
+      },
+      "rate": {
+        "name": "rate",
+        "desc": "Задает темп, высоту и громкость голоса в процентах. От 0 до 100.",
+        "type": "select",
+        "default": 50,
+        "options": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ]
+      },
+      "pitch": {
+        "name": "pitch",
+        "desc": "Задает темп, высоту и громкость голоса в процентах. От 0 до 100.",
+        "type": "select",
+        "default": 50,
+        "options": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ]
+      },
+      "volume": {
+        "name": "volume",
+        "desc": "Задает темп, высоту и громкость голоса в процентах. От 0 до 100.",
+        "type": "select",
+        "default": 50,
+        "options": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100
+        ]
+      },
+      "description": "RHVoice TTS запущенный в виде веб-сервиса. https://github.com/Aculeasis/rhvoice-rest\nГолос лучше чем у гугла.\nОдин из самый быстрых в плане отклика.\nОтклик на апельсинке с отключенным кэшем примерно 100 мс\nНа i7 в виртуалке ~ 20 мс."
+    },
+    "rhvoice": {
+      "speaker": {
+        "name": "speaker",
+        "desc": "См. rhvoice-rest",
+        "type": "select",
+        "default": "anna",
+        "options": [
+          "anna",
+          "elena",
+          "irina",
+          "aleksandr"
+        ]
+      },
+      "description": "!!!Крайне не рекомендуется, используйте rhvoice-rest\nRHVoice TTS, получающий поток от RHVoice-test. Для работы с кэшем еще нужен lame.\nБиблиотека загружается и инициализируется для каждой фразы, это очень медленно.\nОтклик на апельсинке ~2.2 сек.\nПроверка:\necho 'This is fine' | RHVoice-test -p slt -o - | lame -thv --silent - | mpg123 -q -"
+    },
+    "pocketsphinx-rest": {
+      "server": {
+        "name": "server",
+        "desc": "Адрес и порт сервера.",
+        "type": "text",
+        "default": "http://127.0.0.1:8085"
+      },
+      "description": "PocketSphinx STT запущенный в виде веб-сервиса.\nhttps://github.com/Aculeasis/pocketsphinx-rest\nЕго единственный плюс в том что он локальный, медленный и не точный\nИмеет смысл ставить на сервер с нормальным CPU и если он вас хорошо понимает."
+    }
+  },
+  "Запись ключевого слова": {
+    "persons": {
+      "description": "Секция содержит соответствия между моделями и именами пользователей\nесли терминал был активирован моделью у которой есть пользователь, то вместе с командой\nпридет имя пользователя в username.\nИмя пользователя обладает приоритетом над [smarthome] username\nmodel2.pmdl = vasyapupkin"
+    }
+  },
+  "Обслуживание": {
+    "update": {
+      "interval": {
+        "name": "interval",
+        "desc": "Интервал автоматической проверки обновлений в днях, минимум 1 день.\nЕсли 0 отключено. Также триггерится через rec:update_0_0",
+        "type": "text",
+        "default": 0
+      },
+      "pip": {
+        "name": "pip",
+        "desc": "Установит новые пакеты из Requirements/pip-requirements.txt через pip\nПри установке по инструкции это должно работать. Неудача считается ошибкой.\n!Установка некоторых пакетов требует сборки и может потребовать много RAM.\n!Для устройств с RAM <= 512 Mb рекомендуется создать swap >= 512 Mb.",
+        "type": "checkbox",
+        "default": true
+      },
+      "apt": {
+        "name": "apt",
+        "desc": "Установит новые пакеты из Requirements/system-requirements.txt через apt-get\nНе сработает если терминал запущен не от рута. Неудача считается ошибкой.",
+        "type": "checkbox",
+        "default": false
+      },
+      "turnoff": {
+        "name": "turnoff",
+        "desc": "Если 1 завершится после обновления, systemd должен сам его перезапустить.\nЕсли 0 ничего не делает\nЕсли -1 сам примет решение завершаться ему или нет.",
+        "type": "select",
+        "default": -1,
+        "options": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "fallback": {
+        "name": "fallback",
+        "desc": "При ошибке попытается выполнить откат сделанных изменений.\nЭто не относится к новым пакетам pip и apt, только файлы терминала.\nОткат до последнего успешного обновления триггерится rec:rollback_0_0",
+        "type": "checkbox",
+        "default": true
+      },
+      "description": "Терминал может самостоятельно обновляться с помощью стандартных механизмов гит.\nДля этого он должен быть установлен через git clone, а директория терминала должна\nоставаться валидным и доступным для git pull локальным репозиторием, pull не сработает\nесли вы изменяли файлы терминала. Проверить доступность можно с помощью git status.\n\nОбновление засчитывается если хоть один .py файл в src/ изменился, \nили в Requirements/ появились новые пакеты.\nВремя последней проверки обновления и хеш коммита от предыдущего обновления хранятся\nв update.json"
+    },
+    "plugins": {
+      "enable": {
+        "name": "enable",
+        "desc": "Включает поддержку плагинов.",
+        "type": "checkbox",
+        "default": true
+      },
+      "whitelist": {
+        "name": "whitelist",
+        "desc": "Белый список плагинов, разделяется запятыми.\nЕсли не пуст, плагин не будет загружен если его имени нет в списке.",
+        "type": "text",
+        "default": ""
+      },
+      "blacklist": {
+        "name": "blacklist",
+        "desc": "Черный список плагинов. Плагин не будет загружен если его имя в списке.",
+        "type": "text",
+        "default": ""
+      },
+      "blacklist_on_failure": {
+        "name": "blacklist_on_failure",
+        "desc": "Автоматически добавлять плагины в черный список при ошибке.",
+        "type": "checkbox",
+        "default": false
+      }
+    },
+    "cache": {
+      "tts_priority": {
+        "name": "tts_priority",
+        "desc": "Приоритет при поиске в кэше.\nЕсли ничего - берет кэш только текущего провайдера.\nЕсли указан - вначале указанного потом текущего.\nЕсли * - вначале текущего, потом любого.",
+        "type": "select",
+        "default": "",
+        "options": [
+          "",
+          "*",
+          "google",
+          "yandex",
+          "aws",
+          "azure",
+          "rhvoice-rest",
+          "rhvoice"
+        ]
+      },
+      "tts_size": {
+        "name": "tts_size",
+        "desc": "Размер кэша в Мб. Проверяется при запуске.\nЕсли  0 - кэш не используется и будет очищен.\nЕсли -1 - кэш не используется и не будет очищен.\nС отключенным кэшем стрим от локальных провайдеров будет идти в wav а не mp3\nчто немного быстрее.\nЕсли вы используете rhvoice-rest лучше всего отключить кэш.",
+        "type": "text",
+        "default": 100
+      },
+      "path": {
+        "name": "path",
+        "desc": "Абсолютный путь до директории с кэшем, начинается с /\nПо умолчанию используется /<путь до main.py>/tts_cache\nНе забудьте удалить старую директорию и файлы при изменении.",
+        "type": "text",
+        "default": ""
+      }
+    },
+    "log": {
+      "file_lvl": {
+        "name": "file_lvl",
+        "desc": "Задает уровень логирования в файл. Возможные значения: debug, info, warn, error, crit.",
+        "type": "select",
+        "default": "debug",
+        "options": [
+          "debug",
+          "info",
+          "warn",
+          "error",
+          "crit"
+        ]
+      },
+      "print_lvl": {
+        "name": "print_lvl",
+        "desc": "Аналогично file_lvl, но в консоль.",
+        "type": "select",
+        "default": "debug",
+        "options": [
+          "debug",
+          "info",
+          "warn",
+          "error",
+          "crit"
+        ]
+      },
+      "remote_log": {
+        "name": "remote_log",
+        "desc": "Разрешает удаленное подключение к логгеру - терминал начнет отправлять в сокет логи в\nрежиме реального времени с уровнем debug. Одновременно возможно только одно подключение.\nДля активации нужно подключиться к порту 7999 telnet-клиентом и ввести remote_log.",
+        "type": "checkbox",
+        "default": true
+      },
+      "print_ms": {
+        "name": "print_ms",
+        "desc": "Выводить время в консоль с точностью до миллисекунд.",
+        "type": "checkbox",
+        "default": true
+      },
+      "method": {
+        "name": "method",
+        "desc": "Куда вести логирование. 1 - в файл, 2 - в консоль, 3 - в файл и консоль.",
+        "type": "select",
+        "default": 3,
+        "options": [
+          1,
+          2,
+          3
+        ]
+      },
+      "file": {
+        "name": "file",
+        "desc": "Путь к файлу с логом.\nПри первом запуске терминал выберет первую из директорий с правом на запись:\n/var/log, директорию с main.py или директорию для временных файлов",
+        "type": "text",
+        "default": ""
+      }
+    }
+  }
+}
