@@ -2,12 +2,21 @@
 /**
 * модуль для голосового терминала
 * @package project
-* @author Wizard <info@lanket.ru>
+* @author Ruslan <info@lanket.ru>
 * @copyright http://majordomo.smartliving.ru/ (c)
 * @version 0.1 (wizard, 23:05:08 [May 07, 2018])
 */
 //
 //
+/**
+* class json_@rpc
+*
+* @access private
+*/
+
+require(DIR_MODULES.$this->name.'/mpt_jsonLib.inc.php');
+
+
 class mdmPiTerminal extends module {
 /**
 * mdmPiTerminal
@@ -17,11 +26,13 @@ class mdmPiTerminal extends module {
 * @access private
 */
 function mdmPiTerminal() {
-  $this->debug = 0;
+  $this->debug = 1;
   $this->name="mdmPiTerminal";
+  $this->table_name="mpt";
   $this->title="MDM VoiceAssistant";
   $this->module_category="<#LANG_SECTION_DEVICES#>";
   $this->checkInstalled();
+  $this->service_port='7999';
 }
 /**
 * saveParams
@@ -175,6 +186,7 @@ function usual(&$out) {
 * @access public
 */
  function edit_mpt(&$out, $id) {
+
   require(DIR_MODULES.$this->name.'/mpt_edit.inc.php');
  }
 /**
@@ -190,8 +202,8 @@ function usual(&$out) {
  *
  * @access public
  */
-  function read_map_settings_mpt($target) {
-   require(DIR_MODULES.$this->name.'/mpt_read.inc.php');
+  function read_mapSettingsMpt($target) {
+   require(DIR_MODULES.$this->name.'/mpt_readMapSettings.inc.php');
   }
 /**
 * mpt delete record
@@ -322,7 +334,7 @@ mpt -
   $data = <<<EOD
  mpt: ID int(10) unsigned NOT NULL auto_increment
  mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
- mpt: ID_TERMINAL varchar(255) NOT NULL DEFAULT ''
+ mpt: SETTINS TEXT NOT NULL DEFAULT ''
 EOD;
   parent::dbInstall($data);
  }
@@ -368,6 +380,7 @@ EOD;
     }
    // --------------------------------------------------------------------
 }
+
 /*
 *
 * TW9kdWxlIGNyZWF0ZWQgTWF5IDA3LCAyMDE4IHVzaW5nIFNlcmdlIEouIHdpemFyZCAoQWN0aXZlVW5pdCBJbmMgd3d3LmFjdGl2ZXVuaXQuY29tKQ==
