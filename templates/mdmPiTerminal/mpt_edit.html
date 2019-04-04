@@ -28,440 +28,280 @@
 
 <ul id="tab" class="nav nav-tabs">
 		[#begin NAV-TABS#]
-			<li><a data-toggle="tab" href="#[#DIV_ID#]" class="active">[#TITLE#]</a></li>
+			<li><a data-toggle="tab" href="#[#DIV_ID#]"[#if NAV-N==0#] class="active"[#endif#]>[#TITLE#]</a></li>
 		[#end NAV-TABS#]
-  <!-- <li><a data-toggle="tab" href="#panel_settings" class="active">Настройки</a></li>
-  <li><a data-toggle="tab" href="#panel_voice">Выбор и настройка голосовых сервисов</a></li>
-  <li><a data-toggle="tab" href="#panel_record">Запись ключевого слова</a></li>
-  <li><a data-toggle="tab" href="#panel_admin">Обслуживание</a></li> -->
 </ul>
 <br>
 
 <div class="tab-content">
 
-    <!-- panel_settings -->
 		[#begin NAV-TABS#]
 			<li><a data-toggle="tab" href="#[#DIV_ID#]" class="active">[#TITLE#]</a></li>
 			<div id="[#DIV_ID#]" class="tab-pane fade in">
-				<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-        [#if OK#]
-        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
-        [#endif OK#]
-        [#if ERR#]
-        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
-        [#endif ERR#]
-        <fieldset>
-        [#if ID=""#]
-        <legend><#LANG_NEW_RECORD#></legend>
-        [#endif ID#]
+				[#if TITLE=='Запись ключевого слова'#]
 
-				<!-- ID_TERMINAL (select) -->
-				[#if #]
-	        [#if !IS_SET_ID_TERMINAL#]
-	        <div class="form-group ">
-	            <label for="id_terminal" class="col-lg-4 control-label" [#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
-	            Терминал: *
-	            </label>
-	            <div class="col-lg-5">
-	                <select name="id_terminal" class="form-control [#if ERR_ID_TERMINAL#]alert-danger[#endif#]" >
-	                    <option value="">select
-	                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#] | [#NAME#] | [#HOST#] | [#ONLINE#]
-	                    [#end ID_TERMINAL_OPTIONS#]
-	                </select>
+					<p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
+					<input name="kw" type="radio" value="1" checked> 1е слово
+					<input name="kw" type="radio" value="2"> 2е слово
+					<input name="kw" type="radio" value="3"> 3е слово
+					<input name="kw" type="radio" value="4"> 4е слово
+					<input name="kw" type="radio" value="5"> 5е слово
+					<input name="kw" type="radio" value="6"> 6е слово
+					<hr/>
+					<p>Запись первого образца ключевого слова</p>
+					<button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
+					<button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+					<hr/>
+					<p>Запись второго образца ключевого слова</p>
+					<button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
+					<button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+					<hr/>
+					<p>Запись третьего образца ключевого слова</p>
+					<button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
+					<button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
+					<hr/>
+					<p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
+					<button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
+					<hr/>
+					<p>Удалить модель</p>
+					<button onclick="sendCommand([#ID#],'del_0_1',0);return false;" title="Удалить модель" class="btn btn-default">Удалить</button>
+					<!-- <hr/>
+					<p>Применить настройки на терминале</p>
+							<button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
+							-->
+				[#else TITLE#]
 
+					<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+	        [#if OK#]
+		        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+	        [#endif OK#]
+	        [#if ERR#]
+		        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+	        [#endif ERR#]
+	        <fieldset>
+	        [#if ID=""#]
+		        <legend><#LANG_NEW_RECORD#></legend>
+	        [#endif ID#]
+
+					[#begin CASES#]
+						<h2>[#CASE-NAME#]</h2>
+						[#begin SETTINGS#]
+
+						[#if SETTING-NAME = 'ID_TERMINAL'#]
+							<input type="hidden" name="panel_whith_id_terminal" value="1">
+			        [#if !IS_SET_ID_TERMINAL#]
+				        <div class="form-group ">
+				            <label for="id_terminal" class="col-lg-4 control-label" [#if ERR_NAME#] style="color:red;font-weight:bold"[#endif#]>
+				            Терминал: *
+				            </label>
+				            <div class="col-lg-5">
+				                <select name="id_terminal" class="form-control [#if ERR_ID_TERMINAL#]alert-danger[#endif#]" >
+				                    <option value="">select
+				                    [#begin ID_TERMINAL_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#] | [#NAME#] | [#HOST#] | [#ONLINE#]
+				                    [#end ID_TERMINAL_OPTIONS#]
+				                </select>
+
+				            </div>
+				        </div>
+			        [#endif IS_SET_ID_TERMINAL#]
+						[#endif IS_SET_ID_TERMINAL#]
+
+
+				        <div class="form-group">
+									<label for="[#SETTING-NAME#]" class="col-lg-3 control-label"[#ERROR#]>
+										[#SETTING-TITLE#] <img src="/img/helpicon.png" title="[#SETTING-DESC#]"/>
+									</label>
+				          <div class="col-lg-4">
+											[#if SETTING-TYPE=="text"#]
+												<input type="text" class="form-control" name="[#SETTING-NAME#]" value="[#SETTING-VALUE#]" id="[#SETTING-NAME#]">
+											[#endif#]
+											[#if SETTING-TYPE=="checkbox"#]
+												<input type="checkbox" name="[#SETTING-NAME#]" value="1"[#if SETTING-VALUE="1"#] checked[#endif#]>
+											[#endif#]
+											[#if SETTING-TYPE=="select"#]
+												<select name="SETTING-NAME" class="form-control" id="[#SETTING-NAME#]">
+													[#begin SETTING-SELECT-OPTIONS#]
+								            <option value="[#SETTING-SELECT-OPTIONS-VALUE#]"[#if SETTING-SELECT-OPTIONS-VALUE==SETTING-VALUE#] selected[#endif#]>[#SETTING-SELECT-OPTION-TITLE#]</option>
+													[#end SETTING-SELECT-OPTIONS#]
+								        </select>
+											[#endif#]
+				          </div>
+				        </div>
+							[#end SETTINGS#]
+							<hr/>
+					[#end CASES#]
+					<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+	        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+	        <input type="hidden" name="panel_voice" value="1">
+	        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
+	        <input type="hidden" name="mode" value="update">
+	        [#if ID!=""#]
+	            <input type="hidden" name="id" value="[#ID#]">
+	        [#endif ID#]
+	        </fieldset>
+	        <div class="form-group">
+	           <div class="col-lg-offset-3 col-lg-4">
+							 <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+	                [#if ID!=""#]
+	                [#else ID#]
+	                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+	                [#endif ID#]
+	                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
 	            </div>
-	        </div>
-	        [#endif IS_SET_ID_TERMINAL#]
+	       </div>
+	      </form>
+
+		[#endif TITLE#]
+		[#if TITLE=='Обслуживание'#]
+
+			<p>Обновить терминал</p>
+			<button onclick="sendCommand([#ID#],'update_0_0',0);return false;" title="Обновить" class="btn btn-default">Обновить</button>
+			<hr/>
+
+			<p>Откатить термина до предыдущего успешного обновления</p>
+			<button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
+			<hr/>
+			<!-- remote_log -->
+			<style>
+					.log_outputtext {
+					background-color: black;
+					color: aliceblue;
+					overflow-y: auto;
+					overflow-x: hidden;
+					max-width: 1000px;
+					height: 500px;
+					font-family: monospace;
+					font-size: 12px;
+					border-color: black;
+					padding: 2px;
+					border-width: thick;
+					border-style: solid;
+					}
+			</style>
+			<form name="remote_log_form">
+					<p>
+							Лог терминала
+							<input type="button" name=clearButton value="Clear" onClick="clearText();">
+							<input type="button" name=connectButton value="Connect" onClick="doConnectDisconnect();">
+					</p>
+					<input type="hidden" name="ws_token" value="token_is_unset">
+					<input type="hidden" name="terminal_ip" value="[#IP_TERMINAL#]">
+			</form>
+			<div id="log_outputtext" class="log_outputtext"></div>
+
+			<script language="javascript" type="text/javascript">
+					var remote_log = document.getElementById("log_outputtext");
+					// ansi color -> html; https://github.com/mmalecki/ansispan
+					var ansispan = function (str) {
+						Object.keys(ansispan.foregroundColors).forEach(function (ansi) {
+							var span = '<span style="color: ' + ansispan.foregroundColors[ansi] + '">';
+							str = str.replace(
+								new RegExp('\033\\[' + ansi + 'm', 'g'),
+								span
+							).replace(
+								new RegExp('\033\\[1;' + ansi + 'm', 'g'),
+								span
+							);
+						});
+						return restoreURI(str.replace(/\033\[0m/g, '</span>'));
+					};
+
+					ansispan.foregroundColors = {
+						'36': 'cyan',
+						'90': 'gray',
+						'92': 'mediumspringgreen',
+						'93': 'yellow',
+						'91': 'red',
+						'95': 'darkred'
+					};
+
+					// replace start
+					var tagsToReplace = {
+							'&': '&amp;',
+							'<': '&lt;',
+							'>': '&gt;'
+					};
+
+					function replaceTag(tag) {
+							return tagsToReplace[tag] || tag;
+					}
+
+					function safe_tags_replace(str) {
+							return str.replace(/[&<>]/g, replaceTag);
+					}
+					function restoreURI(str) {
+							return str.includes('<span style="color: cyan">majordomo</span>') ? decodeURI(str) : str;
+					}
+					// replace end
+
+				function doConnect()
+				{
+					websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":7999/");
+					websocket.onopen = function(evt) { onOpen(evt) };
+					websocket.onclose = function(evt) { onClose(evt) };
+					websocket.onmessage = function(evt) { onMessage(evt) };
+					websocket.onerror = function(evt) { onError(evt) };
+				}
+
+				function onOpen(evt)
+				{
+					writeToScreenMsg("connected");
+					document.remote_log_form.connectButton.value = "Disconnect";
+					websocket.send(document.remote_log_form.ws_token.value);
+					websocket.send('remote_log');
+				}
+
+				function onClose(evt)
+				{
+					writeToScreenMsg("disconnected");
+					document.remote_log_form.connectButton.value = "Connect";
+				}
+
+				function onMessage(evt)
+				{
+					writeToScreenLog(evt.data);
+				}
+
+				function onError(evt)
+				{
+					writeToScreenMsg('error: ' + evt.data);
+					websocket.close();
+				}
+
+				function writeToScreenMsg(message)
+				{
+					writeToScreen('<span style="color: darkorange">' + message + '</span>');
+				}
+
+				function writeToScreenLog(message)
+				{
+					writeToScreen(ansispan(safe_tags_replace(message)));
+				}
+
+				function writeToScreen(message)
+				{
+					remote_log.innerHTML += message + "<br>";
+					remote_log.scrollTop = remote_log.scrollHeight;
+				}
+
+				function clearText() {
+							remote_log.innerHTML = "";
+				 }
+
+				 function doDisconnect() {
+							websocket.close();
+				 }
+
+				 function doConnectDisconnect() {
+							(document.remote_log_form.connectButton.value == "Connect") ? doConnect() : doDisconnect()
+				 }
+			</script>
 
 
-
-
+		[#endif TITLE#]
+    </div>
 		[#end NAV-TABS#]
 
-
-        <div class="form-group">
-					[#begin SETTINGS#]
-					<label for="[#NAME#]" class="col-lg-3 control-label"[#ERROR#]>
-						[#LABEL#] <img src="/img/helpicon.png" title="[#DESCRIPTION#]"/>
-					</label>
-          <div class="col-lg-4">
-							[#if TYPE=="text"#]
-								<input type="text" class="form-control" name="[#NAME#]" value="[#VALUE#]" id="[#NAME#]">
-							[#endif#]
-							[#if TYPE=="checkbox"#]
-								<input type="checkbox" name="[#NAME#]" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>
-							[#endif#]
-							[#if TYPE=="select"#]
-								<select name="settings_chrome_mode" class="form-control" id="settings_chrome_mode">
-				            <option value="0"[#if SETTINGS_CHROME_MODE=="0"#] selected[#endif#]>Отключить</option>
-				            <option value="1"[#if SETTINGS_CHROME_MODE=="1"#] selected[#endif#]>Включено</option>
-				        </select>
-							[#endif#]
-          </div>
-
-<!-- 			if error seting then  ERR_SETTING=style="color:red;font-weight:bold"
-					<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#] | [#NAME#] | [#HOST#] | [#ONLINE#] -->
-					[#end SETTINGS#]
-        </div>
-
-
-
-
-
-
-
-
-
-    <!-- panel_voice -->
-    <div id="panel_voice" class="tab-pane fade in">
-
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit2" class="form-horizontal">
-        [#if OK#]
-        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
-        [#endif OK#]
-        [#if ERR#]
-        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
-        [#endif ERR#]
-        <fieldset>
-        [#if ID=""#]
-        <legend><#LANG_NEW_RECORD#></legend>
-        [#endif ID#]
-
-        <h2>Case name</h2>
-
-				<!-- SETTINGS type checkbox -->
-        <div class="form-group">
-         <label for="settings_alarmtts" class="col-lg-3 control-label"[#if ERR_SETTINGS_ALARMTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Сигнал перед сообщением:
-         </label>
-         <div class="col-lg-4">
-              <input type="checkbox" name="settings_alarmtts" value="1"[#if SETTINGS_ALARMTTS="1"#] checked[#endif#]>
-         </div>
-        </div>
-
-        <!-- SETTINGS type TEXT -->
-        <div class="form-group[#if ERR_MAJORDOMO_OBJECT_NAME#] has-error[#endif#]">
-         <label for="majordomo_object_name" class="col-lg-3 control-label">
-         <#LANG_LINKED_OBJECT#>:
-         </label>
-         <div class="col-lg-9"><input id="majordomo_object_name" name="majordomo_object_name" value="[#MAJORDOMO_OBJECT_NAME#]" type="text" class="form-control"[#if CREATE_CLASS="1"#] disabled[#endif#]></div>
-        </div>
-
-        <!-- SETTINGS type SELECT -->
-        <div class="form-group">
-         <label for="settings_providertts" class="col-lg-3 control-label"[#if ERR_SETTINGS_PROVIDERTTS#] style="color:red;font-weight:bold"[#endif#]>
-         Сервис синтеза речи
-         </label>
-         <div class="col-lg-4">
-            <select name="settings_providertts" class="form-control" id="settings_providertts">
-                <option value="Yandex"[#if SETTINGS_PROVIDERTTS=="Yandex"#] selected[#endif#]>Yandex</option>
-                <option value="Google"[#if SETTINGS_PROVIDERTTS=="Google"#] selected[#endif#]>Google</option>
-            </select>
-         </div>
-         </div>
-        <hr/>
-
-
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-        <input type="hidden" name="panel_voice" value="1">
-        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
-            <input type="hidden" name="mode" value="update">
-        [#if ID!=""#]
-            <input type="hidden" name="id" value="[#ID#]">
-        [#endif ID#]
-        </fieldset>
-        <div class="form-group">
-           <div class="col-lg-offset-3 col-lg-4">
-                [#if ID!=""#]
-                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-                [#else ID#]
-                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-                [#endif ID#]
-                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-            </div>
-       </div>
-      </form>
-
-    </div>
-
-
-
-    <!-- panel_record -->
-    <div id="panel_record" class="tab-pane fade in">
-        <p>Здесь можно записать до шести ключевых слов по 3 образца каждого ключевого слова. Для избегания ложных срабатываний лучше записать словосочетание из двух слов и более. Для лучшего качества срабатывания лучше записывать с тем микрофоном, который будет использоваться для распознавания. Говорить надо в микрофон на терминале.</p>
-        <input name="kw" type="radio" value="1" checked> 1е слово
-        <input name="kw" type="radio" value="2"> 2е слово
-        <input name="kw" type="radio" value="3"> 3е слово
-        <input name="kw" type="radio" value="4"> 4е слово
-        <input name="kw" type="radio" value="5"> 5е слово
-        <input name="kw" type="radio" value="6"> 6е слово
-        <hr/>
-        <p>Запись первого образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec_0_1',0);return false;" title="Старт записи 1го образца ключевого слова" class="btn btn-default">Запись</button>
-        <button onclick="sendCommand([#ID#],'play_0_1',0);return false;" title="Воспроизведение записи 1го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
-        <hr/>
-        <p>Запись второго образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec_0_2',0);return false;" title="Старт записи 2го образца ключевого слова" class="btn btn-default">Запись</button>
-        <button onclick="sendCommand([#ID#],'play_0_2',0);return false;" title="Воспроизведение записи 2го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
-        <hr/>
-        <p>Запись третьего образца ключевого слова</p>
-        <button onclick="sendCommand([#ID#],'rec_0_3',0);return false;" title="Старт записи 3го образца ключевого слова" class="btn btn-default">Запись</button>
-        <button onclick="sendCommand([#ID#],'play_0_3',0);return false;" title="Воспроизведение записи 3го образца ключевого слова" class="btn btn-default">Воспроизведение</button>
-        <hr/>
-        <p>Последний этап тренировки ключевого слова надо сгенерить служебный файл из записанных образцов по которому и будет работать распознавание ключевого слова.</p>
-        <button onclick="sendCommand([#ID#],'compile_0_1',0);return false;" title="Генерация служебного файла" class="btn btn-default">Компиляция</button>
-	<hr/>
-	<p>Удалить модель</p>
-        <button onclick="sendCommand([#ID#],'del_0_1',0);return false;" title="Удалить модель" class="btn btn-default">Удалить</button>
-	<!-- <hr/>
-	<p>Применить настройки на терминале</p>
-        <button onclick="sendCommand([#ID#],'save_0_1',0);return false;" title="Применить настройки" class="btn btn-default">Применить</button>
-        -->
-    </div>
-
-    <!-- panel_admin -->
-    <div id="panel_admin" class="tab-pane fade in">
-        <p>Обновить терминал</p>
-        <button onclick="sendCommand([#ID#],'update_0_0',0);return false;" title="Обновить" class="btn btn-default">Обновить</button>
-        <hr/>
-
-        <p>Откатить термина до предыдущего успешного обновления</p>
-        <button onclick="sendCommand([#ID#],'rollback_0_0',0);return false;" title="Откатить" class="btn btn-default">Откатить</button>
-        <hr/>
-        <!-- remote_log -->
-        <style>
-            .log_outputtext {
-            background-color: black;
-            color: aliceblue;
-            overflow-y: auto;
-            overflow-x: hidden;
-            max-width: 1000px;
-            height: 500px;
-            font-family: monospace;
-            font-size: 12px;
-            border-color: black;
-            padding: 2px;
-            border-width: thick;
-            border-style: solid;
-            }
-        </style>
-        <form name="remote_log_form">
-            <p>
-                Лог терминала
-                <input type="button" name=clearButton value="Clear" onClick="clearText();">
-                <input type="button" name=connectButton value="Connect" onClick="doConnectDisconnect();">
-            </p>
-            <input type="hidden" name="ws_token" value="token_is_unset">
-            <input type="hidden" name="terminal_ip" value="[#IP_TERMINAL#]">
-        </form>
-        <div id="log_outputtext" class="log_outputtext"></div>
-
-        <script language="javascript" type="text/javascript">
-            var remote_log = document.getElementById("log_outputtext");
-            // ansi color -> html; https://github.com/mmalecki/ansispan
-            var ansispan = function (str) {
-              Object.keys(ansispan.foregroundColors).forEach(function (ansi) {
-                var span = '<span style="color: ' + ansispan.foregroundColors[ansi] + '">';
-                str = str.replace(
-                  new RegExp('\033\\[' + ansi + 'm', 'g'),
-                  span
-                ).replace(
-                  new RegExp('\033\\[1;' + ansi + 'm', 'g'),
-                  span
-                );
-              });
-              return restoreURI(str.replace(/\033\[0m/g, '</span>'));
-            };
-
-            ansispan.foregroundColors = {
-              '36': 'cyan',
-              '90': 'gray',
-              '92': 'mediumspringgreen',
-              '93': 'yellow',
-              '91': 'red',
-              '95': 'darkred'
-            };
-
-            // replace start
-            var tagsToReplace = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;'
-            };
-
-            function replaceTag(tag) {
-                return tagsToReplace[tag] || tag;
-            }
-
-            function safe_tags_replace(str) {
-                return str.replace(/[&<>]/g, replaceTag);
-            }
-            function restoreURI(str) {
-                return str.includes('<span style="color: cyan">majordomo</span>') ? decodeURI(str) : str;
-            }
-            // replace end
-
-          function doConnect()
-          {
-            websocket = new WebSocket("ws://" + document.remote_log_form.terminal_ip.value + ":7999/");
-            websocket.onopen = function(evt) { onOpen(evt) };
-            websocket.onclose = function(evt) { onClose(evt) };
-            websocket.onmessage = function(evt) { onMessage(evt) };
-            websocket.onerror = function(evt) { onError(evt) };
-          }
-
-          function onOpen(evt)
-          {
-            writeToScreenMsg("connected");
-            document.remote_log_form.connectButton.value = "Disconnect";
-            websocket.send(document.remote_log_form.ws_token.value);
-            websocket.send('remote_log');
-          }
-
-          function onClose(evt)
-          {
-            writeToScreenMsg("disconnected");
-            document.remote_log_form.connectButton.value = "Connect";
-          }
-
-          function onMessage(evt)
-          {
-            writeToScreenLog(evt.data);
-          }
-
-          function onError(evt)
-          {
-            writeToScreenMsg('error: ' + evt.data);
-            websocket.close();
-          }
-
-          function writeToScreenMsg(message)
-          {
-            writeToScreen('<span style="color: darkorange">' + message + '</span>');
-          }
-
-          function writeToScreenLog(message)
-          {
-            writeToScreen(ansispan(safe_tags_replace(message)));
-          }
-
-          function writeToScreen(message)
-          {
-            remote_log.innerHTML += message + "<br>";
-            remote_log.scrollTop = remote_log.scrollHeight;
-          }
-
-          function clearText() {
-                remote_log.innerHTML = "";
-           }
-
-           function doDisconnect() {
-                websocket.close();
-           }
-
-           function doConnectDisconnect() {
-                (document.remote_log_form.connectButton.value == "Connect") ? doConnect() : doDisconnect()
-           }
-        </script>
-
-        <form action="?" method="post" enctype="multipart/form-data" name="frmEdit3" class="form-horizontal">
-        [#if OK#]
-        <div class="alert alert-success"><#LANG_DATA_SAVED#></div>
-        [#endif OK#]
-        [#if ERR#]
-        <div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
-        [#endif ERR#]
-        <fieldset>
-        [#if ID=""#]
-        <legend><#LANG_NEW_RECORD#></legend>
-        [#endif ID#]
-
-        <hr/>
-        <h2>Настройки обновления</h2>
-        <p> Терминал может самостоятельно обновляться с помощью стандартных механизмов гит.
-Для этого он должен быть установлен через git clone, а директория терминала должна
-оставаться валидным и доступным для git pull локальным репозиторием, pull не сработает
-если вы изменяли файлы терминала. Проверить доступность можно с помощью git status.
-
-Обновление засчитывается если хоть один .py файл в src/ изменился,
-или в Requirements/ появились новые пакеты.
-Время последней проверки обновления и хеш коммита от предыдущего обновления хранятся
-в update.json
-</p>
-        <!-- UPDATE_INTERVAL (varchar) -->
-        <div class="form-group[#if ERR_UPDATE_INTERVAL#] has-error[#endif#]">
-         <label for="update_interval" class="col-lg-3 control-label">
-         Интервал автоматической проверки обновлений в днях <img src="/img/helpicon.png" title="Интервал автоматической проверки обновлений в днях, минимум 1 день. Терминал не будет проговаривать результат проверок, но пришлет уведомление в MJD при ошибке. Если 0 отключено. Также триггерится через rec:update_0_0"/>
-         </label>
-         <div class="col-lg-9"><input id="update_interval" name="update_interval" value="[#UPDATE_INTERVAL#]" type="text" class="form-control"></div>
-        </div>
-        <!-- UPDATE_TURNOFF (varchar) -->
-        <div class="form-group[#if ERR_UPDATE_TURNOFF#] has-error[#endif#]">
-         <label for="update_turnoff" class="col-lg-3 control-label">
-         Выключение поле обновления
-         </label>
-            <div class="col-lg-4">
-            <select name="update_turnoff" class="form-control" id="update_turnoff">
-                <option value="1"[#if UPDATE_TURNOFF=="1"#] selected[#endif#]>Завершится после обновления, systemd должен сам его перезапустить</option>
-                <option value="0"[#if UPDATE_TURNOFF=="0"#] selected[#endif#]>Ничего не делает</option>
-                <option value="-1"[#if UPDATE_TURNOFF=="-1"#] selected[#endif#]>Сам примет решение завершаться ему или нет</option>
-            </select>
-            </div>
-        </div>
-        <!-- UPDATE_FALLBACK (varchar) -->
-        <div class="form-group[#if ERR_UPDATE_FALLBACK#] has-error[#endif#]">
-         <label for="update_fallback" class="col-lg-3 control-label">
-         Откат при ошибке <img src="/img/helpicon.png" title="При ошибке попытается выполнить откат сделанных изменений. Это не относится к новым пакетам pip и apt, только файлы терминала. Откат до последнего успешного обновления триггерится rec:rollback_0_0"/>
-         </label>
-         <input type="checkbox" name="update_fallback" value="1"[#if UPDATE_FALLBACK="1"#] checked[#endif#]>
-        </div>
-        <!-- UPDATE_PIP (varchar) -->
-        <div class="form-group[#if ERR_UPDATE_PIP#] has-error[#endif#]">
-         <label for="update_pip" class="col-lg-3 control-label">
-         Установит новые пакеты через pip <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/pip-requirements.txt через pip При установке по инструкции это должно работать. Неудача считается ошибкой."/>
-         </label>
-         <input type="checkbox" name="update_pip" value="1"[#if UPDATE_PIP="1"#] checked[#endif#]>
-        </div>
-        <!-- UPDATE_APT (varchar) -->
-        <div class="form-group[#if ERR_UPDATE_APT#] has-error[#endif#]">
-         <label for="update_apt" class="col-lg-3 control-label">
-         Установит новые пакеты через apt-get <img src="/img/helpicon.png" title="Установит новые пакеты из Requirements/system-requirements.txt через apt-get Не сработает если терминал запущен не от рута. Неудача считается ошибкой."/>
-         </label>
-         <input type="checkbox" name="update_apt" value="1"[#if UPDATE_APT="1"#] checked[#endif#]>
-        </div>
-
-
-
-        <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
-        <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
-        <input type="hidden" name="panel_admin" value="1">
-        <input type="hidden" name="id_terminal" value="[#ID_TERMINAL#]">
-            <input type="hidden" name="mode" value="update">
-        [#if ID!=""#]
-            <input type="hidden" name="id" value="[#ID#]">
-        [#endif ID#]
-        </fieldset>
-        <div class="form-group">
-           <div class="col-lg-offset-3 col-lg-4">
-                [#if ID!=""#]
-                    <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
-                [#else ID#]
-                    <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
-                [#endif ID#]
-                <a href="?" class="btn btn-default "><#LANG_CANCEL#></a>
-            </div>
-       </div>
-      </form>
-
-
-
-    </div>
-
-
-
-</div>
-<hr/>
 <script type="text/javascript">
 $('#tab a:first').tab('show');
 </script>

@@ -28,14 +28,14 @@ if($rec['ID_TERMINAL'])
       $tmp=SQLSelectOne("SELECT * FROM terminals WHERE ID='$id_terminal'");
       $mapSettings = $this->read_mapSettingsMpt($tmp['HOST']);
     }
-    if(($rec['ID_TERMINAL'] == '' or $findduble['ID']) and !$_POST['panel_voice'] and !$_POST['panel_admin'])
+    if(($rec['ID_TERMINAL'] == '' or $findduble['ID']) and $_POST['panel_whith_id_terminal'])
     {
         $out['ERR_ID_TERMINAL']=1;
         $ok=0;
     }
-    $postdata = $_POST;
+  // $postdata = $_POST;
   // unset($postdata["panel"],$postdata["view_mode"],$postdata["edit_mode"],$postdata["mode"],$postdata["id"]);
-    unset($postdata["view_mode"],$postdata["edit_mode"],$postdata["mode"]);
+  // unset($postdata["view_mode"],$postdata["edit_mode"],$postdata["mode"]);
 
   // foreach ($postdata as $key => $value) {
   //     $data[$key] = $value;
@@ -44,57 +44,125 @@ if($rec['ID_TERMINAL'])
    if ($ok) {
         if($this->debug == 1) debmes('mpt edit after ok');
 
+        $sendData = array();
         if ($rec['ID']) {
+          //       Update terminal
             if($this->debug == 1) debmes("mpt edit update : $nmTerm ! ip: " . $terminal['HOST']);
             if ($this->config['CREATE_CLASS'] == 1)
             {
                 if($this->debug == 1) debmes("mpt edit update CreateClass=True : $terminal['NAME'] ! ip: " . $tmp['HOST']);
-                $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
-                $rec['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
-                $postdata['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
-                $postdata['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
+              // $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
+              // $rec['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
+                $postdata['smarthome']['object_method'] = 'TerminalDataProcessing';
+                $postdata['smarthome']['object_name'] = $terminal['NAME'];
             }
-            $settings = json_decode($rec['SETTINS']);
 
-            foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
-              foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
-                foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
-                  If(!$settings[$keyMapPanel][$keyMapCase][$keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $valueMapSetting['default'];
-                  //$setting = $postdata[$keyMapCase] . -'_' . $postdata[$keyMapSetting];
-                  If($postdata[$keyMapCase . -'_' . $keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $postdata[$keyMapCase . -'_' . $keyMapSetting];
-                // foreach ($settings as $keys => $values) {
-                //   foreach ($postdata as $keyp => $valuep) {
-                //       $data[$key] = $value;
-                //   }
-                // }
+
+
+
+
+
+            // Стройим массив для построения интерфейса настроек терминала
+
+                $navTabNumber = 0;
+              // $settingOption = 0;
+                foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
+                  // Закладки в модуле
+                  $out['NAV-TABS'][$navTabNumber]['NAV-TITLE'] = $keyMapPanel;
+                  $out['NAV-TABS'][$navTabNumber]['NAV-DIV-ID'] = translitIt($keyMapPanel);
+                  $out['NAV-TABS'][$navTabNumber]['NAV-N'] = $navTabNumber;
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] = "<li><a data-toggle='tab' href='#" . translitIt($keyMapPanel) . "' class='active'>[#TITLE#]</a></li>";
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] .= "<div id='" . translitIt($keyMapPanel) . "' class='tab-pane fade in'>";
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<form action="?" method="post" enctype="multipart/form-data" name="frm' . translitIt($keyMapPanel) . '" class="form-horizontal">';
+                // if ($out['OK']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-success">Сохранено</div>';
+                // if ($out['ERR']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-danger">Вы не выбрали терминал</div>';
+
+                  $caseNumber = 0;
+                  foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
+                    // Секции
+                    $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['CASE-NAME'] = $keyMapCase;
+                    $settingNumber = 0;
+                    foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
+                      // Опции
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-NAME'] = '$keyMapCase.$keyMapSetting';
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TITLE'] = $valueMapSetting['name'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DESC'] = $valueMapSetting['desc'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TYPE'] = $valueMapSetting['type'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DEFAULT'] = $valueMapSetting['default'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-VALUE'] = $valueMapSetting['value'];
+                      If($valueMapSetting['type'] == 'select')
+                      {
+                        foreach ($valueMapSetting['option'] as $keySettingOption => $valueSettingOption) {
+                          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-SELECT-OPTIONS'][]= array('SETTING-SELECT-OPTIONS-VALUE' => $keySettingOption, 'SETTING-SELECT-OPTION-TITLE' => $valueSettingOption );
+                        // $settingOption += 1;
+                        }
+                      }
+                      if($_POST['$keyMapCase.$keyMapSetting') $postdata[$keyMapCase][$keyMapSetting] = $valueMapSetting['value'];
+                    // switch ($valueMapSetting['type'])
+                    // {
+                    //   case 'text':
+                    //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="text" class="form-control" name="' . $keyMapSetting . '" value="' . $valueMapSetting['default'] . '" id="' . $keyMapSetting .'">';
+                    //     break;
+                    //
+                    //   case 'checkbox':
+                    //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="checkbox" name="' . $keyMapSetting . '" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>';
+                    //     break;
+                    //
+                    //   case 'select':
+                    //     // code...
+                    //     break;
+                    // }
+                      $settingNumber += 1;
+                    }
+                    $caseNumber += 1;
+                  }
+                  $navTabNumber += 1;
                 }
-              }
-            }
-            $rec['SETTINS'] = json_encode($settings);
+          // $settings = json_decode($rec['SETTINS']);
+          //
+          // foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
+          //   foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
+          //     foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
+          //       If(!$settings[$keyMapPanel][$keyMapCase][$keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $valueMapSetting['default'];
+          //       //$setting = $postdata[$keyMapCase] . -'_' . $postdata[$keyMapSetting];
+          //       If($postdata[$keyMapCase . -'_' . $keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $postdata[$keyMapCase . -'_' . $keyMapSetting];
+          //     // foreach ($settings as $keys => $values) {
+          //     //   foreach ($postdata as $keyp => $valuep) {
+          //     //       $data[$key] = $value;
+          //     //   }
+          //     // }
+          //     }
+          //   }
+          // }
+          // $rec['SETTINS'] = json_encode($settings);
             SQLUpdate($table_name, $rec); // update sql
-        } else {
+        } else
+        {
+// New terminal
             if($this->debug == 1) debmes('mpt edit no recid insert');
             $new_rec=1;
             if($this->debug == 1) debmes('mpt edit add object: ' . $terminal['NAME']);
             if ($this->config['CREATE_CLASS'] == 1)
             {
                 $this->addObject($terminal['NAME']);
-                $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
-                $rec['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
+                $postdata['smarthome']['object_method'] = 'TerminalDataProcessing';
+                $postdata['smarthome']['object_name'] = $terminal['NAME'];
+              // $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
+              // $rec['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
             }
-            foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
-              foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
-                foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
-                  If($settings[$keyMapPanel][$keyMapCase][$keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $valueMapSetting['default'];
-                // foreach ($settings as $keys => $values) {
-                //   foreach ($postdata as $keyp => $valuep) {
-                //       $data[$key] = $value;
-                //   }
-                // }
-                }
-              }
-            }
-            $rec['SETTINS'] = json_encode($settings);
+          // foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
+          //   foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
+          //     foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
+          //       If($settings[$keyMapPanel][$keyMapCase][$keyMapSetting]) $settings[$keyMapPanel][$keyMapCase][$keyMapSetting] = $valueMapSetting['default'];
+          //     // foreach ($settings as $keys => $values) {
+          //     //   foreach ($postdata as $keyp => $valuep) {
+          //     //       $data[$key] = $value;
+          //     //   }
+          //     // }
+          //     }
+          //   }
+          // }
+          // $rec['SETTINS'] = json_encode($settings);
             $rec['ID']=SQLInsert($table_name, $rec); // adding new record
         }
         $rec['IP_SERVER']=$_SERVER['SERVER_ADDR'];
@@ -106,6 +174,10 @@ if($rec['ID_TERMINAL'])
     $out['ERR']=1;
    }
   }
+
+
+
+
 
 // создаем список терминалов с голочкой MJrApi для выпадающего списка
     $tmp=SQLSelect("SELECT ID, TITLE, NAME, HOST, if(IS_ONLINE = 1, 'Online', 'Offline') as ONLINE FROM terminals WHERE MAJORDROID_API = 1 ORDER BY TITLE");
@@ -119,57 +191,8 @@ if($rec['ID_TERMINAL'])
     }
     $out['ID_TERMINAL_OPTIONS']=$tmp;
 
-    $navTabNumber = 0;
-    $caseNumber = 0;
-    $settingNumber = 0;
-    foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
-      // Закладки в модуле
-      $out['NAV-TABS'][$navTabNumber]['NAV-TITLE'] = $keyMapPanel;
-      $out['NAV-TABS'][$navTabNumber]['NAV-DIV-ID'] = translitIt($keyMapPanel);
-    // $out['NAV-TABS'][$navTabNumber]['BODY'] = "<li><a data-toggle='tab' href='#" . translitIt($keyMapPanel) . "' class='active'>[#TITLE#]</a></li>";
-    // $out['NAV-TABS'][$navTabNumber]['BODY'] .= "<div id='" . translitIt($keyMapPanel) . "' class='tab-pane fade in'>";
-    // $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<form action="?" method="post" enctype="multipart/form-data" name="frm' . translitIt($keyMapPanel) . '" class="form-horizontal">';
-    // if ($out['OK']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-success">Сохранено</div>';
-    // if ($out['ERR']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-danger">Вы не выбрали терминал</div>';
 
-      foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
-        // Секции
-        $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['CASE-NAME'] = $keyMapCase;
-        foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
-          // Опции
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-NAME'] = $keyMapSetting;
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TITLE'] = $valueMapSetting['name'];
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DESC'] = $valueMapSetting['desc'];
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TYPE'] = $valueMapSetting['type'];
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DEFAULT'] = $valueMapSetting['default'];
-          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-VALUE'] = $valueMapSetting['default'];
-        // switch ($valueMapSetting['type'])
-        // {
-        //   case 'text':
-        //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="text" class="form-control" name="' . $keyMapSetting . '" value="' . $valueMapSetting['default'] . '" id="' . $keyMapSetting .'">';
-        //     break;
-        //
-        //   case 'checkbox':
-        //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="checkbox" name="' . $keyMapSetting . '" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>';
-        //     break;
-        //
-        //   case 'select':
-        //     // code...
-        //     break;
-        // }
-          If($valueMapSetting['type'] == 'select')
-          {
-          // foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
-          //
-          // }
-            $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-SELECT-OPTIONS']=$valueMapSetting['options'];
-          }
-          $settingNumber += 1;
-        }
-        $caseNumber += 1;
-      }
-      $navTabNumber += 1;
-    }
+
 
 
   if (is_array($rec)) {
