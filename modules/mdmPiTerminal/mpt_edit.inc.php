@@ -50,7 +50,7 @@ if($rec['ID_TERMINAL'])
             if($this->debug == 1) debmes("mpt edit update : $nmTerm ! ip: " . $terminal['HOST']);
             if ($this->config['CREATE_CLASS'] == 1)
             {
-                if($this->debug == 1) debmes("mpt edit update CreateClass=True : $terminal['NAME'] ! ip: " . $tmp['HOST']);
+                if($this->debug == 1) debmes("mpt edit update CreateClass=True : " . $terminal['NAME'] . " ! ip: " . $tmp['HOST']);
               // $rec['MAJORDOMO_OBJECT_METHOD'] = 'TerminalDataProcessing';
               // $rec['MAJORDOMO_OBJECT_NAME'] = $terminal['NAME'];
                 $postdata['smarthome']['object_method'] = 'TerminalDataProcessing';
@@ -97,7 +97,7 @@ if($rec['ID_TERMINAL'])
                         // $settingOption += 1;
                         }
                       }
-                      if($_POST['$keyMapCase.$keyMapSetting') $postdata[$keyMapCase][$keyMapSetting] = $valueMapSetting['value'];
+                      if($_POST["$keyMapCase.$keyMapSetting"]) $postdata[$keyMapCase][$keyMapSetting] = $valueMapSetting['value'];
                     // switch ($valueMapSetting['type'])
                     // {
                     //   case 'text':
