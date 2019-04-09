@@ -14,7 +14,7 @@
 * @access private
 */
 
-require(DIR_MODULES.$this->name.'/mpt_jsonLib.inc.php');
+require('mpt_jsonLib.inc.php');
 
 
 class mdmPiTerminal extends module {
