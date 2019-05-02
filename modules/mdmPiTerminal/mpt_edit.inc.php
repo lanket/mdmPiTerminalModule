@@ -180,7 +180,7 @@
     $out['ERR']=1;
    }
   }
-    $tmp=SQLSelect("SELECT ID, TITLE, NAME, HOST, if(IS_ONLINE = 1, 'Online', 'Offline') as ONLINE FROM terminals WHERE MAJORDROID_API = 1 ORDER BY TITLE");
+    $tmp=SQLSelect("SELECT ID, TITLE, NAME, HOST, if(IS_ONLINE = 1, 'Online', 'Offline') as ONLINE FROM terminals WHERE CANTTS = 1 OR MAJORDROID_API = 1 ORDER BY TITLE");
     $terminals_total=count($tmp);
     for($terminals_i=0;$terminals_i<$terminals_total;$terminals_i++) {
         $terminal_id_opt[$tmp[$terminals_i]['ID']]=$tmp[$terminals_i]['NAME'];
