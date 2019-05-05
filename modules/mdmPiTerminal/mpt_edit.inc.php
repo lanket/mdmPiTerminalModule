@@ -2,6 +2,7 @@
 /*
 * @version 0.1 (wizard)
 */
+if($this->debug == 1) debmes('mpt edit start');
   if ($this->owner->name=='panel') {
    $out['CONTROLPANEL']=1;
   }
@@ -14,7 +15,10 @@ if($rec['ID_TERMINAL'])
 // $mapSettings = $this->read_mapSettingsMpt($tmp['HOST']);
 }
 
-  if ($this->mode=='update') {
+if($this->debug == 1) debmes('mpt edit befor ifModeUpdate');
+
+
+if ($this->mode=='update') {
    $ok=1;
     //options for 'ID_TERMINAL' (select)
     global $id_terminal;
@@ -174,6 +178,81 @@ if($rec['ID_TERMINAL'])
     $out['ERR']=1;
    }
   }
+ else {
+     
+
+    global $id_terminal;
+    if(!$mapSettings)
+    {
+        if($this->debug == 1) debmes('mpt edit load mapSettings');
+      $tmp=SQLSelectOne("SELECT * FROM terminals WHERE ID='$id_terminal'");
+      $mapSettings = $this->read_mapSettingsMpt($tmp['HOST']);
+      if($this->debug == 1) debmes('mpt edit show count of map = ' . count($mapSettings));
+    }
+     
+     
+            
+     
+            // Стройим массив для построения интерфейса настроек терминала
+
+                $navTabNumber = 0;
+              // $settingOption = 0;
+                foreach ($mapSettings as $keyMapPanel => $valueMapPanel) {
+                  if($this->debug == 1) debmes("mpt edit layers $keyMapPanel");
+                  // Закладки в модуле
+                  $out['NAV-TABS'][$navTabNumber]['NAV-TITLE'] = $keyMapPanel;
+                  $out['NAV-TABS'][$navTabNumber]['NAV-DIV-ID'] = translitIt($keyMapPanel);
+                  $out['NAV-TABS'][$navTabNumber]['NAV-N'] = $navTabNumber;
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] = "<li><a data-toggle='tab' href='#" . translitIt($keyMapPanel) . "' class='active'>[#TITLE#]</a></li>";
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] .= "<div id='" . translitIt($keyMapPanel) . "' class='tab-pane fade in'>";
+                // $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<form action="?" method="post" enctype="multipart/form-data" name="frm' . translitIt($keyMapPanel) . '" class="form-horizontal">';
+                // if ($out['OK']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-success">Сохранено</div>';
+                // if ($out['ERR']) $out['NAV-TABS'][$navTabNumber]['BODY'] .= '<div class="alert alert-danger">Вы не выбрали терминал</div>';
+
+                  $caseNumber = 0;
+                  foreach ($valueMapPanel as $keyMapCase => $valueMapCase) {
+                      if($this->debug == 1) debmes("mpt edit case $keyMapCase");
+                    // Секции
+                    $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['CASE-NAME'] = $keyMapCase;
+                    $settingNumber = 0;
+                    foreach ($valueMapCase as $keyMapSetting => $valueMapSetting) {
+                      // Опции
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-NAME'] = '$keyMapCase.$keyMapSetting';
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TITLE'] = $valueMapSetting['name'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DESC'] = $valueMapSetting['desc'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-TYPE'] = $valueMapSetting['type'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-DEFAULT'] = $valueMapSetting['default'];
+                      $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-VALUE'] = $valueMapSetting['value'];
+                      If($valueMapSetting['type'] == 'select')
+                      {
+                        foreach ($valueMapSetting['option'] as $keySettingOption => $valueSettingOption) {
+                          $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-SELECT-OPTIONS'][]= array('SETTING-SELECT-OPTIONS-VALUE' => $keySettingOption, 'SETTING-SELECT-OPTION-TITLE' => $valueSettingOption );
+                        // $settingOption += 1;
+                        }
+                      }
+//                      if($_POST["$keyMapCase.$keyMapSetting"]) $postdata[$keyMapCase][$keyMapSetting] = $valueMapSetting['value'];
+                    // switch ($valueMapSetting['type'])
+                    // {
+                    //   case 'text':
+                    //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="text" class="form-control" name="' . $keyMapSetting . '" value="' . $valueMapSetting['default'] . '" id="' . $keyMapSetting .'">';
+                    //     break;
+                    //
+                    //   case 'checkbox':
+                    //     $out['NAV-TABS'][$navTabNumber]['CASES'][$caseNumber]['SETTINGS'][$settingNumber]['SETTING-FORM'] = '<input type="checkbox" name="' . $keyMapSetting . '" value="1"[#if SETTINGS_ALARMKWACTIVATED="1"#] checked[#endif#]>';
+                    //     break;
+                    //
+                    //   case 'select':
+                    //     // code...
+                    //     break;
+                    // }
+                      $settingNumber += 1;
+                    }
+                    $caseNumber += 1;
+                  }
+                  $navTabNumber += 1;
+                }
+      
+}
 
 
 

@@ -20,7 +20,20 @@
 */
 
 $json = file_get_contents('/var/www/modules/mdmPiTerminal/jsonfrommdp.json');
-return json_decode($json);
+
+if($this->debug == 1) debmes('mpt edit readMapSettings ' . substr($json,0, 30));
+
+$result = json_decode($json, TRUE);
+
+if($this->debug == 1) debmes('mpt edit readMapSettings ' . count($result));
+
+// return $jsonArray;
+return $result;
+
+// return $json;
+
+
+
 
 //    $service_port='7999';
 /*
