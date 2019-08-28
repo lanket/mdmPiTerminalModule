@@ -117,6 +117,32 @@
         //updating 'settings_chrome_alarmstt' (BOOLEAN)
          $rec['SETTINGS_CHROME_ALARMSTT']=  $this->validate('settings_chrome_alarmstt');
         //updating 'majordomo_object_name' (varchar)
+
+
+         $rec['SETTINGS_LAZY_RECORD']=  $this->validate('settings_lazy_record');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['SETTINGS_ALARM_RECOGNIZED']=  $this->validate('settings_alarm_recognized');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['SETTINGS_BLOCKING_LISTENER']=  $this->validate('settings_blocking_listener');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['SETTINGS_NO_BACKGROUND_PLAY']=  $this->validate('settings_no_background_play');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['SETTINGS_OPTIMISTIC_NONBLOCK_TTS']=  $this->validate('settings_optimistic_nonblock_tts');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['SETTINGS_AUDIO_GAIN']=  $this->validate('settings_audio_gain');
+        //updating 'majordomo_object_name' (varchar)
+         $rec['YANDEX_GRPC']=  $this->validate('yandex_grpc');
+        //updating 'majordomo_object_name' (varchar)
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
          $rec['MAJORDOMO_OBJECT_NAME']= $this->validate('majordomo_object_name');
         //updating 'majordomo_object_method' (varchar)
          $rec['MAJORDOMO_OBJECT_METHOD']= $this->validate('majordomo_object_method');
